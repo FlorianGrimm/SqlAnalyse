@@ -3,6 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace SqlAnalyseLibrary {
-    public class GlobalScope {
+    public class GlobalScope : BaseScope {
     }
 }

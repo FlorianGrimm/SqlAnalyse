@@ -3,6 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace SqlAnalyseLibrary {
-    public class SqlScalarType : Node {
+    public class SqlScalarType : NodeNamed {
     }
 }
