@@ -8,22 +8,26 @@ using System.Linq;
 namespace SqlAnalyseLibrary {
 
     public class StaticEvaluator : TSqlConcreteFragmentVisitor {
-        public static TSqlFragment ParseSql(string sqlCode) {
+        public static (TSqlFragment? fragment, IList<ParseError>? errors) ParseSql(string sqlCode) {
             var parser = new TSql150Parser(false);
-
-            IList<ParseError> errors;
+            TSqlFragment? fragment = null;
+            IList<ParseError>? errors = null;
             var tokens = parser.GetTokenStream(new StringReader(sqlCode), out errors);
-            if (errors is object && errors.Count > 0) { return null; }
-            TSqlFragment fragment = parser.Parse(tokens, out errors);
-            if (errors is object && errors.Count > 0) { return null; }
-            return fragment;
+            if (errors is object && errors.Count > 0) { return (fragment, errors); }
+            fragment = parser.Parse(tokens, out errors);
+            if (errors is object && errors.Count > 0) { return (fragment, errors); }
+            return (fragment, errors);
 
         }
+        public void Resolve(SqlEnvironment sqlEnvironment) {
+            var evaluationState = new EvaluationState(sqlEnvironment);
+            this.Resolve(evaluationState);
+        }
 
-        public void Resolve() {
+        public void Resolve(EvaluationState evaluationState) {
             var result = this.Current.Result;
             if (result is object) {
-                result.Resolve();
+                result.Resolve(evaluationState);
             }
         }
 
@@ -38,9 +42,9 @@ namespace SqlAnalyseLibrary {
             this.Stack.Push(this.Current);
         }
 
-        private void Push(TSqlFragment node, Node previous) {
+        private void Push(TSqlFragment astNode, Node? previous) {
             var current = new StackNode() {
-                Node = node,
+                AstNode = astNode,
                 Scopes = this.Current.Scopes,
                 Previous = previous
             };
@@ -48,14 +52,15 @@ namespace SqlAnalyseLibrary {
             this.Stack.Push(current);
         }
 
-        private StackNode Pop(TSqlFragment node) {
+        private StackNode Pop(TSqlFragment astNode) {
             var result = this.Stack.Pop();
+            if (!ReferenceEquals(result.AstNode, astNode)) { throw new InvalidOperationException("AstNode is not the same."); }
             this.Current = this.Stack.Peek();
             return result;
         }
 
-        private StackNode Accept(TSqlFragment node, Node previous) {
-            StackNode result = null;
+        private StackNode? Accept(TSqlFragment node, Node? previous) {
+            StackNode? result = null;
             if (node is null) { return result; }
             this.Push(node, previous);
             try {
@@ -66,12 +71,12 @@ namespace SqlAnalyseLibrary {
             return result;
         }
 
-        private void AcceptSetResult(TSqlFragment node, TSqlFragment child, Node previous) {
+        private void AcceptSetResult(TSqlFragment node, TSqlFragment child, Node? previous) {
             var result = this.Accept(child, previous);
-            this.SetResult(node, result.Result);
+            this.SetResult(node, result?.Result);
         }
 
-        private List<StackNode> Accept<T>(IList<T> lst, Node previous, Func<StackNode, Node, Node> calcNextPrevious)
+        private List<StackNode> Accept<T>(IList<T> lst, Node? previous, Func<StackNode, Node?, Node?> calcNextPrevious)
             where T : TSqlFragment {
             var result = new List<StackNode>();
             if (lst is null) { return result; }
@@ -85,12 +90,12 @@ namespace SqlAnalyseLibrary {
             return result;
         }
 
-        private void SetResult(TSqlFragment node, Node result) {
-            if ((node is object) && (this.Current.Node is object) && !ReferenceEquals(node, this.Current.Node)) {
-                throw new InvalidOperationException(node.GetType().Name + " - " + this.Current.Node.GetType().Name);
+        private void SetResult(TSqlFragment node, Node? result) {
+            if ((node is object) && (this.Current.AstNode is object) && !ReferenceEquals(node, this.Current.AstNode)) {
+                throw new InvalidOperationException(node.GetType().Name + " - " + this.Current.AstNode.GetType().Name);
             }
             this.Current.Result = result;
-            this.Current.Node = node;
+            this.Current.AstNode = node;
             //if (node is object)
             //{
             //    if (this.Current.Scopes.Node is null)
@@ -122,7 +127,7 @@ namespace SqlAnalyseLibrary {
             this.Current.EnterGlobalScope(result);
             result.Start = first;
             var subResults = this.Accept(node.Batches, first, StackNode.Chain);
-            result.Children.AddRange(subResults.Select(r => r.Result).Where(r => r != null));
+            result.Children.AddRange(subResults.SelectNotNull(r => r.Result));
             (result.Children.LastOrDefault() ?? first).AddForewardLink(result, null, true);
             this.SetResult(node, result);
         }
@@ -136,7 +141,7 @@ namespace SqlAnalyseLibrary {
             result.Start = first;
             this.Current.EnterLocalScope(result);
             var subResults = this.Accept(node.Statements, first, StackNode.Chain);
-            result.Children.AddRange(subResults.Select(r => r.Result).Where(r => r != null));
+            result.Children.AddRange(subResults.SelectNotNull(r => r.Result));
             (result.Children.LastOrDefault() ?? first).AddForewardLink(result, null, true);
             this.SetResult(node, result);
         }
@@ -162,17 +167,19 @@ namespace SqlAnalyseLibrary {
                     result.Children.Add(resultCTes.Result);
                 }
                 var resultQueryExpression = this.Accept(node.QueryExpression, null);
-                result.Children.Add(resultQueryExpression.Result);
+                if (resultQueryExpression?.Result is Node childNode) {
+                    result.Children.Add(childNode);
+                }
                 SetResult(node, result);
             }
         }
 
         public override void ExplicitVisit(FromClause node) {
             var level = GetLevel();
-            var result = new NodeSequence() { Level = level, Comment = "FromClause" };
+            var result = new NodeTableReferences() { Level = level, Comment = "FromClause",Scopes=this.Current.Scopes };
             this.Current.Previous?.AddForewardLink(result, null, true);
             var resultTableReferences = this.Accept(node.TableReferences, null, StackNode.Null);
-            result.Children.AddRange(resultTableReferences.Select(r => r.Result).Where(r => r != null));
+            result.Children.AddRange(resultTableReferences.SelectNotNull(r => r.Result));
             this.SetResult(node, result);
         }
 
@@ -194,7 +201,7 @@ namespace SqlAnalyseLibrary {
                 if (resultSchemaObject is NodeNamed nodeNamed) {
                     result.AddNameIdentifier(nodeNamed.Name.Identifiers.Last(), NodeNameKind.ObjectAlias);
                 } else {
-                    throw new NotSupportedException("?? NamedTableReference->" + resultSchemaObject.GetType().Name);
+                    throw new NotSupportedException($"?? NamedTableReference-> {resultSchemaObject?.GetType()?.Name}");
                 }
                 result.AddToScope();
                 result.Element = resultSchemaObject;
@@ -218,7 +225,9 @@ namespace SqlAnalyseLibrary {
                 var result = new NodeSequence() { Level = level, Comment = "QueryParenthesisExpression", Scope = NodeScopeKind.Unknown };
                 this.Current.EnterAliasScope(result);
                 var subResult = this.Accept(node.QueryExpression, this.Current.Previous);
-                result.Children.Add(subResult.Result);
+                if (subResult?.Result is Node childNode) {
+                    result.Children.Add(childNode);
+                }
                 this.SetResult(node, result);
                 return;
             }
@@ -272,14 +281,15 @@ namespace SqlAnalyseLibrary {
             // node.BinaryQueryExpressionType == BinaryQueryExpressionType.Intersect
             // node.BinaryQueryExpressionType == BinaryQueryExpressionType.Union
             // node.All
+            // TODO: also respect SecondQueryExpression
             // node.SecondQueryExpression
-            SetResult(node, result.Result);
+            SetResult(node, result?.Result);
         }
 
         public override void ExplicitVisit(SelectScalarExpression node) {
             var resultColumnName = this.Accept(node.ColumnName, null)?.Result;
             var resultExpression = this.Accept(node.Expression, null)?.Result;
-            MultiPartIdentifier name = null;
+            MultiPartIdentifier? name = null;
             if (resultColumnName is NodeNamed nodeNamed) {
                 name = nodeNamed.Name;
             } else if (resultExpression is NodeReference nodeReference) {
@@ -367,6 +377,10 @@ namespace SqlAnalyseLibrary {
             if (resultExpression is object) {
                 result.Parameters.Add(resultExpression);
             }
+            resultExpression = this.Accept(node.SecondExpression, result)?.Result;
+            if (resultExpression is object) {
+                result.Parameters.Add(resultExpression);
+            }
             this.SetResult(node, result);
         }
 
@@ -443,11 +457,10 @@ namespace SqlAnalyseLibrary {
             var result = new NodeSequence() { Level = level, Comment = "BeginEndBlockStatement.Result" };
             result.Start = first;
             var resultStatementList = this.Accept(node.StatementList.Statements, first, StackNode.Chain);
-            result.Children.AddRange(resultStatementList.Select(s => s.Result).Where(r => r is object));
+            result.Children.AddRange(resultStatementList.SelectNotNull(s => s.Result));
             result.Children.Last().AddForewardLink(result, null, true);
             this.SetResult(node, result);
         }
-
 
         public override void ExplicitVisit(IfStatement node) {
             var level = GetLevel();
@@ -457,23 +470,23 @@ namespace SqlAnalyseLibrary {
             var result = new NodeJoin() { Level = level, Comment = "IfStatement.Join", Child = nodeIf };
 
             var resultPredicate = this.Accept(node.Predicate, nodeIf);
-            nodeIf.Condition = resultPredicate.Result;
+            var condition = (resultPredicate?.Result) ?? new NodeNoop() { Level = level + 1, Comment = "Condition.Fallback" };
+            nodeIf.Condition = condition;
 
             var resultThen = this.Accept(node.ThenStatement, nodeIf);
-            nodeIf.TrueBranch = resultThen.Result;
+            var trueBranch = (resultThen?.Result) ?? new NodeNoop() { Level = level + 1, Comment = "ThenStatement.Fallback" };
+            nodeIf.TrueBranch = trueBranch;
+            nodeIf.SetForewardLink(trueBranch, condition, true);
+            trueBranch.AddForewardLink(result, null, true);
 
             var resultElse = this.Accept(node.ElseStatement, nodeIf);
-            nodeIf.FalseBranch = resultElse?.Result;
 
-
-            nodeIf.SetForewardLink(nodeIf.TrueBranch, nodeIf.Condition, true);
-            nodeIf.TrueBranch.AddForewardLink(result, null, true);
-
-            if (nodeIf.FalseBranch is object) {
-                nodeIf.SetForewardLink(nodeIf.FalseBranch, nodeIf.Condition, false);
-                nodeIf.FalseBranch.AddForewardLink(result, null, true);
+            if (resultElse?.Result is Node falseBranch) {
+                nodeIf.FalseBranch = falseBranch;
+                nodeIf.SetForewardLink(falseBranch, condition, false);
+                falseBranch.AddForewardLink(result, null, true);
             } else {
-                nodeIf.SetForewardLink(result, nodeIf.Condition, false);
+                nodeIf.SetForewardLink(result, condition, false);
             }
 
             this.SetResult(node, result);

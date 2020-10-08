@@ -7,7 +7,7 @@ namespace SqlAnalyseLibrary {
         }
 
         public List<NodeScopeElement> Columns { get; }
-        public Node NodeFrom { get; set; }
+        public Node? NodeFrom { get; set; }
 
         public override IEnumerable<Node> GetChildren() {
             if (this.NodeFrom is object) { yield return this.NodeFrom; }

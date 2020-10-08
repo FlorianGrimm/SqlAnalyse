@@ -7,7 +7,7 @@
         public GlobalScope GlobalScope { get; }
         public LocalScope LocalScope { get; }
         public AliasScope AliasScope { get; }
-        public INodeHasScope Node { get; }
+        public INodeHasScope? Node { get; }
 
         public Scopes() {
             this._Index = 1 + System.Threading.Interlocked.Increment(ref __Index);

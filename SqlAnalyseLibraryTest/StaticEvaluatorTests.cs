@@ -1,5 +1,7 @@
 using SqlAnalyseLibrary;
 
+using System.Linq;
+
 using Xunit;
 
 namespace SqlAnalyseLibraryTest {
@@ -7,9 +9,10 @@ namespace SqlAnalyseLibraryTest {
         [Fact]
         public void StaticEvaluator201Select() {
             var sqlCode = "SELECT a,b FROM t;";
-            var ast = StaticEvaluator.ParseSql(sqlCode);
-            var staticEvaluator=new StaticEvaluator();
-            ast.Accept(staticEvaluator);
+            var (actNode, errors) = StaticEvaluator.ParseSql(sqlCode);
+            Assert.False(errors is object && errors.Any());
+            var staticEvaluator = new StaticEvaluator();
+            actNode.Accept(staticEvaluator);
 
             //var actNode = StaticEvaluator.ParseTransformSql(sqlCode);
             //Assert.NotNull(actNode);

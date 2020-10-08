@@ -1,6 +1,6 @@
 ﻿namespace SqlAnalyseLibrary {
     public class NodeLink {
-        public NodeLink(Node previousNode, Node nextNode, Node condition, bool conditionResult) {
+        public NodeLink(Node previousNode, Node nextNode, Node? condition, bool conditionResult) {
             this.PreviousNode = previousNode;
             this.NextNode = nextNode;
             this.Condition = condition;
@@ -10,7 +10,7 @@
 
         public Node NextNode { get; set; }
 
-        public Node Condition { get; set; }
+        public Node? Condition { get; set; }
 
         public bool ConditionResult { get; set; }
 
@@ -21,16 +21,16 @@
     }
     public class ForewardLink {
         public ForewardLink(NodeLink nodeLink) {
-            this.NodeLink = nodeLink;
+            this.NodeLink = nodeLink ?? throw new System.ArgumentNullException(nameof(nodeLink));
         }
 
         public NodeLink NodeLink { get; }
 
-        public ForewardLink NextForewardLink { get; set; }
+        public ForewardLink? NextForewardLink { get; set; }
 
 
         public Node NextNode { get => NodeLink.NextNode; }
-        public Node Condition { get => NodeLink.Condition; set => NodeLink.Condition = value; }
+        public Node? Condition { get => NodeLink.Condition; set => NodeLink.Condition = value; }
         public bool ConditionResult { get => NodeLink.ConditionResult; set => NodeLink.ConditionResult = value; }
 
         public ForewardLink GetLast() {
@@ -51,13 +51,13 @@
 
     public class BackwardLink {
         public BackwardLink(NodeLink nodeLink) {
-            this.NodeLink = nodeLink;
+            this.NodeLink = nodeLink ?? throw new System.ArgumentNullException(nameof(nodeLink));
         }
 
         public NodeLink NodeLink { get; }
-        public BackwardLink NextBackwardLink { get; set; }
+        public BackwardLink? NextBackwardLink { get; set; }
         public Node PreviousNode => NodeLink.PreviousNode;
-        public Node Condition { get => NodeLink.Condition; set => NodeLink.Condition = value; }
+        public Node? Condition { get => NodeLink.Condition; set => NodeLink.Condition = value; }
         public bool ConditionResult { get => NodeLink.ConditionResult; set => NodeLink.ConditionResult = value; }
 
         public BackwardLink GetLast() {

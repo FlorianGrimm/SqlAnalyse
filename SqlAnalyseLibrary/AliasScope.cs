@@ -2,11 +2,11 @@
 
 namespace SqlAnalyseLibrary {
     public class AliasScope : BaseScope {
-        public AliasScope(AliasScope parent) {
+        public AliasScope(AliasScope? parent) {
             this.Parent = parent;
         }
 
-        public AliasScope Parent { get; }
+        public AliasScope? Parent { get; }
 
         public override string ToString()
             => (this.Parent is object)

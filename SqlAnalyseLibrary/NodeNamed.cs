@@ -12,7 +12,7 @@ namespace SqlAnalyseLibrary {
             this.Kind = NodeNameKind.Unknown;
         }
 
-        public void SetName(MultiPartIdentifier name, NodeNameKind? kind) {
+        public void SetName(MultiPartIdentifier? name, NodeNameKind? kind) {
             if (name is object) {
                 this.Name = name;
             }
@@ -21,7 +21,7 @@ namespace SqlAnalyseLibrary {
             }
         }
 
-        public void AddNameIdentifier(Identifier name, NodeNameKind? kind) {
+        public void AddNameIdentifier(Identifier? name, NodeNameKind? kind) {
             if (name is object) {
                 this.Name.Identifiers.Add(name);
             }

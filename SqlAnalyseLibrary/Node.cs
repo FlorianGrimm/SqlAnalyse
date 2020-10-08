@@ -9,8 +9,10 @@ namespace SqlAnalyseLibrary {
         public int Index => _Index;
         public int Level { get; set; }
         public string Comment { get; set; }
+
         public Node() {
             this._Index = 1 + System.Threading.Interlocked.Increment(ref __Index);
+            this.Comment = string.Empty;
         }
 
         public override string ToString()
@@ -20,8 +22,8 @@ namespace SqlAnalyseLibrary {
             return Array.Empty<Node>();
         }
 
-        public ForewardLink NextForewardLink { get; set; }
-        public BackwardLink NextBackwardLink { get; set; }
+        public ForewardLink? NextForewardLink { get; set; }
+        public BackwardLink? NextBackwardLink { get; set; }
 
         public IEnumerable<ForewardLink> GetForewardLinks() {
             var current = this.NextForewardLink;
@@ -31,9 +33,9 @@ namespace SqlAnalyseLibrary {
             }
         }
 
-        public virtual void Resolve() {
+        public virtual void Resolve(EvaluationState evaluationState) {
             foreach (var c in this.GetChildren().ToList()) {
-                c.Resolve();
+                c.Resolve(evaluationState);
             }
         }
 
@@ -45,13 +47,13 @@ namespace SqlAnalyseLibrary {
             }
         }
 
-        public void AddForewardLink(Node nextNode, Node condition, bool conditionResult) {
+        public void AddForewardLink(Node nextNode, Node? condition, bool conditionResult) {
             new NodeLink(this, nextNode, condition, conditionResult).Connect();
         }
 
-        public void SetForewardLink(Node nextNode, Node condition, bool conditionResult) {
+        public void SetForewardLink(Node nextNode, Node? condition, bool conditionResult) {
             var current = this.NextForewardLink;
-            ForewardLink previous = null;
+            ForewardLink? previous = null;
             while (current is object) {
                 if (ReferenceEquals(nextNode, current.NextNode)) {
                     current.Condition = condition;

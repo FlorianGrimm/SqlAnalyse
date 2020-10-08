@@ -3,8 +3,8 @@
 namespace SqlAnalyseLibrary {
     public class NodeExpression : Node {
         public NodeExpressionKind Kind { get; set; }
-        public SqlScalarType ScalarType;
-        public object ConstValue;
+        public SqlScalarType? ScalarType;
+        public object? ConstValue;
         public List<Node> Callable;
         public List<Node> Parameters;
 
@@ -25,6 +25,9 @@ namespace SqlAnalyseLibrary {
                 yield return c;
             }
         }
+
+        public override string ToString()
+            => $"{this.GetType().Name}:{Index} {Level} {Comment} {this.Kind} {this.Callable.Count} {this.Parameters.Count}";
     }
 
     public enum NodeExpressionKind {

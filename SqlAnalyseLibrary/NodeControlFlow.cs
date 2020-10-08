@@ -3,9 +3,9 @@
 namespace SqlAnalyseLibrary {
     public class NodeControlFlow : Node {
         public NodeControlFlowKind Kind;
-        public Node Condition;
-        public Node TrueBranch;
-        public Node FalseBranch;
+        public Node? Condition;
+        public Node? TrueBranch;
+        public Node? FalseBranch;
         public override IEnumerable<Node> GetChildren() {
             if (this.Condition is object) {
                 yield return this.Condition;

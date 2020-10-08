@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 
 namespace SqlAnalyse {
     class Program {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
             var sqlCode = @"
 IF (1=1) BEGIN
@@ -19,17 +19,29 @@ SELECT a,b FROM t;
 GO
 SELECT a as aAS, bEQ = b FROM t;
 ";
-            var ast = StaticEvaluator.ParseSql(sqlCode);
+            var (ast, errors) = StaticEvaluator.ParseSql(sqlCode);
+            if (errors is object && errors.Any()) {
+                System.Console.Error.WriteLine("parse errors");
+                System.Console.Error.WriteLine(string.Join("\r\n", errors.Select(e => $"{e.Line}:{e.Column} {e.Message}")));
+                return 1;
+            }
+            if (ast is null) {
+                System.Console.Error.WriteLine("Internal error");
+                return 1;
+            }
             var staticEvaluator = new StaticEvaluator();
             ast.Accept(staticEvaluator);
             var sn = staticEvaluator.Current;
             PrintChildren(sn.Result, "");
+
+            staticEvaluator.Resolve(new SqlEnvironment());
             //if (sn.Result is NodeSequence nodeSequence)
             //{
             //    PrintFWL(nodeSequence.Start, "", 0);
             //}
             //PrintBWL(sn.Result, "");
-            staticEvaluator.Resolve();
+            
+            return 0;
         }
 
         private static void PrintChildren(Node node, string indent)

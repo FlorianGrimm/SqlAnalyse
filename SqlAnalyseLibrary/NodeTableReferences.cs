@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 
 namespace SqlAnalyseLibrary {
-    public class NodeSequence : Node, INodeHasScope {
+    public class NodeTableReferences : Node, INodeHasScope {
         public Node? Start { get; set; }
         public List<Node> Children { get; }
         public NodeScopeKind Scope { get; set; }
         public Scopes? Scopes { get; set; }
-        public NodeSequence() {
+        public NodeTableReferences() {
             this.Children = new List<Node>();
         }
         public override IEnumerable<Node> GetChildren() {
@@ -17,6 +17,8 @@ namespace SqlAnalyseLibrary {
                 yield return c;
             }
         }
+        public override void Resolve(EvaluationState evaluationState) {
+            base.Resolve(evaluationState);
+        }
     }
-
 }
