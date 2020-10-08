@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SqlAnalyseLibrary {
+﻿namespace SqlAnalyseLibrary {
     public class GlobalScope : BaseScope {
     }
 }

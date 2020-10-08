@@ -1,7 +1,5 @@
 ﻿using Microsoft.SqlServer.TransactSql.ScriptDom;
 
-using System;
-
 namespace SqlAnalyseLibrary {
     public class StackNode {
         public Node Previous;
@@ -13,25 +11,21 @@ namespace SqlAnalyseLibrary {
         public LocalScope LocalScope => Scopes.LocalScope;
         public AliasScope AliasScope => Scopes.AliasScope;
 
-        public void EnterGlobalScope(INodeHasScope node)
-        {
+        public void EnterGlobalScope(INodeHasScope node) {
             this.Scopes = this.Scopes.EnterGlobalScope(node);
         }
         public void EnterLocalScope(INodeHasScope node) {
-            this.Scopes = this.Scopes.EnterLocalScope(node );
+            this.Scopes = this.Scopes.EnterLocalScope(node);
         }
-        public void EnterAliasScope(INodeHasScope node)
-        {
+        public void EnterAliasScope(INodeHasScope node) {
             this.Scopes = this.Scopes.EnterAliasScope(node);
         }
 
-        public static Node Chain(StackNode stackNode, Node previous)
-        {
+        public static Node Chain(StackNode stackNode, Node previous) {
             return stackNode.Result;
         }
 
-        public static Node Null(StackNode stackNode, Node previous)
-        {
+        public static Node Null(StackNode stackNode, Node previous) {
             return null;
         }
     }

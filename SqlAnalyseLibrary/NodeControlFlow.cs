@@ -6,17 +6,14 @@ namespace SqlAnalyseLibrary {
         public Node Condition;
         public Node TrueBranch;
         public Node FalseBranch;
-        public override IEnumerable<Node> GetChildren()
-        {
+        public override IEnumerable<Node> GetChildren() {
             if (this.Condition is object) {
                 yield return this.Condition;
             }
-            if (this.TrueBranch is object)
-            {
+            if (this.TrueBranch is object) {
                 yield return this.TrueBranch;
             }
-            if (this.FalseBranch is object)
-            {
+            if (this.FalseBranch is object) {
                 yield return this.FalseBranch;
             }
         }

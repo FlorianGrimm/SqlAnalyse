@@ -1,9 +1,6 @@
-﻿using System;
-
-namespace SqlAnalyseLibrary {
+﻿namespace SqlAnalyseLibrary {
     public class NodeLink {
-        public NodeLink(Node previousNode, Node nextNode, Node condition, bool conditionResult)
-        {
+        public NodeLink(Node previousNode, Node nextNode, Node condition, bool conditionResult) {
             this.PreviousNode = previousNode;
             this.NextNode = nextNode;
             this.Condition = condition;
@@ -17,15 +14,13 @@ namespace SqlAnalyseLibrary {
 
         public bool ConditionResult { get; set; }
 
-        internal void Connect()
-        {
+        internal void Connect() {
             new ForewardLink(this).Connect();
             new BackwardLink(this).Connect();
         }
     }
     public class ForewardLink {
-        public ForewardLink(NodeLink nodeLink)
-        {
+        public ForewardLink(NodeLink nodeLink) {
             this.NodeLink = nodeLink;
         }
 
@@ -34,34 +29,28 @@ namespace SqlAnalyseLibrary {
         public ForewardLink NextForewardLink { get; set; }
 
 
-        public Node NextNode { get => NodeLink.NextNode;}
-        public Node Condition { get => NodeLink.Condition; set => NodeLink.Condition=value; }
-        public bool ConditionResult { get=>NodeLink.ConditionResult; set => NodeLink.ConditionResult=value; }
+        public Node NextNode { get => NodeLink.NextNode; }
+        public Node Condition { get => NodeLink.Condition; set => NodeLink.Condition = value; }
+        public bool ConditionResult { get => NodeLink.ConditionResult; set => NodeLink.ConditionResult = value; }
 
-        public ForewardLink GetLast()
-        {
+        public ForewardLink GetLast() {
             return (this.NextForewardLink is null)
                 ? this
                 : this.NextForewardLink.GetLast();
         }
 
-        internal void Connect()
-        {
-            var previousNode=this.NodeLink.PreviousNode;
-            if (previousNode.NextForewardLink is object)
-            {
+        internal void Connect() {
+            var previousNode = this.NodeLink.PreviousNode;
+            if (previousNode.NextForewardLink is object) {
                 previousNode.NextForewardLink.GetLast().NextForewardLink = this;
-            }
-            else
-            {
+            } else {
                 previousNode.NextForewardLink = this;
             }
         }
     }
 
     public class BackwardLink {
-        public BackwardLink(NodeLink nodeLink)
-        {
+        public BackwardLink(NodeLink nodeLink) {
             this.NodeLink = nodeLink;
         }
 
@@ -71,22 +60,17 @@ namespace SqlAnalyseLibrary {
         public Node Condition { get => NodeLink.Condition; set => NodeLink.Condition = value; }
         public bool ConditionResult { get => NodeLink.ConditionResult; set => NodeLink.ConditionResult = value; }
 
-        public BackwardLink GetLast()
-        {
+        public BackwardLink GetLast() {
             return (this.NextBackwardLink is null)
                 ? this
                 : this.NextBackwardLink.GetLast();
         }
 
-        internal void Connect()
-        {
+        internal void Connect() {
             var nextNode = this.NodeLink.NextNode;
-            if (nextNode.NextBackwardLink is object)
-            {
+            if (nextNode.NextBackwardLink is object) {
                 nextNode.NextBackwardLink.GetLast().NextBackwardLink = this;
-            }
-            else
-            {
+            } else {
                 nextNode.NextBackwardLink = this;
             }
         }

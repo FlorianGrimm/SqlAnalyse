@@ -41,7 +41,7 @@ SELECT a as aAS, bEQ = b FROM t;
                 {
                     if (ReferenceEquals(nodeHasScope.Scopes.Node, node))
                     {
-                        System.Console.Out.WriteLine(indent + "  Scope owner " + nodeHasScope.Scopes.ToString());
+                        System.Console.Out.WriteLine(indent + "  Scope owner " + nodeHasScope.Scopes.ToDebugString());
                     }
                     else
                     {

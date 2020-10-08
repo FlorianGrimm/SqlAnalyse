@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Linq;
 
 namespace SqlAnalyseLibrary {
-    public class AliasScope: BaseScope {
-        public AliasScope(AliasScope parent)
-        {
+    public class AliasScope : BaseScope {
+        public AliasScope(AliasScope parent) {
             this.Parent = parent;
         }
 
