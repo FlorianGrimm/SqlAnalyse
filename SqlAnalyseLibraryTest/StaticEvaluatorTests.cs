@@ -9,10 +9,19 @@ namespace SqlAnalyseLibraryTest {
         [Fact]
         public void StaticEvaluator201Select() {
             var sqlCode = "SELECT a,b FROM t;";
-            var (actNode, errors) = StaticEvaluator.ParseSql(sqlCode);
-            Assert.False(errors is object && errors.Any());
-            var staticEvaluator = new StaticEvaluator();
-            actNode.Accept(staticEvaluator);
+            var staticEvaluator = new StaticEvaluator(
+                new SqlEnvironment("localhost", "SqlAnalyseLibrary", "dbo"));
+            var parseResult = staticEvaluator.ParseSql(sqlCode);
+            Assert.NotNull(parseResult);
+            Assert.Equal("", parseResult.GetErrorsAsString());
+            Assert.True(parseResult.IsSuccessfull());
+
+            var visitResult = parseResult.Visit();
+            Assert.NotNull(visitResult);
+            Assert.True(visitResult.IsSuccessfull());
+
+            var resolveResult = visitResult.Resolve();
+            Assert.NotNull(resolveResult);
 
             //var actNode = StaticEvaluator.ParseTransformSql(sqlCode);
             //Assert.NotNull(actNode);

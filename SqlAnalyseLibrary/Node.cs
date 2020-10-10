@@ -14,6 +14,8 @@ namespace SqlAnalyseLibrary {
             this._Index = 1 + System.Threading.Interlocked.Increment(ref __Index);
             this.Comment = string.Empty;
         }
+        public virtual void AfterInitialization() {
+        }
 
         public override string ToString()
             => $"{this.GetType().Name}:{Index} {Level} {Comment}";

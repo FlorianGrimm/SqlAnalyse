@@ -11,9 +11,23 @@ namespace SqlAnalyseLibrary {
 
         public Scopes? Scopes { get; set; }
 
+        public NodeReference() {
+        }
+
+        public NodeReference(
+            int level,
+            string comment,
+            Scopes scopes,
+            NodeScopeKind scope) : this() {
+            this.Level = level;
+            this.Comment = comment;
+            this.Scopes = scopes;
+            this.Scope = scope;
+        }
+
         internal void SetColumnRegular(MultiPartIdentifier multiPartIdentifier) {
             this.Name = multiPartIdentifier;
-            this.Kind = NodeNameKind.ColumnRegular;
+            this.NameKind = NodeNameKind.ColumnRegular;
         }
 
         public override void Resolve(EvaluationState evaluationState) {

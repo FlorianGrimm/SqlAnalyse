@@ -1,22 +1,42 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.SqlServer.TransactSql.ScriptDom;
+
+using System;
+using System.Collections.Generic;
 
 namespace SqlAnalyseLibrary {
-    public class NodeExpression : Node {
-        public NodeExpressionKind Kind { get; set; }
+    public class NodeExpressionScalar : NodeNamed {
+        public NodeExpressionScalarKind Kind { get; set; }
         public SqlScalarType? ScalarType;
         public object? ConstValue;
         public List<Node> Callable;
         public List<Node> Parameters;
 
-        public NodeExpression() {
+        public NodeExpressionScalar() {
             this.Callable = new List<Node>();
             this.Parameters = new List<Node>();
         }
+
+        public NodeExpressionScalar(
+            int level,
+            string comment,
+            NodeExpressionScalarKind kind) : this() {
+            this.Level = level;
+            this.Comment = comment;
+            this.Kind = kind;
+        }
+
+        public void AddCallable(Node node) {
+            if (node is object) {
+                this.Callable.Add(node);
+            }
+        }
+
         public void AddParameter(Node node) {
             if (node is object) {
                 this.Parameters.Add(node);
             }
         }
+
         public override IEnumerable<Node> GetChildren() {
             foreach (var c in this.Callable) {
                 yield return c;
@@ -28,9 +48,17 @@ namespace SqlAnalyseLibrary {
 
         public override string ToString()
             => $"{this.GetType().Name}:{Index} {Level} {Comment} {this.Kind} {this.Callable.Count} {this.Parameters.Count}";
+
+        public MultiPartIdentifier? GetName() {
+            if (this.Kind == NodeExpressionScalarKind.Const) {
+                return null;
+            }
+            // throw new NotSupportedException("nodeExpression.Kind is ? " + nodeExpression.Kind);
+            return null;
+        }
     }
 
-    public enum NodeExpressionKind {
+    public enum NodeExpressionScalarKind {
         Unknown,
         Const,
         Equals,
@@ -43,6 +71,9 @@ namespace SqlAnalyseLibrary {
         NotLessThan,
         NotGreaterThan,
         LeftOuterJoin,
-        RightOuterJoin
+        RightOuterJoin,
+        FunctionCall,
+        ColumnAccess
+        //Alias
     }
 }

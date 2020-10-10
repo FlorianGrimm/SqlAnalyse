@@ -4,10 +4,16 @@ using System;
 
 namespace SqlAnalyseLibrary {
     public class StackNode {
-        public Node? Previous;
         public TSqlFragment? AstNode;
+        public Scopes Scopes;
+        public Node? Previous;
         public Node? Result;
-        public Scopes? Scopes;
+
+        public StackNode(TSqlFragment? astNode, Scopes scopes, Node? previous) {
+            this.AstNode = astNode;
+            this.Scopes = scopes;
+            this.Previous = previous;
+        }
 
         public GlobalScope? GlobalScope => this.Scopes?.GlobalScope;
         public LocalScope? LocalScope => this.Scopes?.LocalScope;

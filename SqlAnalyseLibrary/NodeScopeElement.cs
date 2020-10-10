@@ -7,18 +7,39 @@ namespace SqlAnalyseLibrary {
         public NodeScopeKind Scope { get; set; }
         public Scopes? Scopes { get; set; }
 
+        // do this better
+        public NodeOuputTable? Owner { get; internal set; }
+
         public NodeScopeElement() {
         }
+        public NodeScopeElement(int level,
+            string comment,
+            Scopes scopes,
+            NodeScopeKind scope) {
+            this.Level = level;
+            this.Comment = comment;
+            this.Scopes = scopes;
+            this.Scope = scope;
+        }
+
 
         public override void Resolve(EvaluationState evaluationState) {
             if (this.Element is Node element && this.Scopes is Scopes scopes) {
                 if (this.Scope == NodeScopeKind.Alias) {
-                    Add table
+                    if (this.NameKind == NodeNameKind.ObjectAlias) {
+                        var nameAlias = this.Name;
+                        var nameSchemaObjectName = this.Name;
+                        if (element is NodeNamed named) {
+                            nameSchemaObjectName = named.Name;
+                        }
+                        evaluationState.ResolveSchemaObjectName(nameSchemaObjectName);
+                    }
                 } else if (this.Scope == NodeScopeKind.Local) {
                 } else if (this.Scope == NodeScopeKind.Global) {
                 } else if (this.Scope == NodeScopeKind.Column) {
                     if (element is NodeScopeElement nodeScopeElement) {
-                        var name = nodeScopeElement.Name;
+                        var name1 = this.Name;
+                        var name2 = nodeScopeElement.Name;
                     } else {
                         throw new InvalidOperationException(element.GetType().Name);
                     }
@@ -34,7 +55,7 @@ namespace SqlAnalyseLibrary {
             }
         }
         public override string ToString()
-            => $"{this.GetType().Name}:{Index} {Level} {Comment} Scope:{Scope}";
+            => $"{this.GetType().Name}:{Index} {Level} {Comment} Scope:{Scope} Kind:{NameKind}-{this.ToStringNameOnly()}";
 
         internal void AddToScope() {
             switch (this.Scope) {

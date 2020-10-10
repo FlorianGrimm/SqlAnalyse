@@ -6,502 +6,79 @@ using System.IO;
 using System.Linq;
 
 namespace SqlAnalyseLibrary {
+    public sealed class StaticEvaluator {
+        public EvaluationState EvaluationState { get; }
 
-    public class StaticEvaluator : TSqlConcreteFragmentVisitor {
-        public static (TSqlFragment? fragment, IList<ParseError>? errors) ParseSql(string sqlCode) {
+        public StaticEvaluator(SqlEnvironment sqlEnvironment)
+            : this(new EvaluationState(sqlEnvironment)) {
+        }
+
+        public StaticEvaluator(EvaluationState evaluationState) {
+            this.EvaluationState = evaluationState ?? throw new ArgumentNullException(nameof(evaluationState));
+        }
+
+        public ParseResult ParseSql(string sqlCode) {
             var parser = new TSql150Parser(false);
-            TSqlFragment? fragment = null;
-            IList<ParseError>? errors = null;
-            var tokens = parser.GetTokenStream(new StringReader(sqlCode), out errors);
-            if (errors is object && errors.Count > 0) { return (fragment, errors); }
-            fragment = parser.Parse(tokens, out errors);
-            if (errors is object && errors.Count > 0) { return (fragment, errors); }
-            return (fragment, errors);
-
-        }
-        public void Resolve(SqlEnvironment sqlEnvironment) {
-            var evaluationState = new EvaluationState(sqlEnvironment);
-            this.Resolve(evaluationState);
+            var tokens = parser.GetTokenStream(new StringReader(sqlCode), out var errors);
+            if (!ParseResult.IsSuccessfull(errors)) { return new ParseResult(this, null, errors); }
+            var fragment = parser.Parse(tokens, out errors);
+            return new ParseResult(this, fragment, errors);
         }
 
-        public void Resolve(EvaluationState evaluationState) {
-            var result = this.Current.Result;
-            if (result is object) {
-                result.Resolve(evaluationState);
+        public sealed class ParseResult {
+            private readonly StaticEvaluator _StaticEvaluator;
+            public readonly TSqlFragment? RootSqlFragment;
+            public readonly IList<ParseError>? Errors;
+
+            public ParseResult(StaticEvaluator staticEvaluator, TSqlFragment? rootSqlFragment, IList<ParseError>? errors) {
+                this._StaticEvaluator = staticEvaluator;
+                this.RootSqlFragment = rootSqlFragment;
+                this.Errors = errors;
             }
-        }
 
-        public readonly Stack<StackNode> Stack;
-        public StackNode Current;
+            public bool IsSuccessfull()
+                => (this.RootSqlFragment is object)
+                && IsSuccessfull(this.Errors);
 
-        public StaticEvaluator() {
-            this.Stack = new Stack<StackNode>();
-            this.Current = new StackNode() {
-                Scopes = new Scopes()
-            };
-            this.Stack.Push(this.Current);
-        }
-
-        private void Push(TSqlFragment astNode, Node? previous) {
-            var current = new StackNode() {
-                AstNode = astNode,
-                Scopes = this.Current.Scopes,
-                Previous = previous
-            };
-            this.Current = current;
-            this.Stack.Push(current);
-        }
-
-        private StackNode Pop(TSqlFragment astNode) {
-            var result = this.Stack.Pop();
-            if (!ReferenceEquals(result.AstNode, astNode)) { throw new InvalidOperationException("AstNode is not the same."); }
-            this.Current = this.Stack.Peek();
-            return result;
-        }
-
-        private StackNode? Accept(TSqlFragment node, Node? previous) {
-            StackNode? result = null;
-            if (node is null) { return result; }
-            this.Push(node, previous);
-            try {
-                node.Accept(this);
-            } finally {
-                result = this.Pop(node);
-            }
-            return result;
-        }
-
-        private void AcceptSetResult(TSqlFragment node, TSqlFragment child, Node? previous) {
-            var result = this.Accept(child, previous);
-            this.SetResult(node, result?.Result);
-        }
-
-        private List<StackNode> Accept<T>(IList<T> lst, Node? previous, Func<StackNode, Node?, Node?> calcNextPrevious)
-            where T : TSqlFragment {
-            var result = new List<StackNode>();
-            if (lst is null) { return result; }
-            foreach (var node in lst) {
-                var resultNode = this.Accept(node, previous);
-                if (resultNode is object) {
-                    result.Add(resultNode);
-                    previous = calcNextPrevious(resultNode, previous);
+            public string GetErrorsAsString() {
+                if ((this.Errors is null) || (!this.Errors.Any())) {
+                    return string.Empty;
+                } else {
+                    return string.Join(
+                        System.Environment.NewLine,
+                        this.Errors.Select(e => $"{e.Line}:{e.Column} {e.Message}"));
                 }
             }
-            return result;
-        }
 
-        private void SetResult(TSqlFragment node, Node? result) {
-            if ((node is object) && (this.Current.AstNode is object) && !ReferenceEquals(node, this.Current.AstNode)) {
-                throw new InvalidOperationException(node.GetType().Name + " - " + this.Current.AstNode.GetType().Name);
+            internal static bool IsSuccessfull(IList<ParseError>? errors)
+                => (errors is null)
+                    ? true
+                    : (!errors.Any());
+
+            public StaticEvaluatorVisitor.VisitorResult Visit() {
+                var root = this.RootSqlFragment;
+                if (!this.IsSuccessfull()) { throw new InvalidOperationException("Parsing faults."); }
+                if (root is null) { throw new ArgumentNullException(nameof(RootSqlFragment)); }
+
+                var visitor = new StaticEvaluatorVisitor(this._StaticEvaluator);
+                return visitor.VistRoot(root);
             }
-            this.Current.Result = result;
-            this.Current.AstNode = node;
-            //if (node is object)
-            //{
-            //    if (this.Current.Scopes.Node is null)
-            //    {
-            //        if (!(node is INodeHasScope))
-            //        {
-            //            throw new NotSupportedException(node.GetType().Name + " must be a IHaveScope.");
-            //        }
-            //        this.Current.Scopes.Node = node;
+
+            //public object Resolve() {
+            //    var root = this.RootSqlFragment;
+            //    if (!this.IsSuccessfull()) { throw new InvalidOperationException("Parsing faults."); }
+            //    if (root is null) { throw new ArgumentNullException(nameof(RootSqlFragment)); }
+
+            //    var visitor = new StaticEvaluatorVisitor(this._StaticEvaluator);
+            //    var visitorResult = visitor.VistRoot(root);
+            //    if (!visitorResult.IsSuccessfull()) {
+            //    } else {
             //    }
+            //    return "";
             //}
         }
 
-        private int GetLevel() {
-            return (this.Current.Previous?.Index ?? -1) + 1;
+        public void Resolve(TSqlFragment? rootSqlFragment) {
         }
-
-        public override void Visit(TSqlFragment node) {
-            //base.Visit(node);
-            if (node is null) { return; }
-            throw new InvalidOperationException(node.GetType().Name);
-        }
-
-        public override void ExplicitVisit(TSqlScript node) {
-            if (node is null) { return; }
-            var first = new NodeNoop() { Level = 1, Comment = "TSqlScript.First" };
-            this.Current.Previous?.AddForewardLink(first, null, true);
-            var result = new NodeSequence() { Level = 1, Comment = "TSqlScript.Result" };
-            this.Current.EnterGlobalScope(result);
-            result.Start = first;
-            var subResults = this.Accept(node.Batches, first, StackNode.Chain);
-            result.Children.AddRange(subResults.SelectNotNull(r => r.Result));
-            (result.Children.LastOrDefault() ?? first).AddForewardLink(result, null, true);
-            this.SetResult(node, result);
-        }
-
-        public override void ExplicitVisit(TSqlBatch node) {
-            if (node is null) { return; }
-            var level = GetLevel();
-            var first = new NodeNoop() { Level = level, Comment = "TSqlBatch.First" };
-            this.Current.Previous?.AddForewardLink(first, null, true);
-            var result = new NodeSequence() { Level = level, Comment = "TSqlBatch.Result" };
-            result.Start = first;
-            this.Current.EnterLocalScope(result);
-            var subResults = this.Accept(node.Statements, first, StackNode.Chain);
-            result.Children.AddRange(subResults.SelectNotNull(r => r.Result));
-            (result.Children.LastOrDefault() ?? first).AddForewardLink(result, null, true);
-            this.SetResult(node, result);
-        }
-
-        public override void ExplicitVisit(SelectStatement node) {
-            if (node is null) { return; }
-            var level = GetLevel();
-            if (node.Into is object) {
-                // node.Into
-                var result = new NodeSequence() { Level = level, Comment = "SelectStatement Into", Scope = NodeScopeKind.Unknown };
-                this.Current.EnterAliasScope(result);
-                var resultCTes = this.Accept(node.WithCtesAndXmlNamespaces, null);
-                var resultQueryExpression = this.Accept(node.QueryExpression, null);
-                SetResult(node, result);
-
-            } else {
-                var result = new NodeSequence() { Level = level, Comment = "SelectStatement", Scope = NodeScopeKind.Unknown };
-                this.Current.EnterAliasScope(result);
-                //var previous = this.Current.Previous;
-                var resultCTes = this.Accept(node.WithCtesAndXmlNamespaces, null);
-                if (resultCTes?.Result is object) {
-                    //previous = resultCTes.Result;
-                    result.Children.Add(resultCTes.Result);
-                }
-                var resultQueryExpression = this.Accept(node.QueryExpression, null);
-                if (resultQueryExpression?.Result is Node childNode) {
-                    result.Children.Add(childNode);
-                }
-                SetResult(node, result);
-            }
-        }
-
-        public override void ExplicitVisit(FromClause node) {
-            var level = GetLevel();
-            var result = new NodeTableReferences() { Level = level, Comment = "FromClause",Scopes=this.Current.Scopes };
-            this.Current.Previous?.AddForewardLink(result, null, true);
-            var resultTableReferences = this.Accept(node.TableReferences, null, StackNode.Null);
-            result.Children.AddRange(resultTableReferences.SelectNotNull(r => r.Result));
-            this.SetResult(node, result);
-        }
-
-        public override void ExplicitVisit(NamedTableReference node) {
-            var level = GetLevel();
-            if (node.Alias is object) {
-                var resultSchemaObject = this.Accept(node.SchemaObject, this.Current.Previous)?.Result;
-                var result = new NodeScopeElement() { Level = level, Comment = "NamedTableReference with Alias", Scopes = this.Current.Scopes, Scope = NodeScopeKind.Alias };
-                //resultSchemaObject.AddForewardLink(result, null, true);
-                result.AddNameIdentifier(node.Alias, NodeNameKind.ObjectAlias);
-                result.Element = resultSchemaObject;
-                result.AddToScope();
-                this.SetResult(node, result);
-                return;
-            } else {
-                var resultSchemaObject = this.Accept(node.SchemaObject, this.Current.Previous)?.Result;
-                var result = new NodeScopeElement() { Level = level, Comment = "NamedTableReference with Alias", Scopes = this.Current.Scopes, Scope = NodeScopeKind.Alias };
-                //resultSchemaObject.AddForewardLink(result, null, true);
-                if (resultSchemaObject is NodeNamed nodeNamed) {
-                    result.AddNameIdentifier(nodeNamed.Name.Identifiers.Last(), NodeNameKind.ObjectAlias);
-                } else {
-                    throw new NotSupportedException($"?? NamedTableReference-> {resultSchemaObject?.GetType()?.Name}");
-                }
-                result.AddToScope();
-                result.Element = resultSchemaObject;
-                this.SetResult(node, result);
-                return;
-            }
-            // node.Alias
-            // node.ForPath
-            // node.SchemaObject
-            // node.TableHints
-            // node.TableSampleClause
-            // node.TemporalClause
-
-
-        }
-
-        public override void ExplicitVisit(QueryParenthesisExpression node) {
-            if (node is null) { return; }
-            if (node.QueryExpression is object) {
-                var level = GetLevel();
-                var result = new NodeSequence() { Level = level, Comment = "QueryParenthesisExpression", Scope = NodeScopeKind.Unknown };
-                this.Current.EnterAliasScope(result);
-                var subResult = this.Accept(node.QueryExpression, this.Current.Previous);
-                if (subResult?.Result is Node childNode) {
-                    result.Children.Add(childNode);
-                }
-                this.SetResult(node, result);
-                return;
-            }
-        }
-
-        public override void ExplicitVisit(QuerySpecification node) {
-            if (node is null) { return; }
-            // node.TopRowFilter
-            // node.UniqueRowFilter
-            var level = GetLevel();
-            var result = new NodeOuputTable() { Level = level, Comment = "QuerySpecification" };
-            result.NodeFrom = this.Accept(node.FromClause, null)?.Result;
-
-            var resultSelectElements = this.Accept(node.SelectElements, null, StackNode.Null);
-            foreach (var resultSelectElement in resultSelectElements) {
-                if (resultSelectElement.Result is null) {
-                } else if (resultSelectElement.Result is NodeReference nodeReference) {
-                    var nodeColumn = new NodeScopeElement() { Level = result.Level + 1, Comment = "QuerySpecification", Scopes = this.Current.Scopes };
-                    nodeColumn.AddNameIdentifier(nodeReference.Name?.Identifiers?.Last(), NodeNameKind.ColumnRegular);
-                    nodeColumn.Scope = NodeScopeKind.Column;
-                    nodeColumn.Element = nodeReference;
-                    result.Columns.Add(nodeColumn);
-                } else if (resultSelectElement.Result is NodeScopeElement nodeScopeElement) {
-                    if (nodeScopeElement.Scope == NodeScopeKind.Column) {
-                        result.Columns.Add(nodeScopeElement);
-                    } else {
-                        var nodeColumn = new NodeScopeElement() { Level = result.Level + 1, Comment = "QuerySpecification", Scopes = this.Current.Scopes };
-                        nodeColumn.AddNameIdentifier(nodeScopeElement.Name?.Identifiers?.Last(), NodeNameKind.ColumnRegular);
-                        nodeColumn.Scope = NodeScopeKind.Column;
-                        nodeColumn.Element = nodeScopeElement;
-                        result.Columns.Add(nodeColumn);
-                    }
-                } else {
-                    throw new NotSupportedException(resultSelectElement.Result.GetType().Name);
-                }
-            }
-
-            // node.GroupByClause
-            // node.HavingClause
-            // node.WhereClause
-            // node.OrderByClause
-            // node.OffsetClause
-            // node.ForClause
-            this.SetResult(node, result);
-        }
-
-        public override void ExplicitVisit(BinaryQueryExpression node) {
-            var result = this.Accept(node.FirstQueryExpression, null);
-            // node.FirstQueryExpression
-            // node.BinaryQueryExpressionType== BinaryQueryExpressionType.Except
-            // node.BinaryQueryExpressionType == BinaryQueryExpressionType.Intersect
-            // node.BinaryQueryExpressionType == BinaryQueryExpressionType.Union
-            // node.All
-            // TODO: also respect SecondQueryExpression
-            // node.SecondQueryExpression
-            SetResult(node, result?.Result);
-        }
-
-        public override void ExplicitVisit(SelectScalarExpression node) {
-            var resultColumnName = this.Accept(node.ColumnName, null)?.Result;
-            var resultExpression = this.Accept(node.Expression, null)?.Result;
-            MultiPartIdentifier? name = null;
-            if (resultColumnName is NodeNamed nodeNamed) {
-                name = nodeNamed.Name;
-            } else if (resultExpression is NodeReference nodeReference) {
-                name = nodeReference.Name;
-                if (name.Identifiers.Count > 1) {
-                    var name1 = new MultiPartIdentifier();
-                    name1.Identifiers.Add(name.Identifiers.Last());
-                    name = name1;
-                }
-            } else {
-                throw new NotSupportedException("resultExpression is ?" + node.GetType().Name);
-            }
-            var level = GetLevel();
-            var result = new NodeScopeElement() { Level = level, Comment = "SelectScalarExpression", Scopes = this.Current.Scopes };
-            if (name is object) {
-                result.SetName(name, NodeNameKind.ColumnRegular);
-            }
-            if (resultExpression is object) {
-                result.Element = resultExpression;
-            } else {
-                throw new NotSupportedException("resultExpression is null:" + node.GetType().Name);
-            }
-            result.AddToScope();
-            this.SetResult(node, result);
-        }
-
-        public override void ExplicitVisit(SelectStarExpression node) {
-            var resultQualifier = this.Accept(node.Qualifier, null)?.Result;
-            var level = GetLevel();
-            var result = new NodeReference() { Level = level, Comment = "SelectStarExpression", Scopes = this.Current.Scopes, Scope = NodeScopeKind.Unknown };
-            this.Current.Previous?.AddForewardLink(result, null, true);
-            result.SetName((resultQualifier as NodeNamed)?.Name, NodeNameKind.ColumnWildcard);
-            this.SetResult(node, resultQualifier);
-        }
-
-        public override void ExplicitVisit(IdentifierOrValueExpression node) {
-            if (node.Identifier is object) {
-                this.AcceptSetResult(node, node.Identifier, null);
-                return;
-            }
-            if (node.ValueExpression is Literal) {
-                this.AcceptSetResult(node, node.ValueExpression, null);
-                return;
-            }
-            throw new NotSupportedException("?? :" + node.GetType().Name);
-
-            //here
-            //if (ValueExpression != null) {
-            //    Literal literal = ValueExpression as Literal;
-            //    if (literal != null) {
-            //        return literal.Value;
-            //    }
-            //    VariableReference variableReference = ValueExpression as VariableReference;
-            //    if (variableReference != null) {
-            //        return variableReference.Name;
-            //    }
-            //    return (ValueExpression as GlobalVariableExpression)?.Name;
-            //}
-
-        }
-        public override void ExplicitVisit(BooleanParenthesisExpression node) {
-            this.AcceptSetResult(node, node.Expression, null);
-        }
-
-        public override void ExplicitVisit(BooleanComparisonExpression node) {
-            var level = GetLevel();
-            var result = new NodeExpression() { Level = level, Comment = "BooleanComparisonExpression" };
-            this.Current.Previous?.AddForewardLink(result, null, true);
-            result.Kind = (node.ComparisonType) switch
-            {
-                BooleanComparisonType.Equals => NodeExpressionKind.Equals,
-                BooleanComparisonType.GreaterThan => NodeExpressionKind.GreaterThan,
-                BooleanComparisonType.LessThan => NodeExpressionKind.LessThan,
-                BooleanComparisonType.GreaterThanOrEqualTo => NodeExpressionKind.GreaterThanOrEqualTo,
-                BooleanComparisonType.LessThanOrEqualTo => NodeExpressionKind.LessThanOrEqualTo,
-                BooleanComparisonType.NotEqualToBrackets => NodeExpressionKind.NotEqualToBrackets,
-                BooleanComparisonType.NotEqualToExclamation => NodeExpressionKind.NotEqualToExclamation,
-                BooleanComparisonType.NotLessThan => NodeExpressionKind.NotLessThan,
-                BooleanComparisonType.NotGreaterThan => NodeExpressionKind.NotGreaterThan,
-                BooleanComparisonType.LeftOuterJoin => NodeExpressionKind.LeftOuterJoin,
-                BooleanComparisonType.RightOuterJoin => NodeExpressionKind.RightOuterJoin,
-                _ => NodeExpressionKind.Unknown
-            };
-            var resultExpression = this.Accept(node.FirstExpression, result)?.Result;
-            if (resultExpression is object) {
-                result.Parameters.Add(resultExpression);
-            }
-            resultExpression = this.Accept(node.SecondExpression, result)?.Result;
-            if (resultExpression is object) {
-                result.Parameters.Add(resultExpression);
-            }
-            this.SetResult(node, result);
-        }
-
-        public override void ExplicitVisit(VariableReference node) {
-            throw new NotSupportedException("TODO:" + node.GetType().Name);
-        }
-
-        public override void ExplicitVisit(GlobalVariableExpression node) {
-            throw new NotSupportedException("TODO:" + node.GetType().Name);
-        }
-
-        public override void ExplicitVisit(IntegerLiteral node) {
-            var result = new NodeExpression() { Kind = NodeExpressionKind.Const, ScalarType = new SqlScalarType() };
-
-            this.SetResult(node, result);
-        }
-        public override void ExplicitVisit(ColumnReferenceExpression node) {
-            var level = GetLevel();
-            switch (node.ColumnType) {
-                case ColumnType.Regular: {
-                        var result = new NodeReference() { Level = level, Comment = "ColumnReferenceExpression", Scopes = this.Current.Scopes, Scope = NodeScopeKind.Column };
-                        result.SetColumnRegular(node.MultiPartIdentifier);
-                        SetResult(node, result);
-                        return;
-                    }
-                case ColumnType.IdentityCol:
-                    throw new NotSupportedException("TODO:" + node.GetType().Name);
-                case ColumnType.RowGuidCol:
-                    throw new NotSupportedException("TODO:" + node.GetType().Name);
-                case ColumnType.Wildcard:
-                    throw new NotSupportedException("TODO:" + node.GetType().Name);
-                case ColumnType.PseudoColumnIdentity:
-                    throw new NotSupportedException("TODO:" + node.GetType().Name);
-                case ColumnType.PseudoColumnRowGuid:
-                    throw new NotSupportedException("TODO:" + node.GetType().Name);
-                case ColumnType.PseudoColumnAction:
-                    throw new NotSupportedException("TODO:" + node.GetType().Name);
-                case ColumnType.PseudoColumnCuid:
-                    break;
-                case ColumnType.PseudoColumnGraphNodeId:
-                    break;
-                case ColumnType.PseudoColumnGraphEdgeId:
-                    break;
-                case ColumnType.PseudoColumnGraphFromId:
-                    break;
-                case ColumnType.PseudoColumnGraphToId:
-                    break;
-                default:
-                    break;
-            }
-            throw new NotSupportedException(node.GetType().Name);
-        }
-
-        public override void ExplicitVisit(SchemaObjectName node) {
-            var level = GetLevel();
-            var result = new NodeNamed() { Level = level, Comment = "SchemaObjectName" };
-            this.Current.Previous?.AddForewardLink(result, null, true);
-            foreach (var identifier in node.Identifiers) {
-                result.Name.Identifiers.Add(identifier);
-            }
-            this.SetResult(node, result);
-        }
-
-        public override void ExplicitVisit(Identifier node) {
-            var level = GetLevel();
-            var result = new NodeNamed() { Level = level, Comment = "Identifier" };
-            result.AddNameIdentifier(node, NodeNameKind.Unknown);
-            this.SetResult(node, result);
-        }
-        public override void ExplicitVisit(BeginEndBlockStatement node) {
-            var level = GetLevel();
-            var first = new NodeNoop() { Level = level, Comment = "BeginEndBlockStatement.First" };
-            this.Current.Previous?.AddForewardLink(first, null, true);
-            var result = new NodeSequence() { Level = level, Comment = "BeginEndBlockStatement.Result" };
-            result.Start = first;
-            var resultStatementList = this.Accept(node.StatementList.Statements, first, StackNode.Chain);
-            result.Children.AddRange(resultStatementList.SelectNotNull(s => s.Result));
-            result.Children.Last().AddForewardLink(result, null, true);
-            this.SetResult(node, result);
-        }
-
-        public override void ExplicitVisit(IfStatement node) {
-            var level = GetLevel();
-            var nodeIf = new NodeControlFlow() { Level = level + 1, Comment = "IfStatement", Kind = NodeControlFlowKind.If };
-            this.Current.Previous?.AddForewardLink(nodeIf, null, true);
-
-            var result = new NodeJoin() { Level = level, Comment = "IfStatement.Join", Child = nodeIf };
-
-            var resultPredicate = this.Accept(node.Predicate, nodeIf);
-            var condition = (resultPredicate?.Result) ?? new NodeNoop() { Level = level + 1, Comment = "Condition.Fallback" };
-            nodeIf.Condition = condition;
-
-            var resultThen = this.Accept(node.ThenStatement, nodeIf);
-            var trueBranch = (resultThen?.Result) ?? new NodeNoop() { Level = level + 1, Comment = "ThenStatement.Fallback" };
-            nodeIf.TrueBranch = trueBranch;
-            nodeIf.SetForewardLink(trueBranch, condition, true);
-            trueBranch.AddForewardLink(result, null, true);
-
-            var resultElse = this.Accept(node.ElseStatement, nodeIf);
-
-            if (resultElse?.Result is Node falseBranch) {
-                nodeIf.FalseBranch = falseBranch;
-                nodeIf.SetForewardLink(falseBranch, condition, false);
-                falseBranch.AddForewardLink(result, null, true);
-            } else {
-                nodeIf.SetForewardLink(result, condition, false);
-            }
-
-            this.SetResult(node, result);
-        }
-
-        /*
-         * 
-         * 
-        public override void ExplicitVisit( node)
-        {
-            var level = GetLevel();
-            var result = new Node() { Level = level, Comment = "" };
-            this.Current.Previous?.AddForewardLink(result, null, true);
-            this.SetResult(node, result);
-        }
-        */
     }
 }
