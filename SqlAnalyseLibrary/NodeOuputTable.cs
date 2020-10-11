@@ -21,7 +21,9 @@ namespace SqlAnalyseLibrary {
         public NodeExpressionTabular? Expression { get; set; }
 
         public override IEnumerable<Node> GetChildren() {
+            if (this.NodeCtes is object) { yield return this.NodeCtes; }
             if (this.NodeFrom is object) { yield return this.NodeFrom; }
+            if (this.Expression is object) { yield return this.Expression; }
             foreach (var c in this.Columns) {
                 yield return c;
             }

@@ -33,6 +33,13 @@ SELECT a as aAS, bEQ = b FROM t;
             sqlCode = @"
 SELECT a,b FROM t;
 GO
+SELECT * FROM t;
+GO
+SELECT * FROM dbo.t;
+GO
+SELECT t.* FROM dbo.t;
+GO
+SELECT c.* FROM dbo.t as c;
 ";
             var staticEvaluator = new StaticEvaluator(
                 new SqlEnvironment("localhost", "SqlAnalyseLibrary", "dbo"));

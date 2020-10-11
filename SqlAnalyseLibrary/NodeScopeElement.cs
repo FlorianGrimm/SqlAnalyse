@@ -25,8 +25,8 @@ namespace SqlAnalyseLibrary {
 
         public override void Resolve(EvaluationState evaluationState) {
             if (this.Element is Node element && this.Scopes is Scopes scopes) {
-                if (this.Scope == NodeScopeKind.Alias) {
-                    if (this.NameKind == NodeNameKind.ObjectAlias) {
+                if (this.Scope == NodeScopeKind.AliasScope) {
+                    if (this.ElementKind == NodeElementKind.ObjectAlias) {
                         var nameAlias = this.Name;
                         var nameSchemaObjectName = this.Name;
                         if (element is NodeNamed named) {
@@ -34,8 +34,8 @@ namespace SqlAnalyseLibrary {
                         }
                         evaluationState.ResolveSchemaObjectName(nameSchemaObjectName);
                     }
-                } else if (this.Scope == NodeScopeKind.Local) {
-                } else if (this.Scope == NodeScopeKind.Global) {
+                } else if (this.Scope == NodeScopeKind.LocalScope) {
+                } else if (this.Scope == NodeScopeKind.GlobalScope) {
                 } else if (this.Scope == NodeScopeKind.Column) {
                     if (element is NodeScopeElement nodeScopeElement) {
                         var name1 = this.Name;
@@ -55,21 +55,21 @@ namespace SqlAnalyseLibrary {
             }
         }
         public override string ToString()
-            => $"{this.GetType().Name}:{Index} {Level} {Comment} Scope:{Scope} Kind:{NameKind}-{this.ToStringNameOnly()}";
+            => $"{this.GetType().Name}:{Index} {Level} {Comment} Scope:{Scope} Kind:{ElementKind}-{this.ToStringNameOnly()}";
 
         internal void AddToScope() {
             switch (this.Scope) {
                 case NodeScopeKind.Unknown:
                     break;
-                case NodeScopeKind.Global:
+                case NodeScopeKind.GlobalScope:
                     if (this.Scopes is null || this.Element is null) { return; }
                     this.Scopes.GlobalScope.Add(this, this.Element);
                     break;
-                case NodeScopeKind.Local:
+                case NodeScopeKind.LocalScope:
                     if (this.Scopes is null || this.Element is null) { return; }
                     this.Scopes.LocalScope.Add(this, this.Element);
                     break;
-                case NodeScopeKind.Alias:
+                case NodeScopeKind.AliasScope:
                     if (this.Scopes is null || this.Element is null) { return; }
                     this.Scopes.AliasScope.Add(this, this.Element);
                     break;

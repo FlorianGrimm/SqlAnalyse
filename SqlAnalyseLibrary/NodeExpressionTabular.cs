@@ -1,20 +1,16 @@
 ﻿using Microsoft.SqlServer.TransactSql.ScriptDom;
 
+using System;
 using System.Collections.Generic;
 
 namespace SqlAnalyseLibrary {
-    public class NodeExpressionTabular : Node {
+    public class NodeExpressionTabular : NodeExpression {
         public NodeExpressionTabularKind Kind { get; set; }
         public SqlScalarType? ScalarType { get; set; }
-        public object? ConstValue;
-        public List<Node> Callable { get; }
-        public List<Node> Parameters { get; }
         public List<Node> Columns { get; }
         public Node? NodeFrom { get; set; }
 
-        public NodeExpressionTabular() {
-            this.Callable = new List<Node>();
-            this.Parameters = new List<Node>();
+        public NodeExpressionTabular() : base() {
             this.Columns = new List<Node>();
         }
 
@@ -27,18 +23,27 @@ namespace SqlAnalyseLibrary {
             this.Kind = kind;
         }
 
-        public void AddParameter(Node node) {
+        public void AddColumn(Node node) {
             if (node is object) {
-                this.Parameters.Add(node);
+                if (ReferenceEquals(this, node)) { throw new ArgumentException("this === node", nameof(node)); }
+                this.Columns.Add(node);
             }
         }
+
         public override IEnumerable<Node> GetChildren() {
+            if (this.NodeFrom is object) {
+                yield return this.NodeFrom;
+            }
             foreach (var c in this.Callable) {
                 yield return c;
             }
             foreach (var c in this.Parameters) {
                 yield return c;
             }
+            foreach (var c in this.Columns) {
+                yield return c;
+            }
+
         }
 
         public override string ToString()

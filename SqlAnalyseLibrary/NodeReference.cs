@@ -27,7 +27,7 @@ namespace SqlAnalyseLibrary {
 
         internal void SetColumnRegular(MultiPartIdentifier multiPartIdentifier) {
             this.Name = multiPartIdentifier;
-            this.NameKind = NodeNameKind.ColumnRegular;
+            this.ElementKind = NodeElementKind.ColumnRegular;
         }
 
         public override void Resolve(EvaluationState evaluationState) {

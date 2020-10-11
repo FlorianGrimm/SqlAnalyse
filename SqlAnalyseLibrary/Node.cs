@@ -18,7 +18,7 @@ namespace SqlAnalyseLibrary {
         }
 
         public override string ToString()
-            => $"{this.GetType().Name}:{Index} {Level} {Comment}";
+            => $"{this.GetType().Name}:{this.Index} {this.Level} {this.Comment}";
 
         public virtual IEnumerable<Node> GetChildren() {
             return Array.Empty<Node>();
