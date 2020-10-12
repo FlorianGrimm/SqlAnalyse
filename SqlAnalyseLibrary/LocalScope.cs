@@ -2,10 +2,9 @@
 
 namespace SqlAnalyseLibrary {
     public class LocalScope : BaseScope {
-        public LocalScope(LocalScope? parent) {
-            this.Parent = parent;
+        public LocalScope(LocalScope? parent) : base(parent) {
         }
-        public LocalScope? Parent { get; }
+        public new LocalScope? Parent => base.Parent as LocalScope;
 
         public override string ToString()
             => (this.Parent is object)

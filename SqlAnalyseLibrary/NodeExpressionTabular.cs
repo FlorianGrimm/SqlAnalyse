@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SqlAnalyseLibrary {
     public class NodeExpressionTabular : NodeExpression {
@@ -48,6 +49,23 @@ namespace SqlAnalyseLibrary {
 
         public override string ToString()
             => $"{this.GetType().Name}:{Index} {Level} {Comment} {this.Kind} {this.Callable.Count} {this.Parameters.Count}";
+
+        public override void ResolveTypesStep1(IResolver resolver) {
+            this.NodeFrom?.ResolveTypesStep1(resolver);
+            foreach (var callable in this.Callable) {
+                callable.ResolveTypesStep1(resolver);
+            }
+            foreach (var parameter in this.Parameters) {
+                parameter.ResolveTypesStep1(resolver);
+            }
+            //if (this.Kind == NodeExpressionTabularKind.Query) {}
+            if (this.Columns.Any()) {
+                var resolverChained = Resolver.GetResolverForChainable(this.NodeFrom, resolver, NodeElementKind.Column);
+                foreach (var column in this.Columns) {
+                    column.ResolveTypesStep1(resolverChained);
+                }
+            }
+        }
 
         public MultiPartIdentifier? GetName() {
             //if (this.Kind == NodeExpressionScalarKind.Const) {

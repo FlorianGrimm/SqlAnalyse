@@ -1,0 +1,2650 @@
+namespace Sqlserver.Showplan {
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Xml.Serialization;
+
+    public partial class AdaptiveJoinType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> AdaptiveJoinType at 'HashKeysBuild' : ColumnReferenceType
+            // ValueType AdaptiveJoinType at 'HashKeysBuildSpecified' : Boolean
+            // Collection<> AdaptiveJoinType at 'HashKeysProbe' : ColumnReferenceType
+            // ValueType AdaptiveJoinType at 'HashKeysProbeSpecified' : Boolean
+            // ShowPlanBase AdaptiveJoinType at 'BuildResidual' : ScalarExpressionType
+            // ShowPlanBase AdaptiveJoinType at 'ProbeResidual' : ScalarExpressionType
+            // ShowPlanBase AdaptiveJoinType at 'StarJoinInfo' : StarJoinInfoType
+            // ShowPlanBase AdaptiveJoinType at 'Predicate' : ScalarExpressionType
+            // ShowPlanBase AdaptiveJoinType at 'PassThru' : ScalarExpressionType
+            // Collection<> AdaptiveJoinType at 'OuterReferences' : ColumnReferenceType
+            // ValueType AdaptiveJoinType at 'OuterReferencesSpecified' : Boolean
+            // ShowPlanBase AdaptiveJoinType at 'PartitionId' : SingleColumnReferenceType
+            // Collection<> AdaptiveJoinType at 'RelOp' : RelOpType
+            // ValueType AdaptiveJoinType at 'BitmapCreator' : Boolean
+            // ValueType AdaptiveJoinType at 'BitmapCreatorSpecified' : Boolean
+            // ValueType AdaptiveJoinType at 'Optimized' : Boolean
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class AffectingConvertWarningType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ValueType AffectingConvertWarningType at 'ConvertIssue' : AffectingConvertWarningTypeConvertIssue
+            // String AffectingConvertWarningType at 'Expression' : String
+            return state;
+        }
+    }
+    public partial class AggregateType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> AggregateType at 'ScalarOperator' : ScalarType
+            // ValueType AggregateType at 'ScalarOperatorSpecified' : Boolean
+            // String AggregateType at 'AggType' : String
+            // ValueType AggregateType at 'Distinct' : Boolean
+            return state;
+        }
+    }
+    public partial class ArithmeticType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> ArithmeticType at 'ScalarOperator' : ScalarType
+            // ValueType ArithmeticType at 'Operation' : ArithmeticOperationType
+            return state;
+        }
+    }
+    public partial class AssignType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase AssignType at 'ColumnReference' : ColumnReferenceType
+            // ShowPlanBase AssignType at 'ScalarOperator' : ScalarType
+            return state;
+        }
+    }
+    public partial class BaseStmtInfoType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase BaseStmtInfoType at 'StatementSetOptions' : SetOptionsType
+            // ValueType BaseStmtInfoType at 'StatementCompId' : Int32
+            // ValueType BaseStmtInfoType at 'StatementCompIdSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'StatementEstRows' : Double
+            // ValueType BaseStmtInfoType at 'StatementEstRowsSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'StatementId' : Int32
+            // ValueType BaseStmtInfoType at 'StatementIdSpecified' : Boolean
+            // String BaseStmtInfoType at 'StatementOptmLevel' : String
+            // ValueType BaseStmtInfoType at 'StatementOptmEarlyAbortReason' : BaseStmtInfoTypeStatementOptmEarlyAbortReason
+            // ValueType BaseStmtInfoType at 'StatementOptmEarlyAbortReasonSpecified' : Boolean
+            // String BaseStmtInfoType at 'CardinalityEstimationModelVersion' : String
+            // ValueType BaseStmtInfoType at 'StatementSubTreeCost' : Double
+            // ValueType BaseStmtInfoType at 'StatementSubTreeCostSpecified' : Boolean
+            // String BaseStmtInfoType at 'StatementText' : String
+            // String BaseStmtInfoType at 'StatementType' : String
+            // String BaseStmtInfoType at 'TemplatePlanGuideDB' : String
+            // String BaseStmtInfoType at 'TemplatePlanGuideName' : String
+            // String BaseStmtInfoType at 'PlanGuideDB' : String
+            // String BaseStmtInfoType at 'PlanGuideName' : String
+            // String BaseStmtInfoType at 'ParameterizedText' : String
+            // String BaseStmtInfoType at 'ParameterizedPlanHandle' : String
+            // String BaseStmtInfoType at 'QueryHash' : String
+            // String BaseStmtInfoType at 'QueryPlanHash' : String
+            // String BaseStmtInfoType at 'RetrievedFromCache' : String
+            // String BaseStmtInfoType at 'StatementSqlHandle' : String
+            // ValueType BaseStmtInfoType at 'DatabaseContextSettingsId' : UInt64
+            // ValueType BaseStmtInfoType at 'DatabaseContextSettingsIdSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'ParentObjectId' : UInt64
+            // ValueType BaseStmtInfoType at 'ParentObjectIdSpecified' : Boolean
+            // String BaseStmtInfoType at 'BatchSqlHandle' : String
+            // ValueType BaseStmtInfoType at 'StatementParameterizationType' : Int32
+            // ValueType BaseStmtInfoType at 'StatementParameterizationTypeSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'SecurityPolicyApplied' : Boolean
+            // ValueType BaseStmtInfoType at 'SecurityPolicyAppliedSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class BatchHashTableBuildType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase BatchHashTableBuildType at 'RelOp' : RelOpType
+            // ValueType BatchHashTableBuildType at 'BitmapCreator' : Boolean
+            // ValueType BatchHashTableBuildType at 'BitmapCreatorSpecified' : Boolean
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class BitmapType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> BitmapType at 'HashKeys' : ColumnReferenceType
+            // ShowPlanBase BitmapType at 'RelOp' : RelOpType
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class CLRFunctionType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // String CLRFunctionType at 'Assembly' : String
+            // String CLRFunctionType at 'Class' : String
+            // String CLRFunctionType at 'Method' : String
+            return state;
+        }
+    }
+    public partial class CollapseType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> CollapseType at 'GroupBy' : ColumnReferenceType
+            // ShowPlanBase CollapseType at 'RelOp' : RelOpType
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class ColumnGroupType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> ColumnGroupType at 'Column' : ColumnType
+            // ValueType ColumnGroupType at 'Usage' : ColumnGroupTypeUsage
+            return state;
+        }
+    }
+    public partial class ColumnReferenceListType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> ColumnReferenceListType at 'ColumnReference' : ColumnReferenceType
+            // ValueType ColumnReferenceListType at 'ColumnReferenceSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class ColumnReferenceType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase ColumnReferenceType at 'ScalarOperator' : ScalarType
+            // ShowPlanBase ColumnReferenceType at 'InternalInfo' : InternalInfoType
+            // String ColumnReferenceType at 'Server' : String
+            // String ColumnReferenceType at 'Database' : String
+            // String ColumnReferenceType at 'Schema' : String
+            // String ColumnReferenceType at 'Table' : String
+            // String ColumnReferenceType at 'Alias' : String
+            // String ColumnReferenceType at 'Column' : String
+            // ValueType ColumnReferenceType at 'ComputedColumn' : Boolean
+            // ValueType ColumnReferenceType at 'ComputedColumnSpecified' : Boolean
+            // String ColumnReferenceType at 'ParameterDataType' : String
+            // String ColumnReferenceType at 'ParameterCompiledValue' : String
+            // String ColumnReferenceType at 'ParameterRuntimeValue' : String
+            return state;
+        }
+    }
+    public partial class ColumnType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // String ColumnType at 'Name' : String
+            // ValueType ColumnType at 'ColumnId' : Int32
+            return state;
+        }
+    }
+    public partial class CompareType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> CompareType at 'ScalarOperator' : ScalarType
+            // ValueType CompareType at 'CompareOp' : CompareOpType
+            return state;
+        }
+    }
+    public partial class ComputeScalarType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase ComputeScalarType at 'RelOp' : RelOpType
+            // ValueType ComputeScalarType at 'ComputeSequence' : Boolean
+            // ValueType ComputeScalarType at 'ComputeSequenceSpecified' : Boolean
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class ConcatType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> ConcatType at 'RelOp' : RelOpType
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class ConditionalType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase ConditionalType at 'Condition' : ScalarExpressionType
+            // ShowPlanBase ConditionalType at 'Then' : ScalarExpressionType
+            // ShowPlanBase ConditionalType at 'Else' : ScalarExpressionType
+            return state;
+        }
+    }
+    public partial class ConstantScanType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> ConstantScanType at 'Values' : ScalarExpressionListType
+            // ValueType ConstantScanType at 'ValuesSpecified' : Boolean
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class ConstantScanTypeValues : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> ConstantScanTypeValues at 'Row' : ScalarExpressionListType
+            // ValueType ConstantScanTypeValues at 'RowSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class ConstType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // String ConstType at 'ConstValue' : String
+            return state;
+        }
+    }
+    public partial class ConvertType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase ConvertType at 'Style' : ScalarExpressionType
+            // ValueType ConvertType at 'Style_1' : Int32
+            // ShowPlanBase ConvertType at 'ScalarOperator' : ScalarType
+            // String ConvertType at 'DataType' : String
+            // ValueType ConvertType at 'Length' : Int32
+            // ValueType ConvertType at 'LengthSpecified' : Boolean
+            // ValueType ConvertType at 'Precision' : Int32
+            // ValueType ConvertType at 'PrecisionSpecified' : Boolean
+            // ValueType ConvertType at 'Scale' : Int32
+            // ValueType ConvertType at 'ScaleSpecified' : Boolean
+            // ValueType ConvertType at 'Implicit' : Boolean
+            return state;
+        }
+    }
+    public partial class CreateIndexType : RowsetType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase CreateIndexType at 'RelOp' : RelOpType
+            // Collection<> RowsetType at 'Object' : ObjectType
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class CursorPlanType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> CursorPlanType at 'Operation' : CursorPlanTypeOperation
+            // ValueType CursorPlanType at 'OperationSpecified' : Boolean
+            // String CursorPlanType at 'CursorName' : String
+            // ValueType CursorPlanType at 'CursorActualType' : CursorType
+            // ValueType CursorPlanType at 'CursorActualTypeSpecified' : Boolean
+            // ValueType CursorPlanType at 'CursorRequestedType' : CursorType
+            // ValueType CursorPlanType at 'CursorRequestedTypeSpecified' : Boolean
+            // ValueType CursorPlanType at 'CursorConcurrency' : CursorPlanTypeCursorConcurrency
+            // ValueType CursorPlanType at 'CursorConcurrencySpecified' : Boolean
+            // ValueType CursorPlanType at 'ForwardOnly' : Boolean
+            // ValueType CursorPlanType at 'ForwardOnlySpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class CursorPlanTypeOperation : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase CursorPlanTypeOperation at 'QueryPlan' : QueryPlanType
+            // Collection<> CursorPlanTypeOperation at 'UDF' : FunctionType
+            // ValueType CursorPlanTypeOperation at 'UDFSpecified' : Boolean
+            // ValueType CursorPlanTypeOperation at 'OperationType' : CursorPlanTypeOperationOperationType
+            return state;
+        }
+    }
+    public partial class DefinedValuesListType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> DefinedValuesListType at 'DefinedValue' : DefinedValuesListTypeDefinedValue
+            // ValueType DefinedValuesListType at 'DefinedValueSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class DefinedValuesListTypeDefinedValue : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> DefinedValuesListTypeDefinedValue at 'ValueVector' : ColumnReferenceType
+            // ValueType DefinedValuesListTypeDefinedValue at 'ValueVectorSpecified' : Boolean
+            // ShowPlanBase DefinedValuesListTypeDefinedValue at 'ColumnReference' : ColumnReferenceType
+            // ShowPlanBase DefinedValuesListTypeDefinedValue at 'ScalarOperator' : ScalarType
+            return state;
+        }
+    }
+    public partial class DefinedValuesListTypeDefinedValueValueVector : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> DefinedValuesListTypeDefinedValueValueVector at 'ColumnReference' : ColumnReferenceType
+            return state;
+        }
+    }
+    public partial class FilterType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase FilterType at 'RelOp' : RelOpType
+            // ShowPlanBase FilterType at 'Predicate' : ScalarExpressionType
+            // ValueType FilterType at 'StartupExpression' : Boolean
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class ForeignKeyReferenceCheckType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase ForeignKeyReferenceCheckType at 'IndexScan' : IndexScanType
+            return state;
+        }
+    }
+    public partial class ForeignKeyReferencesCheckType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase ForeignKeyReferencesCheckType at 'RelOp' : RelOpType
+            // Collection<> ForeignKeyReferencesCheckType at 'ForeignKeyReferenceCheck' : ForeignKeyReferenceCheckType
+            // ValueType ForeignKeyReferencesCheckType at 'ForeignKeyReferencesCount' : Int32
+            // ValueType ForeignKeyReferencesCheckType at 'ForeignKeyReferencesCountSpecified' : Boolean
+            // ValueType ForeignKeyReferencesCheckType at 'NoMatchingIndexCount' : Int32
+            // ValueType ForeignKeyReferencesCheckType at 'NoMatchingIndexCountSpecified' : Boolean
+            // ValueType ForeignKeyReferencesCheckType at 'PartialMatchingIndexCount' : Int32
+            // ValueType ForeignKeyReferencesCheckType at 'PartialMatchingIndexCountSpecified' : Boolean
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class FunctionType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase FunctionType at 'Statements' : StmtBlockType
+            // String FunctionType at 'ProcName' : String
+            // ValueType FunctionType at 'IsNativelyCompiled' : Boolean
+            // ValueType FunctionType at 'IsNativelyCompiledSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class GenericType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> GenericType at 'RelOp' : RelOpType
+            // ValueType GenericType at 'RelOpSpecified' : Boolean
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class GuessedSelectivityType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase GuessedSelectivityType at 'Spatial' : ObjectType
+            return state;
+        }
+    }
+    public partial class HashSpillDetailsType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ValueType HashSpillDetailsType at 'GrantedMemoryKb' : UInt64
+            // ValueType HashSpillDetailsType at 'GrantedMemoryKbSpecified' : Boolean
+            // ValueType HashSpillDetailsType at 'UsedMemoryKb' : UInt64
+            // ValueType HashSpillDetailsType at 'UsedMemoryKbSpecified' : Boolean
+            // ValueType HashSpillDetailsType at 'WritesToTempDb' : UInt64
+            // ValueType HashSpillDetailsType at 'WritesToTempDbSpecified' : Boolean
+            // ValueType HashSpillDetailsType at 'ReadsFromTempDb' : UInt64
+            // ValueType HashSpillDetailsType at 'ReadsFromTempDbSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class HashType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> HashType at 'HashKeysBuild' : ColumnReferenceType
+            // ValueType HashType at 'HashKeysBuildSpecified' : Boolean
+            // Collection<> HashType at 'HashKeysProbe' : ColumnReferenceType
+            // ValueType HashType at 'HashKeysProbeSpecified' : Boolean
+            // ShowPlanBase HashType at 'BuildResidual' : ScalarExpressionType
+            // ShowPlanBase HashType at 'ProbeResidual' : ScalarExpressionType
+            // ShowPlanBase HashType at 'StarJoinInfo' : StarJoinInfoType
+            // Collection<> HashType at 'RelOp' : RelOpType
+            // ValueType HashType at 'BitmapCreator' : Boolean
+            // ValueType HashType at 'BitmapCreatorSpecified' : Boolean
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class IdentType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase IdentType at 'ColumnReference' : ColumnReferenceType
+            // String IdentType at 'Table' : String
+            return state;
+        }
+    }
+    public partial class IndexedViewInfoType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> IndexedViewInfoType at 'Object' : ObjectType
+            // ValueType IndexedViewInfoType at 'ObjectSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class IndexScanType : RowsetType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase IndexScanType at 'SeekPredicates' : SeekPredicatesType
+            // Collection<> IndexScanType at 'Predicate' : ScalarExpressionType
+            // ValueType IndexScanType at 'PredicateSpecified' : Boolean
+            // ShowPlanBase IndexScanType at 'PartitionId' : SingleColumnReferenceType
+            // Collection<> IndexScanType at 'IndexedViewInfo' : ObjectType
+            // ValueType IndexScanType at 'IndexedViewInfoSpecified' : Boolean
+            // ValueType IndexScanType at 'Lookup' : Boolean
+            // ValueType IndexScanType at 'LookupSpecified' : Boolean
+            // ValueType IndexScanType at 'Ordered' : Boolean
+            // ValueType IndexScanType at 'ScanDirection' : OrderType
+            // ValueType IndexScanType at 'ScanDirectionSpecified' : Boolean
+            // ValueType IndexScanType at 'ForcedIndex' : Boolean
+            // ValueType IndexScanType at 'ForcedIndexSpecified' : Boolean
+            // ValueType IndexScanType at 'ForceSeek' : Boolean
+            // ValueType IndexScanType at 'ForceSeekSpecified' : Boolean
+            // ValueType IndexScanType at 'ForceSeekColumnCount' : Int32
+            // ValueType IndexScanType at 'ForceSeekColumnCountSpecified' : Boolean
+            // ValueType IndexScanType at 'ForceScan' : Boolean
+            // ValueType IndexScanType at 'ForceScanSpecified' : Boolean
+            // ValueType IndexScanType at 'NoExpandHint' : Boolean
+            // ValueType IndexScanType at 'NoExpandHintSpecified' : Boolean
+            // ValueType IndexScanType at 'Storage' : StorageType
+            // ValueType IndexScanType at 'StorageSpecified' : Boolean
+            // ValueType IndexScanType at 'DynamicSeek' : Boolean
+            // ValueType IndexScanType at 'DynamicSeekSpecified' : Boolean
+            // Collection<> RowsetType at 'Object' : ObjectType
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class InternalInfoType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ??? InternalInfoType at 'Any' : Collection`1
+            // ValueType InternalInfoType at 'AnySpecified' : Boolean
+            // ??? InternalInfoType at 'AnyAttribute' : Collection`1
+            return state;
+        }
+    }
+    public partial class IntrinsicType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> IntrinsicType at 'ScalarOperator' : ScalarType
+            // ValueType IntrinsicType at 'ScalarOperatorSpecified' : Boolean
+            // String IntrinsicType at 'FunctionName' : String
+            return state;
+        }
+    }
+    public partial class LogicalType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> LogicalType at 'ScalarOperator' : ScalarType
+            // ValueType LogicalType at 'Operation' : LogicalOperationType
+            return state;
+        }
+    }
+    public partial class MemoryFractionsType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ValueType MemoryFractionsType at 'Input' : Double
+            // ValueType MemoryFractionsType at 'Output' : Double
+            return state;
+        }
+    }
+    public partial class MemoryGrantType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ValueType MemoryGrantType at 'SerialRequiredMemory' : UInt64
+            // ValueType MemoryGrantType at 'SerialDesiredMemory' : UInt64
+            // ValueType MemoryGrantType at 'RequiredMemory' : UInt64
+            // ValueType MemoryGrantType at 'RequiredMemorySpecified' : Boolean
+            // ValueType MemoryGrantType at 'DesiredMemory' : UInt64
+            // ValueType MemoryGrantType at 'DesiredMemorySpecified' : Boolean
+            // ValueType MemoryGrantType at 'RequestedMemory' : UInt64
+            // ValueType MemoryGrantType at 'RequestedMemorySpecified' : Boolean
+            // ValueType MemoryGrantType at 'GrantWaitTime' : UInt64
+            // ValueType MemoryGrantType at 'GrantWaitTimeSpecified' : Boolean
+            // ValueType MemoryGrantType at 'GrantedMemory' : UInt64
+            // ValueType MemoryGrantType at 'GrantedMemorySpecified' : Boolean
+            // ValueType MemoryGrantType at 'MaxUsedMemory' : UInt64
+            // ValueType MemoryGrantType at 'MaxUsedMemorySpecified' : Boolean
+            // ValueType MemoryGrantType at 'MaxQueryMemory' : UInt64
+            // ValueType MemoryGrantType at 'MaxQueryMemorySpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class MemoryGrantWarningInfo : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ValueType MemoryGrantWarningInfo at 'GrantWarningKind' : MemoryGrantWarningType
+            // ValueType MemoryGrantWarningInfo at 'RequestedMemory' : UInt64
+            // ValueType MemoryGrantWarningInfo at 'GrantedMemory' : UInt64
+            // ValueType MemoryGrantWarningInfo at 'MaxUsedMemory' : UInt64
+            return state;
+        }
+    }
+    public partial class MergeType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> MergeType at 'InnerSideJoinColumns' : ColumnReferenceType
+            // ValueType MergeType at 'InnerSideJoinColumnsSpecified' : Boolean
+            // Collection<> MergeType at 'OuterSideJoinColumns' : ColumnReferenceType
+            // ValueType MergeType at 'OuterSideJoinColumnsSpecified' : Boolean
+            // ShowPlanBase MergeType at 'Residual' : ScalarExpressionType
+            // ShowPlanBase MergeType at 'PassThru' : ScalarExpressionType
+            // ShowPlanBase MergeType at 'StarJoinInfo' : StarJoinInfoType
+            // Collection<> MergeType at 'RelOp' : RelOpType
+            // ValueType MergeType at 'ManyToMany' : Boolean
+            // ValueType MergeType at 'ManyToManySpecified' : Boolean
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class MissingIndexesType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> MissingIndexesType at 'MissingIndexGroup' : MissingIndexGroupType
+            return state;
+        }
+    }
+    public partial class MissingIndexGroupType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> MissingIndexGroupType at 'MissingIndex' : MissingIndexType
+            // ValueType MissingIndexGroupType at 'Impact' : Double
+            return state;
+        }
+    }
+    public partial class MissingIndexType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> MissingIndexType at 'ColumnGroup' : ColumnGroupType
+            // String MissingIndexType at 'Database' : String
+            // String MissingIndexType at 'Schema' : String
+            // String MissingIndexType at 'Table' : String
+            return state;
+        }
+    }
+    public partial class MultAssignType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> MultAssignType at 'Assign' : AssignType
+            // ValueType MultAssignType at 'AssignSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class NestedLoopsType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase NestedLoopsType at 'Predicate' : ScalarExpressionType
+            // ShowPlanBase NestedLoopsType at 'PassThru' : ScalarExpressionType
+            // Collection<> NestedLoopsType at 'OuterReferences' : ColumnReferenceType
+            // ValueType NestedLoopsType at 'OuterReferencesSpecified' : Boolean
+            // ShowPlanBase NestedLoopsType at 'PartitionId' : SingleColumnReferenceType
+            // ShowPlanBase NestedLoopsType at 'ProbeColumn' : SingleColumnReferenceType
+            // ShowPlanBase NestedLoopsType at 'StarJoinInfo' : StarJoinInfoType
+            // Collection<> NestedLoopsType at 'RelOp' : RelOpType
+            // ValueType NestedLoopsType at 'Optimized' : Boolean
+            // ValueType NestedLoopsType at 'WithOrderedPrefetch' : Boolean
+            // ValueType NestedLoopsType at 'WithOrderedPrefetchSpecified' : Boolean
+            // ValueType NestedLoopsType at 'WithUnorderedPrefetch' : Boolean
+            // ValueType NestedLoopsType at 'WithUnorderedPrefetchSpecified' : Boolean
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class ObjectType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // String ObjectType at 'Server' : String
+            // String ObjectType at 'Database' : String
+            // String ObjectType at 'Schema' : String
+            // String ObjectType at 'Table' : String
+            // String ObjectType at 'Index' : String
+            // ValueType ObjectType at 'Filtered' : Boolean
+            // ValueType ObjectType at 'FilteredSpecified' : Boolean
+            // String ObjectType at 'Alias' : String
+            // ValueType ObjectType at 'TableReferenceId' : Int32
+            // ValueType ObjectType at 'TableReferenceIdSpecified' : Boolean
+            // ValueType ObjectType at 'IndexKind' : IndexKindType
+            // ValueType ObjectType at 'IndexKindSpecified' : Boolean
+            // ValueType ObjectType at 'CloneAccessScope' : CloneAccessScopeType
+            // ValueType ObjectType at 'CloneAccessScopeSpecified' : Boolean
+            // ValueType ObjectType at 'Storage' : StorageType
+            // ValueType ObjectType at 'StorageSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class OptimizerHardwareDependentPropertiesType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ValueType OptimizerHardwareDependentPropertiesType at 'EstimatedAvailableMemoryGrant' : UInt64
+            // ValueType OptimizerHardwareDependentPropertiesType at 'EstimatedPagesCached' : UInt64
+            // ValueType OptimizerHardwareDependentPropertiesType at 'EstimatedAvailableDegreeOfParallelism' : UInt64
+            // ValueType OptimizerHardwareDependentPropertiesType at 'EstimatedAvailableDegreeOfParallelismSpecified' : Boolean
+            // ValueType OptimizerHardwareDependentPropertiesType at 'MaxCompileMemory' : UInt64
+            // ValueType OptimizerHardwareDependentPropertiesType at 'MaxCompileMemorySpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class OptimizerStatsUsageType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> OptimizerStatsUsageType at 'StatisticsInfo' : StatsInfoType
+            return state;
+        }
+    }
+    public partial class OrderByType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> OrderByType at 'OrderByColumn' : OrderByTypeOrderByColumn
+            return state;
+        }
+    }
+    public partial class OrderByTypeOrderByColumn : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase OrderByTypeOrderByColumn at 'ColumnReference' : ColumnReferenceType
+            // ValueType OrderByTypeOrderByColumn at 'Ascending' : Boolean
+            return state;
+        }
+    }
+    public partial class ParallelismType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> ParallelismType at 'PartitionColumns' : ColumnReferenceType
+            // ValueType ParallelismType at 'PartitionColumnsSpecified' : Boolean
+            // Collection<> ParallelismType at 'OrderBy' : OrderByTypeOrderByColumn
+            // ValueType ParallelismType at 'OrderBySpecified' : Boolean
+            // Collection<> ParallelismType at 'HashKeys' : ColumnReferenceType
+            // ValueType ParallelismType at 'HashKeysSpecified' : Boolean
+            // ShowPlanBase ParallelismType at 'ProbeColumn' : SingleColumnReferenceType
+            // ShowPlanBase ParallelismType at 'Predicate' : ScalarExpressionType
+            // ShowPlanBase ParallelismType at 'Activation' : ParallelismTypeActivation
+            // ShowPlanBase ParallelismType at 'BrickRouting' : ParallelismTypeBrickRouting
+            // ShowPlanBase ParallelismType at 'RelOp' : RelOpType
+            // ValueType ParallelismType at 'PartitioningType' : PartitionType
+            // ValueType ParallelismType at 'PartitioningTypeSpecified' : Boolean
+            // ValueType ParallelismType at 'Remoting' : Boolean
+            // ValueType ParallelismType at 'RemotingSpecified' : Boolean
+            // ValueType ParallelismType at 'LocalParallelism' : Boolean
+            // ValueType ParallelismType at 'LocalParallelismSpecified' : Boolean
+            // ValueType ParallelismType at 'InRow' : Boolean
+            // ValueType ParallelismType at 'InRowSpecified' : Boolean
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class ParallelismTypeActivation : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase ParallelismTypeActivation at 'Object' : ObjectType
+            // ValueType ParallelismTypeActivation at 'Type' : ParallelismTypeActivationType
+            // String ParallelismTypeActivation at 'FragmentElimination' : String
+            return state;
+        }
+    }
+    public partial class ParallelismTypeBrickRouting : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase ParallelismTypeBrickRouting at 'Object' : ObjectType
+            // ShowPlanBase ParallelismTypeBrickRouting at 'FragmentIdColumn' : SingleColumnReferenceType
+            return state;
+        }
+    }
+    public partial class ParameterizationType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> ParameterizationType at 'Object' : ObjectType
+            return state;
+        }
+    }
+    public partial class PutType : RemoteQueryType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase PutType at 'RelOp' : RelOpType
+            // String PutType at 'ShuffleType' : String
+            // String PutType at 'ShuffleColumn' : String
+            // String RemoteQueryType at 'RemoteQuery' : String
+            // String RemoteType at 'RemoteDestination' : String
+            // String RemoteType at 'RemoteSource' : String
+            // String RemoteType at 'RemoteObject' : String
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class QueryExecTimeType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ValueType QueryExecTimeType at 'CpuTime' : UInt64
+            // ValueType QueryExecTimeType at 'ElapsedTime' : UInt64
+            return state;
+        }
+    }
+    public partial class QueryPlanType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase QueryPlanType at 'InternalInfo' : InternalInfoType
+            // ShowPlanBase QueryPlanType at 'ThreadStat' : ThreadStatType
+            // Collection<> QueryPlanType at 'MissingIndexes' : MissingIndexGroupType
+            // ValueType QueryPlanType at 'MissingIndexesSpecified' : Boolean
+            // ShowPlanBase QueryPlanType at 'GuessedSelectivity' : GuessedSelectivityType
+            // ShowPlanBase QueryPlanType at 'UnmatchedIndexes' : UnmatchedIndexesType
+            // ShowPlanBase QueryPlanType at 'Warnings' : WarningsType
+            // ShowPlanBase QueryPlanType at 'MemoryGrantInfo' : MemoryGrantType
+            // ShowPlanBase QueryPlanType at 'OptimizerHardwareDependentProperties' : OptimizerHardwareDependentPropertiesType
+            // Collection<> QueryPlanType at 'OptimizerStatsUsage' : StatsInfoType
+            // ValueType QueryPlanType at 'OptimizerStatsUsageSpecified' : Boolean
+            // Collection<> QueryPlanType at 'TraceFlags' : TraceFlagListType
+            // ValueType QueryPlanType at 'TraceFlagsSpecified' : Boolean
+            // Collection<> QueryPlanType at 'WaitStats' : WaitStatType
+            // ValueType QueryPlanType at 'WaitStatsSpecified' : Boolean
+            // ShowPlanBase QueryPlanType at 'QueryTimeStats' : QueryExecTimeType
+            // ShowPlanBase QueryPlanType at 'RelOp' : RelOpType
+            // Collection<> QueryPlanType at 'ParameterList' : ColumnReferenceType
+            // ValueType QueryPlanType at 'ParameterListSpecified' : Boolean
+            // ValueType QueryPlanType at 'DegreeOfParallelism' : Int32
+            // ValueType QueryPlanType at 'DegreeOfParallelismSpecified' : Boolean
+            // ValueType QueryPlanType at 'EffectiveDegreeOfParallelism' : Int32
+            // ValueType QueryPlanType at 'EffectiveDegreeOfParallelismSpecified' : Boolean
+            // String QueryPlanType at 'NonParallelPlanReason' : String
+            // ValueType QueryPlanType at 'MemoryGrant' : UInt64
+            // ValueType QueryPlanType at 'MemoryGrantSpecified' : Boolean
+            // ValueType QueryPlanType at 'CachedPlanSize' : UInt64
+            // ValueType QueryPlanType at 'CachedPlanSizeSpecified' : Boolean
+            // ValueType QueryPlanType at 'CompileTime' : UInt64
+            // ValueType QueryPlanType at 'CompileTimeSpecified' : Boolean
+            // ValueType QueryPlanType at 'CompileCPU' : UInt64
+            // ValueType QueryPlanType at 'CompileCPUSpecified' : Boolean
+            // ValueType QueryPlanType at 'CompileMemory' : UInt64
+            // ValueType QueryPlanType at 'CompileMemorySpecified' : Boolean
+            // ValueType QueryPlanType at 'UsePlan' : Boolean
+            // ValueType QueryPlanType at 'UsePlanSpecified' : Boolean
+            // ValueType QueryPlanType at 'ContainsInterleavedExecutionCandidates' : Boolean
+            // ValueType QueryPlanType at 'ContainsInterleavedExecutionCandidatesSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class ReceivePlanType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> ReceivePlanType at 'Operation' : ReceivePlanTypeOperation
+            return state;
+        }
+    }
+    public partial class ReceivePlanTypeOperation : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase ReceivePlanTypeOperation at 'QueryPlan' : QueryPlanType
+            // ValueType ReceivePlanTypeOperation at 'OperationType' : ReceivePlanTypeOperationOperationType
+            // ValueType ReceivePlanTypeOperation at 'OperationTypeSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class RelOpBaseType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class RelOpType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> RelOpType at 'OutputList' : ColumnReferenceType
+            // ShowPlanBase RelOpType at 'Warnings' : WarningsType
+            // ShowPlanBase RelOpType at 'MemoryFractions' : MemoryFractionsType
+            // Collection<> RelOpType at 'RunTimeInformation' : RunTimeInformationTypeRunTimeCountersPerThread
+            // ValueType RelOpType at 'RunTimeInformationSpecified' : Boolean
+            // ShowPlanBase RelOpType at 'RunTimePartitionSummary' : RunTimePartitionSummaryType
+            // ShowPlanBase RelOpType at 'InternalInfo' : InternalInfoType
+            // ShowPlanBase RelOpType at 'AdaptiveJoin' : AdaptiveJoinType
+            // ShowPlanBase RelOpType at 'Assert' : FilterType
+            // ShowPlanBase RelOpType at 'BatchHashTableBuild' : BatchHashTableBuildType
+            // ShowPlanBase RelOpType at 'Bitmap' : BitmapType
+            // ShowPlanBase RelOpType at 'Collapse' : CollapseType
+            // ShowPlanBase RelOpType at 'ComputeScalar' : ComputeScalarType
+            // ShowPlanBase RelOpType at 'Concat' : ConcatType
+            // ShowPlanBase RelOpType at 'ConstantScan' : ConstantScanType
+            // ShowPlanBase RelOpType at 'CreateIndex' : CreateIndexType
+            // ShowPlanBase RelOpType at 'DeletedScan' : RowsetType
+            // ShowPlanBase RelOpType at 'Extension' : UDXType
+            // ShowPlanBase RelOpType at 'Filter' : FilterType
+            // ShowPlanBase RelOpType at 'ForeignKeyReferencesCheck' : ForeignKeyReferencesCheckType
+            // ShowPlanBase RelOpType at 'Generic' : GenericType
+            // ShowPlanBase RelOpType at 'Hash' : HashType
+            // ShowPlanBase RelOpType at 'IndexScan' : IndexScanType
+            // ShowPlanBase RelOpType at 'InsertedScan' : RowsetType
+            // ShowPlanBase RelOpType at 'LogRowScan' : RelOpBaseType
+            // ShowPlanBase RelOpType at 'Merge' : MergeType
+            // ShowPlanBase RelOpType at 'MergeInterval' : SimpleIteratorOneChildType
+            // ShowPlanBase RelOpType at 'NestedLoops' : NestedLoopsType
+            // ShowPlanBase RelOpType at 'OnlineIndex' : CreateIndexType
+            // ShowPlanBase RelOpType at 'Parallelism' : ParallelismType
+            // ShowPlanBase RelOpType at 'ParameterTableScan' : RelOpBaseType
+            // ShowPlanBase RelOpType at 'PrintDataflow' : RelOpBaseType
+            // ShowPlanBase RelOpType at 'Put' : PutType
+            // ShowPlanBase RelOpType at 'RemoteFetch' : RemoteFetchType
+            // ShowPlanBase RelOpType at 'RemoteModify' : RemoteModifyType
+            // ShowPlanBase RelOpType at 'RemoteQuery' : RemoteQueryType
+            // ShowPlanBase RelOpType at 'RemoteRange' : RemoteRangeType
+            // ShowPlanBase RelOpType at 'RemoteScan' : RemoteType
+            // ShowPlanBase RelOpType at 'RowCountSpool' : SpoolType
+            // ShowPlanBase RelOpType at 'ScalarInsert' : ScalarInsertType
+            // ShowPlanBase RelOpType at 'Segment' : SegmentType
+            // ShowPlanBase RelOpType at 'Sequence' : SequenceType
+            // ShowPlanBase RelOpType at 'SequenceProject' : ComputeScalarType
+            // ShowPlanBase RelOpType at 'SimpleUpdate' : SimpleUpdateType
+            // ShowPlanBase RelOpType at 'Sort' : SortType
+            // ShowPlanBase RelOpType at 'Split' : SplitType
+            // ShowPlanBase RelOpType at 'Spool' : SpoolType
+            // ShowPlanBase RelOpType at 'StreamAggregate' : StreamAggregateType
+            // ShowPlanBase RelOpType at 'Switch' : SwitchType
+            // ShowPlanBase RelOpType at 'TableScan' : TableScanType
+            // ShowPlanBase RelOpType at 'TableValuedFunction' : TableValuedFunctionType
+            // ShowPlanBase RelOpType at 'Top' : TopType
+            // ShowPlanBase RelOpType at 'TopSort' : TopSortType
+            // ShowPlanBase RelOpType at 'Update' : UpdateType
+            // ShowPlanBase RelOpType at 'WindowSpool' : WindowType
+            // ShowPlanBase RelOpType at 'WindowAggregate' : WindowAggregateType
+            // ValueType RelOpType at 'AvgRowSize' : Double
+            // ValueType RelOpType at 'EstimateCPU' : Double
+            // ValueType RelOpType at 'EstimateIO' : Double
+            // ValueType RelOpType at 'EstimateRebinds' : Double
+            // ValueType RelOpType at 'EstimateRewinds' : Double
+            // ValueType RelOpType at 'EstimatedExecutionMode' : ExecutionModeType
+            // ValueType RelOpType at 'EstimatedExecutionModeSpecified' : Boolean
+            // ValueType RelOpType at 'GroupExecuted' : Boolean
+            // ValueType RelOpType at 'GroupExecutedSpecified' : Boolean
+            // ValueType RelOpType at 'EstimateRows' : Double
+            // ValueType RelOpType at 'EstimatedRowsRead' : Double
+            // ValueType RelOpType at 'EstimatedRowsReadSpecified' : Boolean
+            // ValueType RelOpType at 'LogicalOp' : LogicalOpType
+            // ValueType RelOpType at 'NodeId' : Int32
+            // ValueType RelOpType at 'Parallel' : Boolean
+            // ValueType RelOpType at 'RemoteDataAccess' : Boolean
+            // ValueType RelOpType at 'RemoteDataAccessSpecified' : Boolean
+            // ValueType RelOpType at 'Partitioned' : Boolean
+            // ValueType RelOpType at 'PartitionedSpecified' : Boolean
+            // ValueType RelOpType at 'PhysicalOp' : PhysicalOpType
+            // ValueType RelOpType at 'IsAdaptive' : Boolean
+            // ValueType RelOpType at 'IsAdaptiveSpecified' : Boolean
+            // ValueType RelOpType at 'AdaptiveThresholdRows' : Double
+            // ValueType RelOpType at 'AdaptiveThresholdRowsSpecified' : Boolean
+            // ValueType RelOpType at 'EstimatedTotalSubtreeCost' : Double
+            // ValueType RelOpType at 'TableCardinality' : Double
+            // ValueType RelOpType at 'TableCardinalitySpecified' : Boolean
+            // ValueType RelOpType at 'StatsCollectionId' : UInt64
+            // ValueType RelOpType at 'StatsCollectionIdSpecified' : Boolean
+            // ValueType RelOpType at 'EstimatedJoinType' : PhysicalOpType
+            // ValueType RelOpType at 'EstimatedJoinTypeSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class RemoteFetchType : RemoteType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase RemoteFetchType at 'RelOp' : RelOpType
+            // String RemoteType at 'RemoteDestination' : String
+            // String RemoteType at 'RemoteSource' : String
+            // String RemoteType at 'RemoteObject' : String
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class RemoteModifyType : RemoteType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase RemoteModifyType at 'SetPredicate' : ScalarExpressionType
+            // ShowPlanBase RemoteModifyType at 'RelOp' : RelOpType
+            // String RemoteType at 'RemoteDestination' : String
+            // String RemoteType at 'RemoteSource' : String
+            // String RemoteType at 'RemoteObject' : String
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class RemoteQueryType : RemoteType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // String RemoteQueryType at 'RemoteQuery' : String
+            // String RemoteType at 'RemoteDestination' : String
+            // String RemoteType at 'RemoteSource' : String
+            // String RemoteType at 'RemoteObject' : String
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class RemoteRangeType : RemoteType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase RemoteRangeType at 'SeekPredicates' : SeekPredicatesType
+            // String RemoteType at 'RemoteDestination' : String
+            // String RemoteType at 'RemoteSource' : String
+            // String RemoteType at 'RemoteObject' : String
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class RemoteType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // String RemoteType at 'RemoteDestination' : String
+            // String RemoteType at 'RemoteSource' : String
+            // String RemoteType at 'RemoteObject' : String
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class RollupInfoType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> RollupInfoType at 'RollupLevel' : RollupLevelType
+            // ValueType RollupInfoType at 'HighestLevel' : Int32
+            return state;
+        }
+    }
+    public partial class RollupLevelType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ValueType RollupLevelType at 'Level' : Int32
+            return state;
+        }
+    }
+    public partial class RowsetType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> RowsetType at 'Object' : ObjectType
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class RunTimeInformationType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> RunTimeInformationType at 'RunTimeCountersPerThread' : RunTimeInformationTypeRunTimeCountersPerThread
+            return state;
+        }
+    }
+    public partial class RunTimeInformationTypeRunTimeCountersPerThread : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'Thread' : Int32
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'BrickId' : Int32
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'BrickIdSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualRebinds' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualRebindsSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualRewinds' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualRewindsSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualRows' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualRowsRead' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualRowsReadSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'Batches' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'BatchesSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualEndOfScans' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualExecutions' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualExecutionMode' : ExecutionModeType
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualExecutionModeSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'TaskAddr' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'TaskAddrSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'SchedulerId' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'SchedulerIdSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'FirstActiveTime' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'FirstActiveTimeSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'LastActiveTime' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'LastActiveTimeSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'OpenTime' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'OpenTimeSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'FirstRowTime' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'FirstRowTimeSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'LastRowTime' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'LastRowTimeSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'CloseTime' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'CloseTimeSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualElapsedms' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualElapsedmsSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualCPUms' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualCPUmsSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualScans' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualScansSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualLogicalReads' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualLogicalReadsSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualPhysicalReads' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualPhysicalReadsSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualReadAheads' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualReadAheadsSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualLobLogicalReads' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualLobLogicalReadsSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualLobPhysicalReads' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualLobPhysicalReadsSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualLobReadAheads' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualLobReadAheadsSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'SegmentReads' : Int32
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'SegmentReadsSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'SegmentSkips' : Int32
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'SegmentSkipsSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualLocallyAggregatedRows' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualLocallyAggregatedRowsSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'InputMemoryGrant' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'InputMemoryGrantSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'OutputMemoryGrant' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'OutputMemoryGrantSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'UsedMemoryGrant' : UInt64
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'UsedMemoryGrantSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'IsInterleavedExecuted' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'IsInterleavedExecutedSpecified' : Boolean
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualJoinType' : PhysicalOpType
+            // ValueType RunTimeInformationTypeRunTimeCountersPerThread at 'ActualJoinTypeSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class RunTimePartitionSummaryType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase RunTimePartitionSummaryType at 'PartitionsAccessed' : RunTimePartitionSummaryTypePartitionsAccessed
+            return state;
+        }
+    }
+    public partial class RunTimePartitionSummaryTypePartitionsAccessed : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> RunTimePartitionSummaryTypePartitionsAccessed at 'PartitionRange' : RunTimePartitionSummaryTypePartitionsAccessedPartitionRange
+            // ValueType RunTimePartitionSummaryTypePartitionsAccessed at 'PartitionRangeSpecified' : Boolean
+            // ValueType RunTimePartitionSummaryTypePartitionsAccessed at 'PartitionCount' : UInt64
+            return state;
+        }
+    }
+    public partial class RunTimePartitionSummaryTypePartitionsAccessedPartitionRange : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ValueType RunTimePartitionSummaryTypePartitionsAccessedPartitionRange at 'Start' : UInt64
+            // ValueType RunTimePartitionSummaryTypePartitionsAccessedPartitionRange at 'End' : UInt64
+            return state;
+        }
+    }
+    public partial class ScalarExpressionListType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> ScalarExpressionListType at 'ScalarOperator' : ScalarType
+            return state;
+        }
+    }
+    public partial class ScalarExpressionType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase ScalarExpressionType at 'ScalarOperator' : ScalarType
+            return state;
+        }
+    }
+    public partial class ScalarInsertType : RowsetType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase ScalarInsertType at 'SetPredicate' : ScalarExpressionType
+            // ValueType ScalarInsertType at 'DMLRequestSort' : Boolean
+            // ValueType ScalarInsertType at 'DMLRequestSortSpecified' : Boolean
+            // Collection<> RowsetType at 'Object' : ObjectType
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class ScalarSequenceType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // String ScalarSequenceType at 'FunctionName' : String
+            return state;
+        }
+    }
+    public partial class ScalarType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase ScalarType at 'Aggregate' : AggregateType
+            // ShowPlanBase ScalarType at 'Arithmetic' : ArithmeticType
+            // ShowPlanBase ScalarType at 'Assign' : AssignType
+            // ShowPlanBase ScalarType at 'Compare' : CompareType
+            // ShowPlanBase ScalarType at 'Const' : ConstType
+            // ShowPlanBase ScalarType at 'Convert' : ConvertType
+            // ShowPlanBase ScalarType at 'Identifier' : IdentType
+            // ShowPlanBase ScalarType at 'IF' : ConditionalType
+            // ShowPlanBase ScalarType at 'Intrinsic' : IntrinsicType
+            // ShowPlanBase ScalarType at 'Logical' : LogicalType
+            // Collection<> ScalarType at 'MultipleAssign' : AssignType
+            // ValueType ScalarType at 'MultipleAssignSpecified' : Boolean
+            // Collection<> ScalarType at 'ScalarExpressionList' : ScalarType
+            // ValueType ScalarType at 'ScalarExpressionListSpecified' : Boolean
+            // ShowPlanBase ScalarType at 'Sequence' : ScalarSequenceType
+            // ShowPlanBase ScalarType at 'Subquery' : SubqueryType
+            // ShowPlanBase ScalarType at 'UDTMethod' : UDTMethodType
+            // ShowPlanBase ScalarType at 'UserDefinedAggregate' : UDAggregateType
+            // ShowPlanBase ScalarType at 'UserDefinedFunction' : UDFType
+            // ShowPlanBase ScalarType at 'InternalInfo' : InternalInfoType
+            // String ScalarType at 'ScalarString' : String
+            return state;
+        }
+    }
+    public partial class ScanRangeType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> ScanRangeType at 'RangeColumns' : ColumnReferenceType
+            // Collection<> ScanRangeType at 'RangeExpressions' : ScalarType
+            // ValueType ScanRangeType at 'ScanType' : CompareOpType
+            return state;
+        }
+    }
+    public partial class SeekPredicateNewType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> SeekPredicateNewType at 'SeekKeys' : SeekPredicateType
+            return state;
+        }
+    }
+    public partial class SeekPredicatePartType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> SeekPredicatePartType at 'SeekPredicateNew' : SeekPredicateNewType
+            // ValueType SeekPredicatePartType at 'SeekPredicateNewSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class SeekPredicatesType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> SeekPredicatesType at 'SeekPredicate' : SeekPredicateType
+            // ValueType SeekPredicatesType at 'SeekPredicateSpecified' : Boolean
+            // Collection<> SeekPredicatesType at 'SeekPredicateNew' : SeekPredicateNewType
+            // ValueType SeekPredicatesType at 'SeekPredicateNewSpecified' : Boolean
+            // Collection<> SeekPredicatesType at 'SeekPredicatePart' : SeekPredicatePartType
+            // ValueType SeekPredicatesType at 'SeekPredicatePartSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class SeekPredicateType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase SeekPredicateType at 'Prefix' : ScanRangeType
+            // ShowPlanBase SeekPredicateType at 'StartRange' : ScanRangeType
+            // ShowPlanBase SeekPredicateType at 'EndRange' : ScanRangeType
+            // ShowPlanBase SeekPredicateType at 'IsNotNull' : SingleColumnReferenceType
+            return state;
+        }
+    }
+    public partial class SegmentType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> SegmentType at 'GroupBy' : ColumnReferenceType
+            // ShowPlanBase SegmentType at 'SegmentColumn' : SingleColumnReferenceType
+            // ShowPlanBase SegmentType at 'RelOp' : RelOpType
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class SequenceType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> SequenceType at 'RelOp' : RelOpType
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class SetOptionsType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ValueType SetOptionsType at 'ANSI_NULLS' : Boolean
+            // ValueType SetOptionsType at 'ANSI_NULLSSpecified' : Boolean
+            // ValueType SetOptionsType at 'ANSI_PADDING' : Boolean
+            // ValueType SetOptionsType at 'ANSI_PADDINGSpecified' : Boolean
+            // ValueType SetOptionsType at 'ANSI_WARNINGS' : Boolean
+            // ValueType SetOptionsType at 'ANSI_WARNINGSSpecified' : Boolean
+            // ValueType SetOptionsType at 'ARITHABORT' : Boolean
+            // ValueType SetOptionsType at 'ARITHABORTSpecified' : Boolean
+            // ValueType SetOptionsType at 'CONCAT_NULL_YIELDS_NULL' : Boolean
+            // ValueType SetOptionsType at 'CONCAT_NULL_YIELDS_NULLSpecified' : Boolean
+            // ValueType SetOptionsType at 'NUMERIC_ROUNDABORT' : Boolean
+            // ValueType SetOptionsType at 'NUMERIC_ROUNDABORTSpecified' : Boolean
+            // ValueType SetOptionsType at 'QUOTED_IDENTIFIER' : Boolean
+            // ValueType SetOptionsType at 'QUOTED_IDENTIFIERSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class SetPredicateElementType : ScalarExpressionType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ValueType SetPredicateElementType at 'SetPredicateType' : SetPredicateType
+            // ValueType SetPredicateElementType at 'SetPredicateTypeSpecified' : Boolean
+            // ShowPlanBase ScalarExpressionType at 'ScalarOperator' : ScalarType
+            return state;
+        }
+    }
+    public partial class ShowPlanXML : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> ShowPlanXML at 'BatchSequence' : ShowPlanXMLBatchSequenceBatch
+            // String ShowPlanXML at 'Version' : String
+            // String ShowPlanXML at 'Build' : String
+            // ValueType ShowPlanXML at 'ClusteredMode' : Boolean
+            // ValueType ShowPlanXML at 'ClusteredModeSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class ShowPlanXMLBatchSequence : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> ShowPlanXMLBatchSequence at 'Batch' : ShowPlanXMLBatchSequenceBatch
+            return state;
+        }
+    }
+    public partial class ShowPlanXMLBatchSequenceBatch : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> ShowPlanXMLBatchSequenceBatch at 'Statements' : StmtBlockType
+            return state;
+        }
+    }
+    public partial class SimpleIteratorOneChildType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase SimpleIteratorOneChildType at 'RelOp' : RelOpType
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class SimpleUpdateType : RowsetType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase SimpleUpdateType at 'SeekPredicate' : SeekPredicateType
+            // Collection<> SimpleUpdateType at 'SeekPredicateNew' : SeekPredicateType
+            // ValueType SimpleUpdateType at 'SeekPredicateNewSpecified' : Boolean
+            // ShowPlanBase SimpleUpdateType at 'SetPredicate' : ScalarExpressionType
+            // ValueType SimpleUpdateType at 'DMLRequestSort' : Boolean
+            // ValueType SimpleUpdateType at 'DMLRequestSortSpecified' : Boolean
+            // Collection<> RowsetType at 'Object' : ObjectType
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class SingleColumnReferenceType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase SingleColumnReferenceType at 'ColumnReference' : ColumnReferenceType
+            return state;
+        }
+    }
+    public partial class SortSpillDetailsType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ValueType SortSpillDetailsType at 'GrantedMemoryKb' : UInt64
+            // ValueType SortSpillDetailsType at 'GrantedMemoryKbSpecified' : Boolean
+            // ValueType SortSpillDetailsType at 'UsedMemoryKb' : UInt64
+            // ValueType SortSpillDetailsType at 'UsedMemoryKbSpecified' : Boolean
+            // ValueType SortSpillDetailsType at 'WritesToTempDb' : UInt64
+            // ValueType SortSpillDetailsType at 'WritesToTempDbSpecified' : Boolean
+            // ValueType SortSpillDetailsType at 'ReadsFromTempDb' : UInt64
+            // ValueType SortSpillDetailsType at 'ReadsFromTempDbSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class SortType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> SortType at 'OrderBy' : OrderByTypeOrderByColumn
+            // ShowPlanBase SortType at 'PartitionId' : SingleColumnReferenceType
+            // ShowPlanBase SortType at 'RelOp' : RelOpType
+            // ValueType SortType at 'Distinct' : Boolean
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class SpillToTempDbType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ValueType SpillToTempDbType at 'SpillLevel' : UInt64
+            // ValueType SpillToTempDbType at 'SpillLevelSpecified' : Boolean
+            // ValueType SpillToTempDbType at 'SpilledThreadCount' : UInt64
+            // ValueType SpillToTempDbType at 'SpilledThreadCountSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class SplitType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase SplitType at 'ActionColumn' : SingleColumnReferenceType
+            // ShowPlanBase SplitType at 'RelOp' : RelOpType
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class SpoolType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase SpoolType at 'SeekPredicate' : SeekPredicateType
+            // Collection<> SpoolType at 'SeekPredicateNew' : SeekPredicateType
+            // ValueType SpoolType at 'SeekPredicateNewSpecified' : Boolean
+            // ShowPlanBase SpoolType at 'RelOp' : RelOpType
+            // ValueType SpoolType at 'Stack' : Boolean
+            // ValueType SpoolType at 'StackSpecified' : Boolean
+            // ValueType SpoolType at 'PrimaryNodeId' : Int32
+            // ValueType SpoolType at 'PrimaryNodeIdSpecified' : Boolean
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class StarJoinInfoType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ValueType StarJoinInfoType at 'Root' : Boolean
+            // ValueType StarJoinInfoType at 'RootSpecified' : Boolean
+            // ValueType StarJoinInfoType at 'OperationType' : StarJoinInfoTypeOperationType
+            return state;
+        }
+    }
+    public partial class StatsInfoType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // String StatsInfoType at 'Database' : String
+            // String StatsInfoType at 'Schema' : String
+            // String StatsInfoType at 'Table' : String
+            // String StatsInfoType at 'Statistics' : String
+            // ValueType StatsInfoType at 'ModificationCount' : UInt64
+            // ValueType StatsInfoType at 'SamplingPercent' : Double
+            // ValueType StatsInfoType at 'LastUpdate' : DateTime
+            // ValueType StatsInfoType at 'LastUpdateSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class StmtBlockType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> StmtBlockType at 'StmtSimple' : StmtSimpleType
+            // ValueType StmtBlockType at 'StmtSimpleSpecified' : Boolean
+            // Collection<> StmtBlockType at 'StmtCond' : StmtCondType
+            // ValueType StmtBlockType at 'StmtCondSpecified' : Boolean
+            // Collection<> StmtBlockType at 'StmtCursor' : StmtCursorType
+            // ValueType StmtBlockType at 'StmtCursorSpecified' : Boolean
+            // Collection<> StmtBlockType at 'StmtReceive' : StmtReceiveType
+            // ValueType StmtBlockType at 'StmtReceiveSpecified' : Boolean
+            // Collection<> StmtBlockType at 'StmtUseDb' : StmtUseDbType
+            // ValueType StmtBlockType at 'StmtUseDbSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class StmtCondType : BaseStmtInfoType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase StmtCondType at 'Condition' : StmtCondTypeCondition
+            // ShowPlanBase StmtCondType at 'Then' : StmtCondTypeThen
+            // ShowPlanBase StmtCondType at 'Else' : StmtCondTypeElse
+            // ShowPlanBase BaseStmtInfoType at 'StatementSetOptions' : SetOptionsType
+            // ValueType BaseStmtInfoType at 'StatementCompId' : Int32
+            // ValueType BaseStmtInfoType at 'StatementCompIdSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'StatementEstRows' : Double
+            // ValueType BaseStmtInfoType at 'StatementEstRowsSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'StatementId' : Int32
+            // ValueType BaseStmtInfoType at 'StatementIdSpecified' : Boolean
+            // String BaseStmtInfoType at 'StatementOptmLevel' : String
+            // ValueType BaseStmtInfoType at 'StatementOptmEarlyAbortReason' : BaseStmtInfoTypeStatementOptmEarlyAbortReason
+            // ValueType BaseStmtInfoType at 'StatementOptmEarlyAbortReasonSpecified' : Boolean
+            // String BaseStmtInfoType at 'CardinalityEstimationModelVersion' : String
+            // ValueType BaseStmtInfoType at 'StatementSubTreeCost' : Double
+            // ValueType BaseStmtInfoType at 'StatementSubTreeCostSpecified' : Boolean
+            // String BaseStmtInfoType at 'StatementText' : String
+            // String BaseStmtInfoType at 'StatementType' : String
+            // String BaseStmtInfoType at 'TemplatePlanGuideDB' : String
+            // String BaseStmtInfoType at 'TemplatePlanGuideName' : String
+            // String BaseStmtInfoType at 'PlanGuideDB' : String
+            // String BaseStmtInfoType at 'PlanGuideName' : String
+            // String BaseStmtInfoType at 'ParameterizedText' : String
+            // String BaseStmtInfoType at 'ParameterizedPlanHandle' : String
+            // String BaseStmtInfoType at 'QueryHash' : String
+            // String BaseStmtInfoType at 'QueryPlanHash' : String
+            // String BaseStmtInfoType at 'RetrievedFromCache' : String
+            // String BaseStmtInfoType at 'StatementSqlHandle' : String
+            // ValueType BaseStmtInfoType at 'DatabaseContextSettingsId' : UInt64
+            // ValueType BaseStmtInfoType at 'DatabaseContextSettingsIdSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'ParentObjectId' : UInt64
+            // ValueType BaseStmtInfoType at 'ParentObjectIdSpecified' : Boolean
+            // String BaseStmtInfoType at 'BatchSqlHandle' : String
+            // ValueType BaseStmtInfoType at 'StatementParameterizationType' : Int32
+            // ValueType BaseStmtInfoType at 'StatementParameterizationTypeSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'SecurityPolicyApplied' : Boolean
+            // ValueType BaseStmtInfoType at 'SecurityPolicyAppliedSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class StmtCondTypeCondition : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase StmtCondTypeCondition at 'QueryPlan' : QueryPlanType
+            // Collection<> StmtCondTypeCondition at 'UDF' : FunctionType
+            // ValueType StmtCondTypeCondition at 'UDFSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class StmtCondTypeElse : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase StmtCondTypeElse at 'Statements' : StmtBlockType
+            return state;
+        }
+    }
+    public partial class StmtCondTypeThen : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase StmtCondTypeThen at 'Statements' : StmtBlockType
+            return state;
+        }
+    }
+    public partial class StmtCursorType : BaseStmtInfoType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase StmtCursorType at 'CursorPlan' : CursorPlanType
+            // ShowPlanBase BaseStmtInfoType at 'StatementSetOptions' : SetOptionsType
+            // ValueType BaseStmtInfoType at 'StatementCompId' : Int32
+            // ValueType BaseStmtInfoType at 'StatementCompIdSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'StatementEstRows' : Double
+            // ValueType BaseStmtInfoType at 'StatementEstRowsSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'StatementId' : Int32
+            // ValueType BaseStmtInfoType at 'StatementIdSpecified' : Boolean
+            // String BaseStmtInfoType at 'StatementOptmLevel' : String
+            // ValueType BaseStmtInfoType at 'StatementOptmEarlyAbortReason' : BaseStmtInfoTypeStatementOptmEarlyAbortReason
+            // ValueType BaseStmtInfoType at 'StatementOptmEarlyAbortReasonSpecified' : Boolean
+            // String BaseStmtInfoType at 'CardinalityEstimationModelVersion' : String
+            // ValueType BaseStmtInfoType at 'StatementSubTreeCost' : Double
+            // ValueType BaseStmtInfoType at 'StatementSubTreeCostSpecified' : Boolean
+            // String BaseStmtInfoType at 'StatementText' : String
+            // String BaseStmtInfoType at 'StatementType' : String
+            // String BaseStmtInfoType at 'TemplatePlanGuideDB' : String
+            // String BaseStmtInfoType at 'TemplatePlanGuideName' : String
+            // String BaseStmtInfoType at 'PlanGuideDB' : String
+            // String BaseStmtInfoType at 'PlanGuideName' : String
+            // String BaseStmtInfoType at 'ParameterizedText' : String
+            // String BaseStmtInfoType at 'ParameterizedPlanHandle' : String
+            // String BaseStmtInfoType at 'QueryHash' : String
+            // String BaseStmtInfoType at 'QueryPlanHash' : String
+            // String BaseStmtInfoType at 'RetrievedFromCache' : String
+            // String BaseStmtInfoType at 'StatementSqlHandle' : String
+            // ValueType BaseStmtInfoType at 'DatabaseContextSettingsId' : UInt64
+            // ValueType BaseStmtInfoType at 'DatabaseContextSettingsIdSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'ParentObjectId' : UInt64
+            // ValueType BaseStmtInfoType at 'ParentObjectIdSpecified' : Boolean
+            // String BaseStmtInfoType at 'BatchSqlHandle' : String
+            // ValueType BaseStmtInfoType at 'StatementParameterizationType' : Int32
+            // ValueType BaseStmtInfoType at 'StatementParameterizationTypeSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'SecurityPolicyApplied' : Boolean
+            // ValueType BaseStmtInfoType at 'SecurityPolicyAppliedSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class StmtReceiveType : BaseStmtInfoType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> StmtReceiveType at 'ReceivePlan' : ReceivePlanTypeOperation
+            // ShowPlanBase BaseStmtInfoType at 'StatementSetOptions' : SetOptionsType
+            // ValueType BaseStmtInfoType at 'StatementCompId' : Int32
+            // ValueType BaseStmtInfoType at 'StatementCompIdSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'StatementEstRows' : Double
+            // ValueType BaseStmtInfoType at 'StatementEstRowsSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'StatementId' : Int32
+            // ValueType BaseStmtInfoType at 'StatementIdSpecified' : Boolean
+            // String BaseStmtInfoType at 'StatementOptmLevel' : String
+            // ValueType BaseStmtInfoType at 'StatementOptmEarlyAbortReason' : BaseStmtInfoTypeStatementOptmEarlyAbortReason
+            // ValueType BaseStmtInfoType at 'StatementOptmEarlyAbortReasonSpecified' : Boolean
+            // String BaseStmtInfoType at 'CardinalityEstimationModelVersion' : String
+            // ValueType BaseStmtInfoType at 'StatementSubTreeCost' : Double
+            // ValueType BaseStmtInfoType at 'StatementSubTreeCostSpecified' : Boolean
+            // String BaseStmtInfoType at 'StatementText' : String
+            // String BaseStmtInfoType at 'StatementType' : String
+            // String BaseStmtInfoType at 'TemplatePlanGuideDB' : String
+            // String BaseStmtInfoType at 'TemplatePlanGuideName' : String
+            // String BaseStmtInfoType at 'PlanGuideDB' : String
+            // String BaseStmtInfoType at 'PlanGuideName' : String
+            // String BaseStmtInfoType at 'ParameterizedText' : String
+            // String BaseStmtInfoType at 'ParameterizedPlanHandle' : String
+            // String BaseStmtInfoType at 'QueryHash' : String
+            // String BaseStmtInfoType at 'QueryPlanHash' : String
+            // String BaseStmtInfoType at 'RetrievedFromCache' : String
+            // String BaseStmtInfoType at 'StatementSqlHandle' : String
+            // ValueType BaseStmtInfoType at 'DatabaseContextSettingsId' : UInt64
+            // ValueType BaseStmtInfoType at 'DatabaseContextSettingsIdSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'ParentObjectId' : UInt64
+            // ValueType BaseStmtInfoType at 'ParentObjectIdSpecified' : Boolean
+            // String BaseStmtInfoType at 'BatchSqlHandle' : String
+            // ValueType BaseStmtInfoType at 'StatementParameterizationType' : Int32
+            // ValueType BaseStmtInfoType at 'StatementParameterizationTypeSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'SecurityPolicyApplied' : Boolean
+            // ValueType BaseStmtInfoType at 'SecurityPolicyAppliedSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class StmtSimpleType : BaseStmtInfoType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase StmtSimpleType at 'QueryPlan' : QueryPlanType
+            // Collection<> StmtSimpleType at 'UDF' : FunctionType
+            // ValueType StmtSimpleType at 'UDFSpecified' : Boolean
+            // ShowPlanBase StmtSimpleType at 'StoredProc' : FunctionType
+            // ShowPlanBase BaseStmtInfoType at 'StatementSetOptions' : SetOptionsType
+            // ValueType BaseStmtInfoType at 'StatementCompId' : Int32
+            // ValueType BaseStmtInfoType at 'StatementCompIdSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'StatementEstRows' : Double
+            // ValueType BaseStmtInfoType at 'StatementEstRowsSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'StatementId' : Int32
+            // ValueType BaseStmtInfoType at 'StatementIdSpecified' : Boolean
+            // String BaseStmtInfoType at 'StatementOptmLevel' : String
+            // ValueType BaseStmtInfoType at 'StatementOptmEarlyAbortReason' : BaseStmtInfoTypeStatementOptmEarlyAbortReason
+            // ValueType BaseStmtInfoType at 'StatementOptmEarlyAbortReasonSpecified' : Boolean
+            // String BaseStmtInfoType at 'CardinalityEstimationModelVersion' : String
+            // ValueType BaseStmtInfoType at 'StatementSubTreeCost' : Double
+            // ValueType BaseStmtInfoType at 'StatementSubTreeCostSpecified' : Boolean
+            // String BaseStmtInfoType at 'StatementText' : String
+            // String BaseStmtInfoType at 'StatementType' : String
+            // String BaseStmtInfoType at 'TemplatePlanGuideDB' : String
+            // String BaseStmtInfoType at 'TemplatePlanGuideName' : String
+            // String BaseStmtInfoType at 'PlanGuideDB' : String
+            // String BaseStmtInfoType at 'PlanGuideName' : String
+            // String BaseStmtInfoType at 'ParameterizedText' : String
+            // String BaseStmtInfoType at 'ParameterizedPlanHandle' : String
+            // String BaseStmtInfoType at 'QueryHash' : String
+            // String BaseStmtInfoType at 'QueryPlanHash' : String
+            // String BaseStmtInfoType at 'RetrievedFromCache' : String
+            // String BaseStmtInfoType at 'StatementSqlHandle' : String
+            // ValueType BaseStmtInfoType at 'DatabaseContextSettingsId' : UInt64
+            // ValueType BaseStmtInfoType at 'DatabaseContextSettingsIdSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'ParentObjectId' : UInt64
+            // ValueType BaseStmtInfoType at 'ParentObjectIdSpecified' : Boolean
+            // String BaseStmtInfoType at 'BatchSqlHandle' : String
+            // ValueType BaseStmtInfoType at 'StatementParameterizationType' : Int32
+            // ValueType BaseStmtInfoType at 'StatementParameterizationTypeSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'SecurityPolicyApplied' : Boolean
+            // ValueType BaseStmtInfoType at 'SecurityPolicyAppliedSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class StmtUseDbType : BaseStmtInfoType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // String StmtUseDbType at 'Database' : String
+            // ShowPlanBase BaseStmtInfoType at 'StatementSetOptions' : SetOptionsType
+            // ValueType BaseStmtInfoType at 'StatementCompId' : Int32
+            // ValueType BaseStmtInfoType at 'StatementCompIdSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'StatementEstRows' : Double
+            // ValueType BaseStmtInfoType at 'StatementEstRowsSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'StatementId' : Int32
+            // ValueType BaseStmtInfoType at 'StatementIdSpecified' : Boolean
+            // String BaseStmtInfoType at 'StatementOptmLevel' : String
+            // ValueType BaseStmtInfoType at 'StatementOptmEarlyAbortReason' : BaseStmtInfoTypeStatementOptmEarlyAbortReason
+            // ValueType BaseStmtInfoType at 'StatementOptmEarlyAbortReasonSpecified' : Boolean
+            // String BaseStmtInfoType at 'CardinalityEstimationModelVersion' : String
+            // ValueType BaseStmtInfoType at 'StatementSubTreeCost' : Double
+            // ValueType BaseStmtInfoType at 'StatementSubTreeCostSpecified' : Boolean
+            // String BaseStmtInfoType at 'StatementText' : String
+            // String BaseStmtInfoType at 'StatementType' : String
+            // String BaseStmtInfoType at 'TemplatePlanGuideDB' : String
+            // String BaseStmtInfoType at 'TemplatePlanGuideName' : String
+            // String BaseStmtInfoType at 'PlanGuideDB' : String
+            // String BaseStmtInfoType at 'PlanGuideName' : String
+            // String BaseStmtInfoType at 'ParameterizedText' : String
+            // String BaseStmtInfoType at 'ParameterizedPlanHandle' : String
+            // String BaseStmtInfoType at 'QueryHash' : String
+            // String BaseStmtInfoType at 'QueryPlanHash' : String
+            // String BaseStmtInfoType at 'RetrievedFromCache' : String
+            // String BaseStmtInfoType at 'StatementSqlHandle' : String
+            // ValueType BaseStmtInfoType at 'DatabaseContextSettingsId' : UInt64
+            // ValueType BaseStmtInfoType at 'DatabaseContextSettingsIdSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'ParentObjectId' : UInt64
+            // ValueType BaseStmtInfoType at 'ParentObjectIdSpecified' : Boolean
+            // String BaseStmtInfoType at 'BatchSqlHandle' : String
+            // ValueType BaseStmtInfoType at 'StatementParameterizationType' : Int32
+            // ValueType BaseStmtInfoType at 'StatementParameterizationTypeSpecified' : Boolean
+            // ValueType BaseStmtInfoType at 'SecurityPolicyApplied' : Boolean
+            // ValueType BaseStmtInfoType at 'SecurityPolicyAppliedSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class StreamAggregateType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> StreamAggregateType at 'GroupBy' : ColumnReferenceType
+            // ValueType StreamAggregateType at 'GroupBySpecified' : Boolean
+            // ShowPlanBase StreamAggregateType at 'RollupInfo' : RollupInfoType
+            // ShowPlanBase StreamAggregateType at 'RelOp' : RelOpType
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class SubqueryType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase SubqueryType at 'ScalarOperator' : ScalarType
+            // ShowPlanBase SubqueryType at 'RelOp' : RelOpType
+            // ValueType SubqueryType at 'Operation' : SubqueryOperationType
+            return state;
+        }
+    }
+    public partial class SwitchType : ConcatType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase SwitchType at 'Predicate' : ScalarExpressionType
+            // Collection<> ConcatType at 'RelOp' : RelOpType
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class TableScanType : RowsetType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase TableScanType at 'Predicate' : ScalarExpressionType
+            // ShowPlanBase TableScanType at 'PartitionId' : SingleColumnReferenceType
+            // Collection<> TableScanType at 'IndexedViewInfo' : ObjectType
+            // ValueType TableScanType at 'IndexedViewInfoSpecified' : Boolean
+            // ValueType TableScanType at 'Ordered' : Boolean
+            // ValueType TableScanType at 'ForcedIndex' : Boolean
+            // ValueType TableScanType at 'ForcedIndexSpecified' : Boolean
+            // ValueType TableScanType at 'ForceScan' : Boolean
+            // ValueType TableScanType at 'ForceScanSpecified' : Boolean
+            // ValueType TableScanType at 'NoExpandHint' : Boolean
+            // ValueType TableScanType at 'NoExpandHintSpecified' : Boolean
+            // ValueType TableScanType at 'Storage' : StorageType
+            // ValueType TableScanType at 'StorageSpecified' : Boolean
+            // Collection<> RowsetType at 'Object' : ObjectType
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class TableValuedFunctionType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase TableValuedFunctionType at 'Object' : ObjectType
+            // ShowPlanBase TableValuedFunctionType at 'Predicate' : ScalarExpressionType
+            // ShowPlanBase TableValuedFunctionType at 'RelOp' : RelOpType
+            // Collection<> TableValuedFunctionType at 'ParameterList' : ScalarType
+            // ValueType TableValuedFunctionType at 'ParameterListSpecified' : Boolean
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class ThreadReservationType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ValueType ThreadReservationType at 'NodeId' : Int32
+            // ValueType ThreadReservationType at 'ReservedThreads' : Int32
+            return state;
+        }
+    }
+    public partial class ThreadStatType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> ThreadStatType at 'ThreadReservation' : ThreadReservationType
+            // ValueType ThreadStatType at 'ThreadReservationSpecified' : Boolean
+            // ValueType ThreadStatType at 'Branches' : Int32
+            // ValueType ThreadStatType at 'UsedThreads' : Int32
+            // ValueType ThreadStatType at 'UsedThreadsSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class TopSortType : SortType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ValueType TopSortType at 'Rows' : Int32
+            // ValueType TopSortType at 'WithTies' : Boolean
+            // ValueType TopSortType at 'WithTiesSpecified' : Boolean
+            // Collection<> SortType at 'OrderBy' : OrderByTypeOrderByColumn
+            // ShowPlanBase SortType at 'PartitionId' : SingleColumnReferenceType
+            // ShowPlanBase SortType at 'RelOp' : RelOpType
+            // ValueType SortType at 'Distinct' : Boolean
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class TopType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> TopType at 'TieColumns' : ColumnReferenceType
+            // ValueType TopType at 'TieColumnsSpecified' : Boolean
+            // ShowPlanBase TopType at 'OffsetExpression' : ScalarExpressionType
+            // ShowPlanBase TopType at 'TopExpression' : ScalarExpressionType
+            // ShowPlanBase TopType at 'RelOp' : RelOpType
+            // ValueType TopType at 'RowCount' : Boolean
+            // ValueType TopType at 'RowCountSpecified' : Boolean
+            // ValueType TopType at 'Rows' : Int32
+            // ValueType TopType at 'RowsSpecified' : Boolean
+            // ValueType TopType at 'IsPercent' : Boolean
+            // ValueType TopType at 'IsPercentSpecified' : Boolean
+            // ValueType TopType at 'WithTies' : Boolean
+            // ValueType TopType at 'WithTiesSpecified' : Boolean
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class TraceFlagListType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> TraceFlagListType at 'TraceFlag' : TraceFlagType
+            // ValueType TraceFlagListType at 'IsCompileTime' : Boolean
+            return state;
+        }
+    }
+    public partial class TraceFlagType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ValueType TraceFlagType at 'Value' : UInt64
+            // ValueType TraceFlagType at 'Scope' : TraceFlagScopeType
+            return state;
+        }
+    }
+    public partial class UDAggregateType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase UDAggregateType at 'UDAggObject' : ObjectType
+            // Collection<> UDAggregateType at 'ScalarOperator' : ScalarType
+            // ValueType UDAggregateType at 'ScalarOperatorSpecified' : Boolean
+            // ValueType UDAggregateType at 'Distinct' : Boolean
+            return state;
+        }
+    }
+    public partial class UDFType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> UDFType at 'ScalarOperator' : ScalarType
+            // ValueType UDFType at 'ScalarOperatorSpecified' : Boolean
+            // ShowPlanBase UDFType at 'CLRFunction' : CLRFunctionType
+            // String UDFType at 'FunctionName' : String
+            // ValueType UDFType at 'IsClrFunction' : Boolean
+            // ValueType UDFType at 'IsClrFunctionSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class UDTMethodType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase UDTMethodType at 'CLRFunction' : CLRFunctionType
+            // Collection<> UDTMethodType at 'ScalarOperator' : ScalarType
+            // ValueType UDTMethodType at 'ScalarOperatorSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class UDXType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> UDXType at 'UsedUDXColumns' : ColumnReferenceType
+            // ValueType UDXType at 'UsedUDXColumnsSpecified' : Boolean
+            // ShowPlanBase UDXType at 'RelOp' : RelOpType
+            // String UDXType at 'UDXName' : String
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class UnmatchedIndexesType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> UnmatchedIndexesType at 'Parameterization' : ObjectType
+            return state;
+        }
+    }
+    public partial class UpdateType : RowsetType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> UpdateType at 'SetPredicate' : SetPredicateElementType
+            // ValueType UpdateType at 'SetPredicateSpecified' : Boolean
+            // ShowPlanBase UpdateType at 'ProbeColumn' : SingleColumnReferenceType
+            // ShowPlanBase UpdateType at 'ActionColumn' : SingleColumnReferenceType
+            // ShowPlanBase UpdateType at 'OriginalActionColumn' : SingleColumnReferenceType
+            // ShowPlanBase UpdateType at 'RelOp' : RelOpType
+            // ValueType UpdateType at 'WithOrderedPrefetch' : Boolean
+            // ValueType UpdateType at 'WithOrderedPrefetchSpecified' : Boolean
+            // ValueType UpdateType at 'WithUnorderedPrefetch' : Boolean
+            // ValueType UpdateType at 'WithUnorderedPrefetchSpecified' : Boolean
+            // ValueType UpdateType at 'DMLRequestSort' : Boolean
+            // ValueType UpdateType at 'DMLRequestSortSpecified' : Boolean
+            // Collection<> RowsetType at 'Object' : ObjectType
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class WaitStatListType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> WaitStatListType at 'Wait' : WaitStatType
+            // ValueType WaitStatListType at 'WaitSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class WaitStatType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // String WaitStatType at 'WaitType' : String
+            // ValueType WaitStatType at 'WaitTimeMs' : UInt64
+            // ValueType WaitStatType at 'WaitCount' : UInt64
+            return state;
+        }
+    }
+    public partial class WaitWarningType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ValueType WaitWarningType at 'WaitType' : WaitWarningTypeWaitType
+            // ValueType WaitWarningType at 'WaitTime' : UInt64
+            // ValueType WaitWarningType at 'WaitTimeSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class WarningsType : ShowPlanBase {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // Collection<> WarningsType at 'ColumnsWithNoStatistics' : ColumnReferenceListType
+            // ValueType WarningsType at 'ColumnsWithNoStatisticsSpecified' : Boolean
+            // Collection<> WarningsType at 'SpillToTempDb' : SpillToTempDbType
+            // ValueType WarningsType at 'SpillToTempDbSpecified' : Boolean
+            // Collection<> WarningsType at 'Wait' : WaitWarningType
+            // ValueType WarningsType at 'WaitSpecified' : Boolean
+            // Collection<> WarningsType at 'PlanAffectingConvert' : AffectingConvertWarningType
+            // ValueType WarningsType at 'PlanAffectingConvertSpecified' : Boolean
+            // Collection<> WarningsType at 'SortSpillDetails' : SortSpillDetailsType
+            // ValueType WarningsType at 'SortSpillDetailsSpecified' : Boolean
+            // Collection<> WarningsType at 'HashSpillDetails' : HashSpillDetailsType
+            // ValueType WarningsType at 'HashSpillDetailsSpecified' : Boolean
+            // Collection<> WarningsType at 'MemoryGrantWarning' : MemoryGrantWarningInfo
+            // ValueType WarningsType at 'MemoryGrantWarningSpecified' : Boolean
+            // ValueType WarningsType at 'NoJoinPredicate' : Boolean
+            // ValueType WarningsType at 'NoJoinPredicateSpecified' : Boolean
+            // ValueType WarningsType at 'SpatialGuess' : Boolean
+            // ValueType WarningsType at 'SpatialGuessSpecified' : Boolean
+            // ValueType WarningsType at 'UnmatchedIndexes' : Boolean
+            // ValueType WarningsType at 'UnmatchedIndexesSpecified' : Boolean
+            // ValueType WarningsType at 'FullUpdateForOnlineIndexBuild' : Boolean
+            // ValueType WarningsType at 'FullUpdateForOnlineIndexBuildSpecified' : Boolean
+            return state;
+        }
+    }
+    public partial class WindowAggregateType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase WindowAggregateType at 'RelOp' : RelOpType
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+    public partial class WindowType : RelOpBaseType {
+        public override T Accept<T>(Visitor<T> visitor, T state) => visitor.Visit(this, state);
+        public override T AcceptExplicit<T>(Visitor<T> visitor, T state) {
+            state = visitor.Enter(this, state);
+            state = visitor.VisitExplicit(this, state);
+            return visitor.Exit(this, state);
+        }
+        public override T AcceptChildren<T>(Visitor<T> visitor, T state) {
+            // ShowPlanBase WindowType at 'RelOp' : RelOpType
+            // Collection<> RelOpBaseType at 'DefinedValues' : DefinedValuesListTypeDefinedValue
+            // ValueType RelOpBaseType at 'DefinedValuesSpecified' : Boolean
+            // ShowPlanBase RelOpBaseType at 'InternalInfo' : InternalInfoType
+            return state;
+        }
+    }
+}

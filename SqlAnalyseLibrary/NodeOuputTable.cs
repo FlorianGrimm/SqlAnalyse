@@ -9,7 +9,7 @@ namespace SqlAnalyseLibrary {
 
         public NodeOuputTable(
             int level,
-            string comment) :this() {
+            string comment) : this() {
             this.Level = level;
             this.Comment = comment;
         }
@@ -30,11 +30,21 @@ namespace SqlAnalyseLibrary {
         }
 
         public override void AfterInitialization() {
-            foreach(var column in this.Columns) {
+            foreach (var column in this.Columns) {
                 if (column is NodeScopeElement columnScopeElement) {
                     columnScopeElement.Owner = this;
                 }
             }
         }
+
+        public override void ResolveTypesStep1(IResolver resolver) {
+            if (this.GetResolvedType() is object) { return; }
+            this.NodeCtes?.ResolveTypesStep1(resolver);
+            this.NodeFrom?.ResolveTypesStep1(resolver);
+            this.Expression?.ResolveTypesStep1(resolver);
+            base.ResolveTypesStep1(resolver);
+
+        }
+
     }
 }

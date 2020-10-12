@@ -9,9 +9,9 @@
         public AliasScope AliasScope { get; }
         public INodeHasScope? Node { get; }
 
-        public Scopes() {
+        public Scopes(GlobalScope? globalScope = null) {
             this._Index = 1 + System.Threading.Interlocked.Increment(ref __Index);
-            this.GlobalScope = new GlobalScope();
+            this.GlobalScope = globalScope ?? (new GlobalScope(null));
             this.LocalScope = new LocalScope(null);
             this.AliasScope = new AliasScope(null);
             this.Node = null;
@@ -27,7 +27,7 @@
             }
         }
         internal Scopes EnterGlobalScope(INodeHasScope node) {
-            return new Scopes(new GlobalScope(), new LocalScope(null), new AliasScope(null), node);
+            return new Scopes(new GlobalScope(this.GlobalScope), new LocalScope(null), new AliasScope(null), node);
         }
         internal Scopes EnterLocalScope(INodeHasScope node) {
             return new Scopes(this.GlobalScope, new LocalScope(this.LocalScope), new AliasScope(null), node);

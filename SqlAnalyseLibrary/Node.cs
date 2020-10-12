@@ -10,7 +10,13 @@ namespace SqlAnalyseLibrary {
         public int Level { get; set; }
         public string Comment { get; set; }
 
-        public Node() {
+        public virtual Node? GetResolvedType() => null;
+
+        public virtual void SetResolvedType(Node? value) {
+            throw new NotSupportedException(this.GetType().Name);
+        }
+
+        protected Node() {
             this._Index = 1 + System.Threading.Interlocked.Increment(ref __Index);
             this.Comment = string.Empty;
         }
@@ -35,9 +41,11 @@ namespace SqlAnalyseLibrary {
             }
         }
 
-        public virtual void Resolve(EvaluationState evaluationState) {
+        public virtual void ResolveTypesStep1(IResolver resolver) {
+            if (this.GetResolvedType() is object) { return; }
+            System.Console.Out.WriteLine($"ResolveTypesStep1: {this.ToString()}");
             foreach (var c in this.GetChildren().ToList()) {
-                c.Resolve(evaluationState);
+                c.ResolveTypesStep1(resolver);
             }
         }
 
@@ -68,5 +76,16 @@ namespace SqlAnalyseLibrary {
             new NodeLink(this, nextNode, condition, conditionResult).Connect();
         }
     }
+    public class NodeWithResolvedType : Node {
+        private Node? resolvedType;
 
+        public override Node? GetResolvedType() {
+            return this.resolvedType;
+        }
+
+        public override void SetResolvedType(Node? value) {
+            this.resolvedType = value;
+        }
+
+    }
 }

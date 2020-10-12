@@ -9,8 +9,8 @@ namespace SqlAnalyseLibrary {
     public sealed class StaticEvaluator {
         public EvaluationState EvaluationState { get; }
 
-        public StaticEvaluator(SqlEnvironment sqlEnvironment)
-            : this(new EvaluationState(sqlEnvironment)) {
+        public StaticEvaluator(SqlEnvironment sqlEnvironment, GlobalScope? globalScope)
+            : this(new EvaluationState(sqlEnvironment, globalScope)) {
         }
 
         public StaticEvaluator(EvaluationState evaluationState) {
@@ -78,7 +78,7 @@ namespace SqlAnalyseLibrary {
             //}
         }
 
-        public void Resolve(TSqlFragment? rootSqlFragment) {
-        }
+        //public void Resolve(TSqlFragment? rootSqlFragment) {
+        //}
     }
 }

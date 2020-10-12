@@ -1,4 +1,6 @@
-﻿using SqlAnalyseLibrary;
+﻿using Microsoft.SqlServer.TransactSql.ScriptDom;
+
+using SqlAnalyseLibrary;
 
 using System;
 using System.Linq;
@@ -41,8 +43,23 @@ SELECT t.* FROM dbo.t;
 GO
 SELECT c.* FROM dbo.t as c;
 ";
-            var staticEvaluator = new StaticEvaluator(
-                new SqlEnvironment("localhost", "SqlAnalyseLibrary", "dbo"));
+            const string ServerName = "localhost";
+            const string DatabaseName = "SqlAnalyseLibrary";
+            const string SchemaName = "dbo";
+
+            var globalScope = new GlobalScope(null);
+            var t = new SqlTable(MultiPartIdentifierUtility.Create(ServerName, DatabaseName, SchemaName)) { Level = 0, Comment = "predefined" };
+            var sys_int = new SqlScalarType(MultiPartIdentifierUtility.Create(ServerName, DatabaseName, "sys", "int"));
+            t.AddColumn("a", sys_int);
+            t.AddColumn("b", sys_int);
+            globalScope.Add(t);
+            //
+            var evaluationState = new EvaluationState(
+                new SqlEnvironment(ServerName, DatabaseName, SchemaName),
+                globalScope
+                );
+            //evaluationState.GlobalState
+            var staticEvaluator = new StaticEvaluator(evaluationState);
             var parseResult = staticEvaluator.ParseSql(sqlCode);
             if (!parseResult.IsSuccessfull()) {
                 System.Console.Error.WriteLine("parse errors");
@@ -55,7 +72,7 @@ SELECT c.* FROM dbo.t as c;
                     return 2;
                 } else {
                     PrintChildren(visitorResult.NodeRoot!, "");
-                    //visitorResult.Resolve();
+                    visitorResult.Resolve();
                 }
             }
             /*

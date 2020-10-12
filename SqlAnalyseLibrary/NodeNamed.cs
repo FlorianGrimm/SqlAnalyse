@@ -11,6 +11,8 @@ namespace SqlAnalyseLibrary {
             this.Name = new MultiPartIdentifier();
             this.ElementKind = NodeElementKind.Unknown;
         }
+        public bool IsNameSet()
+            => (this.Name.Count > 0);
 
         public void SetName(MultiPartIdentifier? name, NodeElementKind? kind) {
             if (name is object) {
@@ -34,7 +36,7 @@ namespace SqlAnalyseLibrary {
             //if (this.Name.Count == 1 && kind.HasValue && this.Kind == kind.Value) {
             //    return this;
             //}
-            if (this.Name.Count > 0) {
+            if (this.IsNameSet()) {
                 var result = new NodeNamed();
                 result.AddNameIdentifier(this.Name[this.Name.Count - 1], kind);
                 return result;
@@ -46,6 +48,6 @@ namespace SqlAnalyseLibrary {
         public override string ToString()
             => $"{this.GetType().Name}:{this.Index} {this.Level} {this.Comment} {this.ElementKind}-{this.ToStringNameOnly()}";
 
-        public string ToStringNameOnly() => (this.Name is object) ? string.Join("/", this.Name.Identifiers.Select(i => i.Value)) : "";
+        public string ToStringNameOnly() => MultiPartIdentifierUtility.ConvertToDebugString(this.Name);
     }
 }

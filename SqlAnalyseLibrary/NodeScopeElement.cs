@@ -23,30 +23,36 @@ namespace SqlAnalyseLibrary {
         }
 
 
-        public override void Resolve(EvaluationState evaluationState) {
-            if (this.Element is Node element && this.Scopes is Scopes scopes) {
-                if (this.Scope == NodeScopeKind.AliasScope) {
-                    if (this.ElementKind == NodeElementKind.ObjectAlias) {
-                        var nameAlias = this.Name;
-                        var nameSchemaObjectName = this.Name;
-                        if (element is NodeNamed named) {
-                            nameSchemaObjectName = named.Name;
-                        }
-                        evaluationState.ResolveSchemaObjectName(nameSchemaObjectName);
-                    }
-                } else if (this.Scope == NodeScopeKind.LocalScope) {
-                } else if (this.Scope == NodeScopeKind.GlobalScope) {
-                } else if (this.Scope == NodeScopeKind.Column) {
-                    if (element is NodeScopeElement nodeScopeElement) {
-                        var name1 = this.Name;
-                        var name2 = nodeScopeElement.Name;
-                    } else {
-                        throw new InvalidOperationException(element.GetType().Name);
-                    }
-                } else {
-                }
-            }
-            base.Resolve(evaluationState);
+        //public override void Resolve(EvaluationState evaluationState) {
+        //    if (this.Element is Node element && this.Scopes is Scopes scopes) {
+        //        if (this.Scope == NodeScopeKind.AliasScope) {
+        //            if (this.ElementKind == NodeElementKind.ObjectAlias) {
+        //                var nameAlias = this.Name;
+        //                var nameSchemaObjectName = this.Name;
+        //                if (element is NodeNamed named) {
+        //                    nameSchemaObjectName = named.Name;
+        //                }
+        //                evaluationState.ResolveSchemaObjectName(nameSchemaObjectName, this.Scope, this.Scopes);
+        //            }
+        //        } else if (this.Scope == NodeScopeKind.LocalScope) {
+        //        } else if (this.Scope == NodeScopeKind.GlobalScope) {
+        //        } else if (this.Scope == NodeScopeKind.Column) {
+        //            if (element is NodeScopeElement nodeScopeElement) {
+        //                var name1 = this.Name;
+        //                var name2 = nodeScopeElement.Name;
+        //            } else {
+        //                throw new InvalidOperationException(element.GetType().Name);
+        //            }
+        //        } else {
+        //        }
+        //    }
+        //    base.Resolve(evaluationState);
+        //}
+
+        public override void ResolveTypesStep1(IResolver resolver) {
+            if (this.GetResolvedType() is object) { return; }
+            base.ResolveTypesStep1(resolver);
+            
         }
 
         public override IEnumerable<Node> GetChildren() {

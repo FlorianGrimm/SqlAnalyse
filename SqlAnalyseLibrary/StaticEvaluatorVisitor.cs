@@ -15,7 +15,7 @@ namespace SqlAnalyseLibrary {
         public StaticEvaluatorVisitor(StaticEvaluator staticEvaluator) {
             this.EvaluationState = staticEvaluator.EvaluationState;
             this.Stack = new Stack<StackNode>();
-            this.Current = new StackNode(null, new Scopes(), null);
+            this.Current = new StackNode(null, new Scopes(this.EvaluationState.GlobalScope), null);
             this.Stack.Push(this.Current);
         }
 
@@ -167,7 +167,7 @@ namespace SqlAnalyseLibrary {
                 //// TODO result.Ctes?.AfterInitialization();
                 //SetResult(node, result);
             } else {
-                var result = new NodeTableReferences(level, "SelectStatement", null, NodeScopeKind.AliasScope);
+                var result = new NodeTableReferences(level, "SelectStatement", this.Current.Scopes, NodeScopeKind.AliasScope);
                 this.Current.EnterAliasScope(result);
                 var resultOuputTable = new NodeOuputTable();
                 result.TabularResult = resultOuputTable;
@@ -186,6 +186,7 @@ namespace SqlAnalyseLibrary {
                 } else {
                     throw new NotImplementedException("TODO");
                 }
+                result.Children.Add(resultOuputTable);
                 resultOuputTable.AfterInitialization();
                 result.AfterInitialization();
                 SetResult(node, result);
@@ -205,30 +206,42 @@ namespace SqlAnalyseLibrary {
 
         public override void ExplicitVisit(NamedTableReference node) {
             var level = GetLevel();
+            var resultSchemaObject = this.Accept(node.SchemaObject, this.Current.Previous)?.Result;
+            NodeReference? resultReference = null;
+            if (resultSchemaObject is null) {
+                throw new NotSupportedException("NamedTableReference: resultSchemaObject is null");
+            } else if (resultSchemaObject is NodeNamed nodeNamedSchemaObject) {
+                resultReference = new NodeReference(level + 1, "NamedTableReference", this.Current.Scopes, NodeScopeKind.AnyScope);
+                resultReference.SetName(nodeNamedSchemaObject.Name, NodeElementKind.ObjectLike);
+            }
             if (node.Alias is object) {
-                var resultSchemaObject = this.Accept(node.SchemaObject, this.Current.Previous)?.Result;
-                var result = new NodeScopeElement() { Level = level, Comment = "NamedTableReference with Alias", Scopes = this.Current.Scopes, Scope = NodeScopeKind.AliasScope };
+                var result = new NodeScopeElement(level, "NamedTableReference with Alias", this.Current.Scopes, NodeScopeKind.AliasScope);
                 //resultSchemaObject.AddForewardLink(result, null, true);
                 result.AddNameIdentifier(node.Alias, NodeElementKind.ObjectAlias);
-                result.Element = resultSchemaObject;
+                result.Element = resultReference ?? resultSchemaObject;
                 result.AddToScope();
                 result.AfterInitialization();
                 this.SetResult(node, result);
                 return;
             } else {
-                var resultSchemaObject = this.Accept(node.SchemaObject, this.Current.Previous)?.Result;
-                var result = new NodeScopeElement() { Level = level, Comment = "NamedTableReference with Alias", Scopes = this.Current.Scopes, Scope = NodeScopeKind.AliasScope };
-                //resultSchemaObject.AddForewardLink(result, null, true);
-                if (resultSchemaObject is NodeNamed nodeNamed) {
-                    result.AddNameIdentifier(nodeNamed.Name.Identifiers.Last(), NodeElementKind.ObjectAlias);
+                if (resultReference is object) {
+                    resultReference.AfterInitialization();
+                    this.SetResult(node, resultReference);
                 } else {
-                    throw new NotSupportedException($"?? NamedTableReference-> {resultSchemaObject?.GetType()?.Name}");
+                    throw new NotSupportedException($"?? NamedTableReference: resultReference is null.");
                 }
-                result.Element = resultSchemaObject;
-                result.AddToScope();
-                result.AfterInitialization();
-                this.SetResult(node, result);
-                return;
+                //var result = new NodeScopeElement(level, "NamedTableReference without Alias", this.Current.Scopes, NodeScopeKind.AliasScope);
+                ////resultSchemaObject.AddForewardLink(result, null, true);
+                //if (resultSchemaObject is NodeNamed nodeNamed) {
+                //    result.SetName(nodeNamed.Name, NodeElementKind.ObjectAlias);
+                //} else {
+                //    throw new NotSupportedException($"?? NamedTableReference-> {resultSchemaObject?.GetType()?.Name}");
+                //}
+                //result.Element = resultSchemaObject??resultSchemaObject;
+                //result.AddToScope();
+                //result.AfterInitialization();
+                //this.SetResult(node, result);
+                //return;
             }
             // node.Alias
             // node.ForPath
@@ -368,6 +381,7 @@ namespace SqlAnalyseLibrary {
             var resultSelectElements = this.Accept(node.SelectElements, null, StackNode.Null);
             var nodeFrom = this.Accept(node.FromClause, null)?.Result;
 
+            // shortcut...
             if (resultSelectElements.Count == 1) {
                 if (resultSelectElements[0]?.Result is NodeExpressionTabular nodeExpressionTabular) {
                     if (nodeExpressionTabular.ElementKind == NodeElementKind.ColumnWildcard) {
@@ -472,7 +486,7 @@ namespace SqlAnalyseLibrary {
                         result.AddNameIdentifier(nodeReference.Name.Identifiers.Last(), NodeElementKind.ColumnRegular);
                         if (nameRest is object) {
                             var refObject = new NodeReference(level + 1, "SelectScalarExpression", this.Current.Scopes, NodeScopeKind.AnyScope);
-                            refObject.SetName(nameRest, NodeElementKind.Object);
+                            refObject.SetName(nameRest, NodeElementKind.ObjectLike);
                             result.AddCallable(refObject);
                         }
                     }
@@ -612,7 +626,7 @@ namespace SqlAnalyseLibrary {
         }
 
         public override void ExplicitVisit(IntegerLiteral node) {
-            var result = new NodeExpressionScalar() { Kind = NodeExpressionScalarKind.Const, ScalarType = new SqlScalarType() };
+            var result = new NodeExpressionScalar() { Kind = NodeExpressionScalarKind.Const, ScalarType = new SqlScalarType(MultiPartIdentifierUtility.Create("sys", "int")) };
 
             result.AfterInitialization();
             this.SetResult(node, result);

@@ -17,6 +17,10 @@ namespace SqlAnalyseLibrary {
                 yield return c;
             }
         }
+
+        public override void ResolveTypesStep1(IResolver resolver) {
+            base.ResolveTypesStep1(resolver);
+        }
     }
 
 }

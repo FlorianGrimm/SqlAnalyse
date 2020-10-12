@@ -20,7 +20,7 @@
         /// <summary>
         ///  for references a Table, View or ObjectAlias.
         /// </summary>
-        Object,
+        ObjectLike,
 
         /// <summary>
         /// Table
@@ -42,6 +42,9 @@
         /// </summary>
         Function,
 
+        /// <summary>
+        /// ColumnRegular or ColumnWildcard
+        /// </summary>
         Column,
         Index,
         //

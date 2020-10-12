@@ -3,6 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace SqlAnalyseLibrary {
-    class SqlDatabase {
+    public class SqlDatabase : SqlObject {
     }
 }
