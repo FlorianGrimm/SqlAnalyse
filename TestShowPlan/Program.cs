@@ -13,6 +13,13 @@ using System.Collections.ObjectModel;
 namespace TestShowPlan {
     class Program {
         static void Main(string[] args) {
+#if false
+            MainGen(args);
+#else
+            MainExtract(args);
+#endif
+        }
+        static void MainGen(string[] args) {
             var types = new Type[] {
                 typeof( AdaptiveJoinType ),
                 typeof( AffectingConvertWarningType ),
@@ -176,12 +183,20 @@ namespace TestShowPlan {
                     if (typeof(System.Collections.ICollection).IsAssignableFrom(prop.PropertyType) && prop.PropertyType.IsGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(Collection<>) && typeof(ShowPlanBase).IsAssignableFrom(prop.PropertyType.GenericTypeArguments[0])) {
                         var itemType = prop.PropertyType.GenericTypeArguments[0];
                         sb.AppendLine($"            // Collection<> {prop.DeclaringType.Name} at '{prop.Name}' : {itemType.Name}");
-                    } else if (prop.PropertyType == typeof(string)){ 
+                        sb.AppendLine($"            if (this.{prop.Name} is object) {{");
+                        sb.AppendLine($"                foreach ({itemType.Name} item in this.{prop.Name}) {{");
+                        sb.AppendLine($"                    if (item is object) {{");
+                        sb.AppendLine($"                        state = visitor.Visit(item, state);");
+                        sb.AppendLine($"                    }}");
+                        sb.AppendLine($"                }}");
+                        sb.AppendLine($"            }}");
+                    } else if (prop.PropertyType == typeof(string)) {
                         sb.AppendLine($"            // String {prop.DeclaringType.Name} at '{prop.Name}' : {prop.PropertyType.Name}");
                     } else if (prop.PropertyType.IsValueType) {
                         sb.AppendLine($"            // ValueType {prop.DeclaringType.Name} at '{prop.Name}' : {prop.PropertyType.Name}");
                     } else if (typeof(ShowPlanBase).IsAssignableFrom(prop.PropertyType)) {
                         sb.AppendLine($"            // ShowPlanBase {prop.DeclaringType.Name} at '{prop.Name}' : {prop.PropertyType.Name}");
+                        sb.AppendLine($"            if ({prop.Name} is object) {{ state = visitor.Visit(this.{prop.Name}, state); }}");
                     } else {
                         sb.AppendLine($"            // ??? {prop.DeclaringType.Name} at '{prop.Name}' : {prop.PropertyType.Name}");
                     }
@@ -193,7 +208,7 @@ namespace TestShowPlan {
             sb.AppendLine("}");
             System.IO.File.WriteAllText(@"C:\github.com\FlorianGrimm\SqlAnalyse\TestShowPlan\Model\Sqlserver.Showplan.Visitor.txt", sb.ToString());
         }
-        static void Main2(string[] args) {
+        static void MainExtract(string[] args) {
             /*
               c:\prgs\XmlSchemaClassGenerator\XmlSchemaClassGenerator.Console.exe --output=C:\github.com\FlorianGrimm\SqlAnalyse\TestShowPlan\Model\ C:\github.com\FlorianGrimm\SqlAnalyse\TestShowPlan\Model\showplanxml.xsd
              */
@@ -204,46 +219,62 @@ namespace TestShowPlan {
             csb.IntegratedSecurity = true;
             var sqlInfoMessageEventReceiver = new SqlInfoMessageEventReceiver();
             string showPlanXml;
+            string sqlCode = "SELECT a=a,b=b FROM dbo.t;";
+            /*
+            string sqlCode = System.IO.File.ReadAllText(statementPath);
+            string statementPath = @"C:\github.com\FlorianGrimm\SqlAnalyse\TestShowPlan\ShowPlanXml\4-Statement.sql";
+            string storePath = @"C:\github.com\FlorianGrimm\SqlAnalyse\TestShowPlan\ShowPlanXml\4-ShowPlanXml.xml";
+            */
             using (var connection = new SqlConnection(csb.ConnectionString)) {
                 connection.Open();
                 sqlInfoMessageEventReceiver.WireConnection(connection);
                 var resultOn = SqlExecuteReader(connection, "SET SHOWPLAN_XML ON;", sqlInfoMessageEventReceiver);
-                var resultData = SqlExecuteReader(connection, "IF (object_id('dbo.t') is not null) begin SELECT c.a, b = c.b  FROM dbo.t as c; end;", sqlInfoMessageEventReceiver);
-                //var resultData = SqlExecuteReader(connection, "SELECT c.a, b = c.b  FROM dbo.t as c;", sqlInfoMessageEventReceiver);
+                var resultData = SqlExecuteReader(connection, sqlCode, sqlInfoMessageEventReceiver);
                 var resultOff = SqlExecuteReader(connection, "SET SHOWPLAN_XML OFF;", sqlInfoMessageEventReceiver);
                 connection.Close();
                 showPlanXml = (string)resultData[0].Rows[0][0];
             }
+            /*
+            System.IO.File.WriteAllText(storePath, showPlanXml);
+            */
             var showPlan = (ShowPlanXML)serializer.Deserialize(new System.IO.StringReader(showPlanXml));
             var s = new ShowPlanExtraction();
-            s.Extract(showPlan);
-
-
-
-
-            if (showPlan.BatchSequence is object) {
-                //" StatementType="SELECT"
-                foreach (ShowPlanXMLBatchSequenceBatch batchSequenceBatch in showPlan.BatchSequence) {
-                    if (batchSequenceBatch.Statements is object) {
-                        foreach (StmtBlockType stmt in batchSequenceBatch.Statements) {
-                            if (stmt.StmtReceive is object) {
-                                foreach (var stmtReceive in stmt.StmtReceive) {
-                                    System.Console.Out.WriteLine(stmtReceive.GetType().Name);
-                                }
-                            }
-                            if (stmt.StmtSimple is object) {
-                                foreach (var stmtSimple in stmt.StmtSimple) {
-                                    System.Console.Out.WriteLine(stmtSimple.GetType().Name);
-                                    var outputList = stmtSimple.QueryPlan?.RelOp?.OutputList;
-                                    foreach (var columnReference in outputList) {
-                                        System.Console.Out.WriteLine($"{columnReference.Alias} {columnReference.Column} {columnReference.Table} {columnReference.Schema} {columnReference.Database} {columnReference.Server}");
-                                    }
-                                }
-                            }
-                        }
-                    }
+            var selectResults = s.Extract(showPlan).SelectResults;
+            System.Console.WriteLine("Results:");
+            foreach (var selectResult in selectResults) {
+                System.Console.WriteLine("Result");
+                System.Console.WriteLine("------");
+                foreach (var column in selectResult.Columns) {
+                    System.Console.WriteLine($"{column.Server}.{column.Database}.{column.Schema}.{column.Table}.{column.Column}");
                 }
             }
+
+
+
+
+            //if (showPlan.BatchSequence is object) {
+            //    //" StatementType="SELECT"
+            //    foreach (ShowPlanXMLBatchSequenceBatch batchSequenceBatch in showPlan.BatchSequence) {
+            //        if (batchSequenceBatch.Statements is object) {
+            //            foreach (StmtBlockType stmt in batchSequenceBatch.Statements) {
+            //                if (stmt.StmtReceive is object) {
+            //                    foreach (var stmtReceive in stmt.StmtReceive) {
+            //                        System.Console.Out.WriteLine(stmtReceive.GetType().Name);
+            //                    }
+            //                }
+            //                if (stmt.StmtSimple is object) {
+            //                    foreach (var stmtSimple in stmt.StmtSimple) {
+            //                        System.Console.Out.WriteLine(stmtSimple.GetType().Name);
+            //                        var outputList = stmtSimple.QueryPlan?.RelOp?.OutputList;
+            //                        foreach (var columnReference in outputList) {
+            //                            System.Console.Out.WriteLine($"{columnReference.Alias} {columnReference.Column} {columnReference.Table} {columnReference.Schema} {columnReference.Database} {columnReference.Server}");
+            //                        }
+            //                    }
+            //                }
+            //            }
+            //        }6
+            //    }
+            //}
             System.Console.Out.WriteLine("Done");
             /*
              new System.Collections.Generic.ICollectionDebugView<Sqlserver.Showplan.ColumnReferenceType>((new System.Collections.Generic.ICollectionDebugView<Sqlserver.Showplan.StmtSimpleType>((new System.Collections.Generic.ICollectionDebugView<Sqlserver.Showplan.StmtBlockType>((new System.Collections.Generic.ICollectionDebugView<Sqlserver.Showplan.ShowPlanXMLBatchSequenceBatch>(showPlan.BatchSequence).Items[0]).Statements).Items[0]).StmtSimple).Items[0]).QueryPlan.RelOp.OutputList).Items[0]

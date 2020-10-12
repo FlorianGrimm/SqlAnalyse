@@ -1,0 +1,142 @@
+<ShowPlanXML xmlns="http://schemas.microsoft.com/sqlserver/2004/07/showplan" Version="1.6" Build="14.0.2027.2">
+  <BatchSequence>
+    <Batch>
+      <Statements>
+        <StmtCond StatementText="IF (object_id(&apos;dbo.t&apos;) is not null)" StatementId="1" StatementCompId="1" StatementType="COND" RetrievedFromCache="false">
+          <Condition></Condition>
+          <Then>
+            <Statements>
+              <StmtSimple StatementText=" begin SELECT c.a, b = c.b, c= 1  FROM dbo.t as c" StatementId="2" StatementCompId="2" StatementType="SELECT" RetrievedFromCache="false" StatementSubTreeCost="0.0032844" StatementEstRows="2" SecurityPolicyApplied="false" StatementOptmLevel="TRIVIAL" QueryHash="0xA06D42A3B9A3B78C" QueryPlanHash="0x252D8D81099DFEBD" CardinalityEstimationModelVersion="140">
+                <StatementSetOptions QUOTED_IDENTIFIER="true" ARITHABORT="false" CONCAT_NULL_YIELDS_NULL="true" ANSI_NULLS="true" ANSI_PADDING="true" ANSI_WARNINGS="true" NUMERIC_ROUNDABORT="false"></StatementSetOptions>
+                <QueryPlan NonParallelPlanReason="MaxDOPSetToOne" CachedPlanSize="16" CompileTime="0" CompileCPU="0" CompileMemory="128">
+                  <MemoryGrantInfo SerialRequiredMemory="0" SerialDesiredMemory="0"></MemoryGrantInfo>
+                  <OptimizerHardwareDependentProperties EstimatedAvailableMemoryGrant="694093" EstimatedPagesCached="173523" EstimatedAvailableDegreeOfParallelism="1" MaxCompileMemory="4231224"></OptimizerHardwareDependentProperties>
+                  <RelOp NodeId="0" PhysicalOp="Compute Scalar" LogicalOp="Compute Scalar" EstimateRows="2" EstimateIO="0" EstimateCPU="2e-007" AvgRowSize="35" EstimatedTotalSubtreeCost="0.0032844" Parallel="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row">
+                    <OutputList>
+                      <ColumnReference Database="[SqlAnalyseLibrary]" Schema="[dbo]" Table="[t]" Alias="[c]" Column="a"></ColumnReference>
+                      <ColumnReference Database="[SqlAnalyseLibrary]" Schema="[dbo]" Table="[t]" Alias="[c]" Column="b"></ColumnReference>
+                      <ColumnReference Column="Expr1002"></ColumnReference>
+                    </OutputList>
+                    <ComputeScalar>
+                      <DefinedValues>
+                        <DefinedValue>
+                          <ColumnReference Column="Expr1002"></ColumnReference>
+                          <ScalarOperator ScalarString="(1)">
+                            <Const ConstValue="(1)"></Const>
+                          </ScalarOperator>
+                        </DefinedValue>
+                      </DefinedValues>
+                      <RelOp NodeId="1" PhysicalOp="Table Scan" LogicalOp="Table Scan" EstimateRows="2" EstimatedRowsRead="2" EstimateIO="0.0032035" EstimateCPU="8.07e-005" AvgRowSize="31" EstimatedTotalSubtreeCost="0.0032842" TableCardinality="2" Parallel="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row">
+                        <OutputList>
+                          <ColumnReference Database="[SqlAnalyseLibrary]" Schema="[dbo]" Table="[t]" Alias="[c]" Column="a"></ColumnReference>
+                          <ColumnReference Database="[SqlAnalyseLibrary]" Schema="[dbo]" Table="[t]" Alias="[c]" Column="b"></ColumnReference>
+                        </OutputList>
+                        <TableScan Ordered="0" ForcedIndex="0" ForceScan="0" NoExpandHint="0" Storage="RowStore">
+                          <DefinedValues>
+                            <DefinedValue>
+                              <ColumnReference Database="[SqlAnalyseLibrary]" Schema="[dbo]" Table="[t]" Alias="[c]" Column="a"></ColumnReference>
+                            </DefinedValue>
+                            <DefinedValue>
+                              <ColumnReference Database="[SqlAnalyseLibrary]" Schema="[dbo]" Table="[t]" Alias="[c]" Column="b"></ColumnReference>
+                            </DefinedValue>
+                          </DefinedValues>
+                          <Object Database="[SqlAnalyseLibrary]" Schema="[dbo]" Table="[t]" Alias="[c]" IndexKind="Heap" Storage="RowStore"></Object>
+                        </TableScan>
+                      </RelOp>
+                    </ComputeScalar>
+                  </RelOp>
+                </QueryPlan>
+              </StmtSimple>
+            </Statements>
+          </Then>
+          <Else>
+            <Statements>
+              <StmtSimple StatementText="; end ELSE BEGIN SELECT b,a,c=2  FROM dbo.t" StatementId="3" StatementCompId="5" StatementType="SELECT" RetrievedFromCache="false" StatementSubTreeCost="0.0032844" StatementEstRows="2" SecurityPolicyApplied="false" StatementOptmLevel="TRIVIAL" QueryHash="0x472B05201DBCDFE2" QueryPlanHash="0x252D8D81099DFEBD" CardinalityEstimationModelVersion="140">
+                <StatementSetOptions QUOTED_IDENTIFIER="true" ARITHABORT="false" CONCAT_NULL_YIELDS_NULL="true" ANSI_NULLS="true" ANSI_PADDING="true" ANSI_WARNINGS="true" NUMERIC_ROUNDABORT="false"></StatementSetOptions>
+                <QueryPlan NonParallelPlanReason="MaxDOPSetToOne" CachedPlanSize="16" CompileTime="0" CompileCPU="0" CompileMemory="128">
+                  <MemoryGrantInfo SerialRequiredMemory="0" SerialDesiredMemory="0"></MemoryGrantInfo>
+                  <OptimizerHardwareDependentProperties EstimatedAvailableMemoryGrant="694093" EstimatedPagesCached="173523" EstimatedAvailableDegreeOfParallelism="1" MaxCompileMemory="4231224"></OptimizerHardwareDependentProperties>
+                  <RelOp NodeId="0" PhysicalOp="Compute Scalar" LogicalOp="Compute Scalar" EstimateRows="2" EstimateIO="0" EstimateCPU="2e-007" AvgRowSize="35" EstimatedTotalSubtreeCost="0.0032844" Parallel="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row">
+                    <OutputList>
+                      <ColumnReference Database="[SqlAnalyseLibrary]" Schema="[dbo]" Table="[t]" Column="a"></ColumnReference>
+                      <ColumnReference Database="[SqlAnalyseLibrary]" Schema="[dbo]" Table="[t]" Column="b"></ColumnReference>
+                      <ColumnReference Column="Expr1003"></ColumnReference>
+                    </OutputList>
+                    <ComputeScalar>
+                      <DefinedValues>
+                        <DefinedValue>
+                          <ColumnReference Column="Expr1003"></ColumnReference>
+                          <ScalarOperator ScalarString="(2)">
+                            <Const ConstValue="(2)"></Const>
+                          </ScalarOperator>
+                        </DefinedValue>
+                      </DefinedValues>
+                      <RelOp NodeId="1" PhysicalOp="Table Scan" LogicalOp="Table Scan" EstimateRows="2" EstimatedRowsRead="2" EstimateIO="0.0032035" EstimateCPU="8.07e-005" AvgRowSize="31" EstimatedTotalSubtreeCost="0.0032842" TableCardinality="2" Parallel="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row">
+                        <OutputList>
+                          <ColumnReference Database="[SqlAnalyseLibrary]" Schema="[dbo]" Table="[t]" Column="a"></ColumnReference>
+                          <ColumnReference Database="[SqlAnalyseLibrary]" Schema="[dbo]" Table="[t]" Column="b"></ColumnReference>
+                        </OutputList>
+                        <TableScan Ordered="0" ForcedIndex="0" ForceScan="0" NoExpandHint="0" Storage="RowStore">
+                          <DefinedValues>
+                            <DefinedValue>
+                              <ColumnReference Database="[SqlAnalyseLibrary]" Schema="[dbo]" Table="[t]" Column="a"></ColumnReference>
+                            </DefinedValue>
+                            <DefinedValue>
+                              <ColumnReference Database="[SqlAnalyseLibrary]" Schema="[dbo]" Table="[t]" Column="b"></ColumnReference>
+                            </DefinedValue>
+                          </DefinedValues>
+                          <Object Database="[SqlAnalyseLibrary]" Schema="[dbo]" Table="[t]" IndexKind="Heap" Storage="RowStore"></Object>
+                        </TableScan>
+                      </RelOp>
+                    </ComputeScalar>
+                  </RelOp>
+                </QueryPlan>
+              </StmtSimple>
+            </Statements>
+          </Else>
+        </StmtCond>
+        <StmtSimple StatementText="; END; SELECT b,a,c=3  FROM dbo.t" StatementId="4" StatementCompId="7" StatementType="SELECT" RetrievedFromCache="false" StatementSubTreeCost="0.0032844" StatementEstRows="2" SecurityPolicyApplied="false" StatementOptmLevel="TRIVIAL" QueryHash="0x472B05201DBCDFE2" QueryPlanHash="0x252D8D81099DFEBD" CardinalityEstimationModelVersion="140">
+          <StatementSetOptions QUOTED_IDENTIFIER="true" ARITHABORT="false" CONCAT_NULL_YIELDS_NULL="true" ANSI_NULLS="true" ANSI_PADDING="true" ANSI_WARNINGS="true" NUMERIC_ROUNDABORT="false"></StatementSetOptions>
+          <QueryPlan NonParallelPlanReason="MaxDOPSetToOne" CachedPlanSize="16" CompileTime="0" CompileCPU="0" CompileMemory="128">
+            <MemoryGrantInfo SerialRequiredMemory="0" SerialDesiredMemory="0"></MemoryGrantInfo>
+            <OptimizerHardwareDependentProperties EstimatedAvailableMemoryGrant="694093" EstimatedPagesCached="173523" EstimatedAvailableDegreeOfParallelism="1" MaxCompileMemory="4231224"></OptimizerHardwareDependentProperties>
+            <RelOp NodeId="0" PhysicalOp="Compute Scalar" LogicalOp="Compute Scalar" EstimateRows="2" EstimateIO="0" EstimateCPU="2e-007" AvgRowSize="35" EstimatedTotalSubtreeCost="0.0032844" Parallel="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row">
+              <OutputList>
+                <ColumnReference Database="[SqlAnalyseLibrary]" Schema="[dbo]" Table="[t]" Column="a"></ColumnReference>
+                <ColumnReference Database="[SqlAnalyseLibrary]" Schema="[dbo]" Table="[t]" Column="b"></ColumnReference>
+                <ColumnReference Column="Expr1003"></ColumnReference>
+              </OutputList>
+              <ComputeScalar>
+                <DefinedValues>
+                  <DefinedValue>
+                    <ColumnReference Column="Expr1003"></ColumnReference>
+                    <ScalarOperator ScalarString="(3)">
+                      <Const ConstValue="(3)"></Const>
+                    </ScalarOperator>
+                  </DefinedValue>
+                </DefinedValues>
+                <RelOp NodeId="1" PhysicalOp="Table Scan" LogicalOp="Table Scan" EstimateRows="2" EstimatedRowsRead="2" EstimateIO="0.0032035" EstimateCPU="8.07e-005" AvgRowSize="31" EstimatedTotalSubtreeCost="0.0032842" TableCardinality="2" Parallel="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row">
+                  <OutputList>
+                    <ColumnReference Database="[SqlAnalyseLibrary]" Schema="[dbo]" Table="[t]" Column="a"></ColumnReference>
+                    <ColumnReference Database="[SqlAnalyseLibrary]" Schema="[dbo]" Table="[t]" Column="b"></ColumnReference>
+                  </OutputList>
+                  <TableScan Ordered="0" ForcedIndex="0" ForceScan="0" NoExpandHint="0" Storage="RowStore">
+                    <DefinedValues>
+                      <DefinedValue>
+                        <ColumnReference Database="[SqlAnalyseLibrary]" Schema="[dbo]" Table="[t]" Column="a"></ColumnReference>
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[SqlAnalyseLibrary]" Schema="[dbo]" Table="[t]" Column="b"></ColumnReference>
+                      </DefinedValue>
+                    </DefinedValues>
+                    <Object Database="[SqlAnalyseLibrary]" Schema="[dbo]" Table="[t]" IndexKind="Heap" Storage="RowStore"></Object>
+                  </TableScan>
+                </RelOp>
+              </ComputeScalar>
+            </RelOp>
+          </QueryPlan>
+        </StmtSimple>
+      </Statements>
+    </Batch>
+  </BatchSequence>
+</ShowPlanXML>
