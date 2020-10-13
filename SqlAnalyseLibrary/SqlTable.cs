@@ -12,5 +12,6 @@ namespace SqlAnalyseLibrary {
         }
 
         public override Node? GetResolvedType() => this;
+        public override Node? GetResultNode() => this;
     }
 }

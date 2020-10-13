@@ -33,7 +33,8 @@ namespace SqlAnalyseLibrary {
             => $"{this.GetType().Name}:{Index} {Level} {Comment} {this.Kind} {this.Callable.Count} {this.Parameters.Count}";
 
         public override void ResolveTypesStep1(IResolver resolver) {
-            base.ResolveTypesStep1(resolver);
+            if (this.IsResultNodeSet()) { return; }
+            // base.ResolveTypesStep1(resolver);
             if (this.Kind == NodeExpressionScalarKind.Const) {
                 throw new NotImplementedException();
             }
@@ -41,18 +42,29 @@ namespace SqlAnalyseLibrary {
                 if (this.Callable.Count == 0) {
                     if (this.Parameters.Count == 1) {
                         var column = this.Parameters[0];
-                        if (column is NodeNamed columnNamed) {
-                            columnNamed.ResolveTypesStep1(resolver);
-                        }
-                        //resolver.ResolveColumnName(new MultiPartIdentifier(), )
+                        column.ResolveTypesStep1(resolver);
+                        NodeResolveUtility.ResolveNowOrLater(this, column);
                     } else {
                         throw new NotSupportedException();
                     }
-
                 } else if (this.Callable.Count == 1) {
-                    if (this.Callable[0] is NodeNamed nodeNamed) {
-                        nodeNamed.ResolveTypesStep1(resolver);
-                        //resolver.ResolveSchemaObjectName(, NodeScopeKind.AnyScope, null);
+                    var callable0 = this.Callable[0];
+                    callable0.ResolveTypesStep1(resolver);
+                    if (callable0 is NodeNamed nodeNamed) {
+                        var (foundCallable0, resultCallable0) = resolver.ResolveSchemaObjectName(nodeNamed.Name, NodeScopeKind.AnyScope, null, NodeElementKind.ObjectLike);
+                        if (foundCallable0 && resultCallable0 is object) {
+                            resolver = Resolver.GetResolverForChainable(resultCallable0, resolver, NodeElementKind.Column);
+                        }
+                    }
+                    if (this.Parameters.Count == 1) {
+                        var column = this.Parameters[0];
+                        column.ResolveTypesStep1(resolver);
+                        var nodeResolvedType = column.GetResolvedType();
+                        if (nodeResolvedType is object) {
+                            this.SetResolvedType(nodeResolvedType);
+                        }
+                    } else {
+                        throw new NotSupportedException();
                     }
                     throw new NotImplementedException();
                 } else {

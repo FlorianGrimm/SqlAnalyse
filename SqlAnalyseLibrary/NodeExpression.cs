@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 namespace SqlAnalyseLibrary {
-    public class NodeExpression : NodeNamed {
+    public class NodeExpression : NodeNamedWithResolvedType {
         public object? ConstValue;
         public List<Node> Callable;
         public List<Node> Parameters;

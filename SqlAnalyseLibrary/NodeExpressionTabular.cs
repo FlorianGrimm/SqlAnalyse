@@ -51,19 +51,41 @@ namespace SqlAnalyseLibrary {
             => $"{this.GetType().Name}:{Index} {Level} {Comment} {this.Kind} {this.Callable.Count} {this.Parameters.Count}";
 
         public override void ResolveTypesStep1(IResolver resolver) {
-            this.NodeFrom?.ResolveTypesStep1(resolver);
+            if (this.IsResultNodeSet()) { return; }
+
+            var resolved = true;
+            var resolverChained = resolver;
+            if (this.NodeFrom is Node nodeFrom) { 
+                nodeFrom.ResolveTypesStep1(resolver);
+                if (!nodeFrom.IsResultNodeSet()) {
+                    resolved = false;
+                }
+                resolverChained = Resolver.GetResolverForChainable(this.NodeFrom, resolver, NodeElementKind.Column);
+            }
             foreach (var callable in this.Callable) {
                 callable.ResolveTypesStep1(resolver);
+                if (!callable.IsResultNodeSet()) {
+                    resolved = false;
+                }
             }
             foreach (var parameter in this.Parameters) {
                 parameter.ResolveTypesStep1(resolver);
+                if (!parameter.IsResultNodeSet()) {
+                    resolved = false;
+                }
             }
-            //if (this.Kind == NodeExpressionTabularKind.Query) {}
             if (this.Columns.Any()) {
-                var resolverChained = Resolver.GetResolverForChainable(this.NodeFrom, resolver, NodeElementKind.Column);
                 foreach (var column in this.Columns) {
                     column.ResolveTypesStep1(resolverChained);
+                    if (!column.IsResultNodeSet()) {
+                        resolved = false;
+                    }
                 }
+            }
+            if (resolved) {
+                // if (this.Kind == NodeExpressionTabularKind.Query)
+                this.SetResultNode(this);
+                this.SetResolvedType(this);
             }
         }
 

@@ -50,4 +50,16 @@ namespace SqlAnalyseLibrary {
 
         public string ToStringNameOnly() => MultiPartIdentifierUtility.ConvertToDebugString(this.Name);
     }
+
+    public class NodeNamedWithResolvedType : NodeNamed {
+        private Node? resolvedType;
+
+        public override Node? GetResolvedType() {
+            return this.resolvedType;
+        }
+
+        public override void SetResolvedType(Node? value) {
+            this.resolvedType = value;
+        }
+    }
 }

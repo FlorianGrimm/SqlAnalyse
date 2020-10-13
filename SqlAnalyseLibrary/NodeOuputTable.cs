@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace SqlAnalyseLibrary {
     public class NodeOuputTable : Node {
         public NodeOuputTable() {
-            this.Columns = new List<NodeScopeElement>();
+            this.Columns = new List<Node>();
         }
 
         public NodeOuputTable(
@@ -14,7 +14,7 @@ namespace SqlAnalyseLibrary {
             this.Comment = comment;
         }
 
-        public List<NodeScopeElement> Columns { get; }
+        public List<Node> Columns { get; }
 
         public Node? NodeCtes { get; set; }
         public Node? NodeFrom { get; set; }
@@ -38,12 +38,17 @@ namespace SqlAnalyseLibrary {
         }
 
         public override void ResolveTypesStep1(IResolver resolver) {
-            if (this.GetResolvedType() is object) { return; }
+            if (this.IsResultNodeSet()) { return; }
             this.NodeCtes?.ResolveTypesStep1(resolver);
             this.NodeFrom?.ResolveTypesStep1(resolver);
             this.Expression?.ResolveTypesStep1(resolver);
-            base.ResolveTypesStep1(resolver);
-
+            if (this.Expression is NodeExpressionTabular nodeExpressionTabular) {
+                if (this.Columns.Count == 0) {
+                    NodeResolveUtility.ResolveNowOrLater(this, nodeExpressionTabular);
+                } else {
+                    throw new NotSupportedException("columns");
+                }
+            }
         }
 
     }

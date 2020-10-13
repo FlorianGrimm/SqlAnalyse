@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 
 namespace SqlAnalyseLibrary {
-    public class NodeReference : NodeNamed, INodeHasScope {
+    public class NodeReference : NodeNamedWithResolvedType, INodeHasScope {
 
         //public SqlScalarType? ScalarType;
         //public SqlTable? SqlTable;
@@ -35,29 +35,42 @@ namespace SqlAnalyseLibrary {
         }
 
         public override void ResolveTypesStep1(IResolver resolver) {
-            if (this.GetResolvedType() is object) { return; }
-            base.ResolveTypesStep1(resolver);
-            if (this.ResolvedElement is object) {
-                this.SetResolvedType(this.ResolvedElement.GetResolvedType());
-            } else if (this.IsNameSet()) {
-                if (this.ElementKind == NodeElementKind.ObjectLike) {
-                    var (found, result) = resolver.ResolveSchemaObjectName(this.Name, this.Scope, this.Scopes, this.ElementKind);
-                    if (found && result is object) { this.ResolvedElement = result; }
-                } else if ((this.ElementKind == NodeElementKind.Column) || (this.ElementKind == NodeElementKind.ColumnRegular)) {
-                    var (found, result) = resolver.ResolveColumnName(this.Name, this.Scope, this.Scopes, this.ElementKind);
-                    if (found && result is object) { this.ResolvedElement = result; }
-                } else {
-                    throw new NotSupportedException("??");
-                    //var (found, result) = resolver.ResolveSchemaObjectName(this.Name, this.Scope, this.Scopes);
-                    //if (found && result is object) { this.SetTypeResolved(result); }
+            if (this.IsResultNodeSet()) { return; }
+            // base.ResolveTypesStep1(resolver);
+            resolver = Resolver.GetResolverUsingScopes(this.Scopes, resolver);
+            {
+                if (this.IsNameSet()) {
+                    if (this.ElementKind == NodeElementKind.ObjectLike) {
+                        var (found, result) = resolver.ResolveSchemaObjectName(this.Name, this.Scope, this.Scopes, this.ElementKind);
+                        if (found && result is Node nodeResolvedElement) {
+                            this.ResolvedElement = nodeResolvedElement;
+                            NodeResolveUtility.ResolveNowOrLater(this, nodeResolvedElement);
+                        }
+                    } else if ((this.ElementKind == NodeElementKind.Column) || (this.ElementKind == NodeElementKind.ColumnRegular)) {
+                        var (found, result) = resolver.ResolveColumnName(this.Name, this.Scope, this.Scopes, this.ElementKind);
+                        if (found && result is Node nodeResolvedElement) {
+                            this.ResolvedElement = nodeResolvedElement;
+                            NodeResolveUtility.ResolveNowOrLater(this, nodeResolvedElement);
+                        }
+                    } else {
+                        throw new NotSupportedException("??");
+                        //var (found, result) = resolver.ResolveSchemaObjectName(this.Name, this.Scope, this.Scopes);
+                        //if (found && result is object) { this.SetTypeResolved(result); }
+                    }
+                    return;
                 }
-
-            } else {
+            }
+            if (this.ElementKind == NodeElementKind.ColumnWildcard) {
+                //resolver.ResolveSchemaObjectNames(this)
+                //resolver.ResolveColumnNames(new MultiPartIdentifier(),)
+            }
+            {
                 throw new NotSupportedException("??");
             }
         }
 
-        public override Node? GetResolvedType() => this.ResolvedElement?.GetResolvedType();
+        // public override Node? GetResolvedType() => this.ResolvedElement?.GetResolvedType();
+        // public override void SetResolvedType(Node? value) { base.SetResolvedType(value); }
 
         public override string ToString() {
             var i = (this.Name is object) ? string.Join("/", this.Name.Identifiers.Select(i => i.Value)) : "";

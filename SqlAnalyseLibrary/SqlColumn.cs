@@ -15,6 +15,6 @@ namespace SqlAnalyseLibrary {
         public SqlScalarType ColumnType { get; set; }
 
         public override Node? GetResolvedType() => this.ColumnType;
-
+        public override Node? GetResultNode() => this;
     }
 }

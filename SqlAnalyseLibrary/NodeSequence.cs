@@ -19,6 +19,7 @@ namespace SqlAnalyseLibrary {
         }
 
         public override void ResolveTypesStep1(IResolver resolver) {
+            if (this.IsResultNodeSet()) { return; }
             base.ResolveTypesStep1(resolver);
         }
     }

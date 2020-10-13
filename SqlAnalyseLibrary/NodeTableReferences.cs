@@ -34,24 +34,50 @@ namespace SqlAnalyseLibrary {
         }
 
         public override void ResolveTypesStep1(IResolver resolver) {
-            if (this.GetResolvedType() is object) { return; }
-            //base.ResolveStep1(staticEvaluatorResolver);
-            bool resolved = true;
+            if (this.IsResultNodeSet()) { return; }
+
+            var resolverScopes = Resolver.GetResolverUsingScopes(this.Scopes, resolver);
+
+            //bool resolved = true;
+            var tableRefs = new List<Node>();
             foreach (var c in this.Children) {
-                c.ResolveTypesStep1(resolver);
-                if (c.GetResolvedType() is null) {
-                    resolved = false;
-                }
+                c.ResolveTypesStep1(resolverScopes);
+                tableRefs.Add(c);
+            }
+            here
+            NodeResolveUtility.ResolveNowOrLater(this, tableRefs, CreateSqlObjectWithColumns, resolver);
+
+
+            var tabularResult = this.TabularResult;
+            if (tabularResult is null) {
+                this.SetResultNode(this);
+                this.SetResolvedType(new NodeVoid());
+            } else { 
+                tabularResult.ResolveTypesStep1(resolverScopes);
+                NodeResolveUtility.ResolveNowOrLater(this, tabularResult);
             }
 
-            if (this.TabularResult is object) {
-                this.TabularResult.ResolveTypesStep1(resolver);
-                this.SetResolvedType(this.TabularResult.GetResolvedType());
-            } else {
-                if (resolved) {
-                    this.SetResolvedType(this);
-                }
+
+            //if (this.TabularResult is object) {
+            //    this.TabularResult.ResolveTypesStep1(resolver);
+            //    if (resolved) {
+            //        var resolvedType = this.TabularResult.GetResolvedType();
+            //        if (resolvedType is object) {
+            //            this.SetResolvedType(resolvedType);
+            //        }
+            //    }
+            //} else {
+            //    if (resolved) {
+            //        this.SetResolvedType(this);
+            //    }
+            //}
+        }
+
+        private static Node? CreateSqlObjectWithColumns(Node that, List<Node> items) {
+            var result = new SqlObjectWithColumns();
+            foreach (var item in items) { 
             }
+            return result;
         }
 
         public IResolver? GetResolver(IResolver resolver, NodeElementKind elementKind) {
@@ -72,8 +98,9 @@ namespace SqlAnalyseLibrary {
 
             public (bool found, Node? result) ResolveColumnName(MultiPartIdentifier name, NodeScopeKind scope, Scopes? scopes, NodeElementKind elementKind) {
                 foreach (var child in this.owner.Children) {
-                    if (child.GetResolvedType() is object) {
-                        var childResolver = Resolver.GetResolverForChainable(child.GetResolvedType(), resolver, elementKind);
+                    var nodeResolvedType = child.GetResolvedType();
+                    if (nodeResolvedType is object) {
+                        var childResolver = Resolver.GetResolverForChainable(nodeResolvedType, this.resolver, elementKind);
                         var result = childResolver.ResolveColumnName(name, scope, scopes, elementKind);
                         if (result.found) { return result; }
                     }
@@ -83,7 +110,7 @@ namespace SqlAnalyseLibrary {
             }
 
             public (bool found, Node? result) ResolveSchemaObjectName(MultiPartIdentifier name, NodeScopeKind scope, Scopes? scopes, NodeElementKind elementKind) {
-                
+
                 return resolver.ResolveSchemaObjectName(name, scope, scopes, elementKind);
             }
         }

@@ -38,6 +38,7 @@ namespace SqlAnalyseLibrary {
                     if (name.Count == 1) {
                         foreach (var column in this._Owner.Columns) {
                             if (MultiPartIdentifierUtility.IsEqual(column.Name, name)) {
+                                return (true, column);
                             }
                         }
                     }

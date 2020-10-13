@@ -10,11 +10,31 @@ namespace SqlAnalyseLibrary {
         public int Level { get; set; }
         public string Comment { get; set; }
 
-        public virtual Node? GetResolvedType() => null;
-
+        protected Node? _ResolvedType;
+        public virtual Node? GetResolvedType() => this._ResolvedType;
         public virtual void SetResolvedType(Node? value) {
-            throw new NotSupportedException(this.GetType().Name);
+            this._ResolvedType = value;
         }
+
+        protected Node? _ResultNode;
+        public virtual Node? GetResultNode() => this._ResultNode;
+        public virtual void SetResultNode(Node? value) {
+            this._ResultNode = value;
+        }
+
+        public void SetResultNodeAndResolvedType(Node? value) {
+            if (value is object) {
+                this._ResultNode = value;
+                if (this.GetResolvedType() is null) {
+                    var resolvedType = value.GetResolvedType();
+                    if (resolvedType is object) {
+                        this.SetResolvedType(resolvedType);
+                    }
+                }
+            }
+        }
+
+        public virtual bool IsResultNodeSet() => (this.GetResultNode() is object);
 
         protected Node() {
             this._Index = 1 + System.Threading.Interlocked.Increment(ref __Index);
@@ -42,8 +62,8 @@ namespace SqlAnalyseLibrary {
         }
 
         public virtual void ResolveTypesStep1(IResolver resolver) {
-            if (this.GetResolvedType() is object) { return; }
-            System.Console.Out.WriteLine($"ResolveTypesStep1: {this.ToString()}");
+            if (this.IsResultNodeSet()) { return; }
+            // System.Console.Out.WriteLine($"ResolveTypesStep1: {this.ToString()}");
             foreach (var c in this.GetChildren().ToList()) {
                 c.ResolveTypesStep1(resolver);
             }
@@ -75,17 +95,5 @@ namespace SqlAnalyseLibrary {
             }
             new NodeLink(this, nextNode, condition, conditionResult).Connect();
         }
-    }
-    public class NodeWithResolvedType : Node {
-        private Node? resolvedType;
-
-        public override Node? GetResolvedType() {
-            return this.resolvedType;
-        }
-
-        public override void SetResolvedType(Node? value) {
-            this.resolvedType = value;
-        }
-
     }
 }

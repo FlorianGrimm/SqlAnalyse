@@ -50,9 +50,19 @@ namespace SqlAnalyseLibrary {
         //}
 
         public override void ResolveTypesStep1(IResolver resolver) {
-            if (this.GetResolvedType() is object) { return; }
+            if (this.IsResultNodeSet()) { return; }
+
             base.ResolveTypesStep1(resolver);
-            
+            //if (this.GetResolvedType() is object) { return; }
+            // base.ResolveTypesStep1(resolver);
+            if (this.Element is object) {
+                resolver = Resolver.GetResolverUsingScopes(this.Scopes, resolver);
+                this.Element.ResolveTypesStep1(resolver);
+            }
+        }
+
+        public override Node? GetResolvedType() {
+            return (this.Element?.GetResolvedType()) ?? base.GetResolvedType();
         }
 
         public override IEnumerable<Node> GetChildren() {
