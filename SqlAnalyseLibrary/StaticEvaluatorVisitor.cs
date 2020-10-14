@@ -186,7 +186,6 @@ namespace SqlAnalyseLibrary {
                 } else {
                     throw new NotImplementedException("TODO");
                 }
-                result.Children.Add(resultOuputTable);
                 resultOuputTable.AfterInitialization();
                 result.AfterInitialization();
                 SetResult(node, result);
@@ -283,7 +282,7 @@ namespace SqlAnalyseLibrary {
             };
             this.Current.EnterAliasScope(resultTableReferences);
             var resultOuputTable = new NodeOuputTable() { Level = level + 1, Comment = "QueryDerivedTable" };
-            resultTableReferences.Children.Add(resultOuputTable);
+            resultTableReferences.TabularResult = resultOuputTable;
             var alias = node.Alias;
 
             var resultScopeElement = new NodeScopeElement() {

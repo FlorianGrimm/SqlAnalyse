@@ -1,9 +1,6 @@
 ﻿using Microsoft.SqlServer.TransactSql.ScriptDom;
 
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace SqlAnalyseLibrary {
     public class StaticEvaluatorResolver : IResolver {
@@ -28,5 +25,8 @@ namespace SqlAnalyseLibrary {
             => (scopes is object)
                 ? this.EvaluationState.ResolveSchemaObjectName(name, scope, scopes, elementKind)
                 : (false, null);
+
+            public List<Node>? ResolveCurrentTableReferences(MultiPartIdentifier name)
+                => null;
     }
 }

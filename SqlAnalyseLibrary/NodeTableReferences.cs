@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SqlAnalyseLibrary {
     public class NodeTableReferences : Node, INodeHasScope, IResolverChainable {
-        public Node? TabularResult { get; set; }
+        public NodeOuputTable? TabularResult { get; set; }
         public List<Node> Children { get; }
         public NodeScopeKind Scope { get; set; }
         public Scopes? Scopes { get; set; }
@@ -43,15 +43,14 @@ namespace SqlAnalyseLibrary {
             foreach (var c in this.Children) {
                 c.ResolveTypesStep1(resolverScopes);
                 tableRefs.Add(c);
-            }
-            here
-            NodeResolveUtility.ResolveNowOrLater(this, tableRefs, CreateSqlObjectWithColumns, resolver);
+            }            
+            //NodeResolveUtility.ResolveNowOrLater(this, tableRefs, CreateSqlObjectWithColumns, resolver);
 
 
             var tabularResult = this.TabularResult;
             if (tabularResult is null) {
                 this.SetResultNode(this);
-                this.SetResolvedType(new NodeVoid());
+                this.SetResolvedType(this);
             } else { 
                 tabularResult.ResolveTypesStep1(resolverScopes);
                 NodeResolveUtility.ResolveNowOrLater(this, tabularResult);
@@ -89,30 +88,30 @@ namespace SqlAnalyseLibrary {
 
         public class ResolverColumn : IResolver {
             private readonly NodeTableReferences owner;
-            private readonly IResolver resolver;
+            private readonly IResolver _Resolver;
 
             public ResolverColumn(NodeTableReferences owner, IResolver resolver) {
                 this.owner = owner;
-                this.resolver = resolver;
+                this._Resolver = resolver;
             }
 
             public (bool found, Node? result) ResolveColumnName(MultiPartIdentifier name, NodeScopeKind scope, Scopes? scopes, NodeElementKind elementKind) {
                 foreach (var child in this.owner.Children) {
                     var nodeResolvedType = child.GetResolvedType();
                     if (nodeResolvedType is object) {
-                        var childResolver = Resolver.GetResolverForChainable(nodeResolvedType, this.resolver, elementKind);
+                        var childResolver = Resolver.GetResolverForChainable(nodeResolvedType, this._Resolver, elementKind);
                         var result = childResolver.ResolveColumnName(name, scope, scopes, elementKind);
                         if (result.found) { return result; }
                     }
                 }
                 return (false, null);
-
             }
 
-            public (bool found, Node? result) ResolveSchemaObjectName(MultiPartIdentifier name, NodeScopeKind scope, Scopes? scopes, NodeElementKind elementKind) {
+            public (bool found, Node? result) ResolveSchemaObjectName(MultiPartIdentifier name, NodeScopeKind scope, Scopes? scopes, NodeElementKind elementKind) 
+                => this._Resolver.ResolveSchemaObjectName(name, scope, scopes, elementKind);
 
-                return resolver.ResolveSchemaObjectName(name, scope, scopes, elementKind);
-            }
+            public List<Node>? ResolveCurrentTableReferences(MultiPartIdentifier name)
+                => this._Resolver.ResolveCurrentTableReferences(name);
         }
     }
 }

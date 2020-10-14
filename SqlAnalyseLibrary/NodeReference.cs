@@ -61,11 +61,19 @@ namespace SqlAnalyseLibrary {
                 }
             }
             if (this.ElementKind == NodeElementKind.ColumnWildcard) {
+                var tables = resolver.ResolveCurrentTableReferences(new MultiPartIdentifier());
+                if (tables is object){
+                    foreach(var t in tables){
+                        System.Console.WriteLine(t.ToString());
+                    }
+                }
+                // here
                 //resolver.ResolveSchemaObjectNames(this)
                 //resolver.ResolveColumnNames(new MultiPartIdentifier(),)
+                //return;
             }
             {
-                throw new NotSupportedException("??");
+                throw new NotSupportedException($"?? {this.ElementKind}");
             }
         }
 
